@@ -109,7 +109,8 @@ add_action( 'admin_init', array( $settings_obj, 'settingsInit') );
 /**
  * Load script for ItalyStrap\Admin
  */
-add_action( 'admin_enqueue_scripts', array( $settings_obj, 'enqueueAdminStyleScript') );
+$asset = new \ItalyStrap\Settings\Asset( $plugin );
+add_action( 'admin_enqueue_scripts', [ $asset, 'enqueueAdminStyleScript' ] );
 
 /**
  * Add link in plugin activation panel
