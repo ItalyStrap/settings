@@ -49,25 +49,6 @@ class Settings implements SettingsInterface {
 	private $theme_mods;
 
 	/**
-	 * Returns an array of hooks that this subscriber wants to register with
-	 * the WordPress plugin API.
-	 *
-	 * @hooked update_option - 10
-	 *
-	 * @return array
-	 */
-	public static function get_subscribed_events() {
-
-		return array(
-			// 'hook_name'							=> 'method_name',
-			'update_option'	=> array(
-				'function_to_add'	=> 'save',
-				'accepted_args'		=> 3,
-			),
-		);
-	}
-
-	/**
 	 * Definition of variables containing the configuration
 	 * to be applied to the various function calls wordpress
 	 *
@@ -352,24 +333,5 @@ class Settings implements SettingsInterface {
 		$this->setThemeMods( (array) $value );
 
 		return $option;
-	}
-
-	/**
-	 * Show on page
-	 *
-	 * @param string|bool $condition The config array.
-	 * @return bool         Return true if conditions are resolved.
-	 */
-	private function showOn( $condition ) {
-
-		if ( \is_bool( $condition ) ) {
-			return $condition;
-		}
-
-		if ( \is_callable( $condition ) ) {
-			return (bool) \call_user_func( $condition );
-		}
-
-		return false;
 	}
 }

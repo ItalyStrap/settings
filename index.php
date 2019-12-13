@@ -97,8 +97,8 @@ $settings_obj = new \ItalyStrap\Settings\Settings(
 	(array) \get_theme_mods(),
 	new \ItalyStrap\Fields\Fields()
 );
-
-add_action( 'admin_init', array( $settings_obj, 'load') );
+add_action( 'admin_init', [ $settings_obj, 'load' ] );
+add_action( 'update_option', [ $settings_obj, 'save' ], 10, 3 );
 
 
 $config_pages = \ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/config/pages.php' );

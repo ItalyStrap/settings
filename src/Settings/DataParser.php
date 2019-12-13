@@ -24,7 +24,11 @@ class DataParser {
 
 	private $fields = [];
 
-
+	public function __construct() {
+		$this->validation = new Validation;
+		$this->sanitization = new Sanitization;
+		$this->translator = new Translator( 'Perf_Metrics' );
+	}
 
 	/**
 	 * Sanitize the input data
@@ -33,10 +37,6 @@ class DataParser {
 	 * @return array           Return the array sanitized
 	 */
 	public function parse( $data ) {
-
-		$this->validation = new Validation;
-		$this->sanitization = new Sanitization;
-		$this->translator = new Translator( 'Perf_Metrics' );
 
 		foreach ( $this->fields as $field ) {
 			if ( ! isset( $data[ $field['id'] ] ) ) {
