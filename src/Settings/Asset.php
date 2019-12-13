@@ -29,7 +29,7 @@ class Asset {
 		if ( \strpos( $hook, $this->pagenow ) !== false ) {
 			\wp_enqueue_script(
 				$this->pagenow,
-				\plugins_url( '/js/script.min.js', __FILE__ ),
+				\plugins_url( '/assets/js/script.min.js', __FILE__ ),
 				['jquery-ui-tabs', 'jquery-form'],
 				false,
 				false
@@ -37,7 +37,7 @@ class Asset {
 
 			\wp_enqueue_style(
 				$this->pagenow,
-				\plugins_url( '/css/style.css', __FILE__ )
+				\plugins_url( '/assets/css/style.css', __FILE__ )
 			);
 		}
 	}
