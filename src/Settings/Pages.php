@@ -7,8 +7,8 @@ use ItalyStrap\Config\ConfigInterface;
 use ItalyStrap\View\View;
 use ItalyStrap\View\ViewInterface;
 
-class Pages
-{
+class Pages {
+
 	use ShowableTrait;
 
 	const DS = DIRECTORY_SEPARATOR;
@@ -26,7 +26,7 @@ class Pages
 	private $config;
 	private $capability;
 	private $pagenow;
-	private $settings;
+	private $sections;
 
 	/**
 	 * @var ViewInterface
@@ -38,14 +38,22 @@ class Pages
 	 */
 	private $options_group;
 
-	public function __construct( ConfigInterface $config, ViewInterface $view, $settings, $options_group ) {
+	/**
+	 * Pages constructor.
+	 * @param ConfigInterface $config
+	 * @param ViewInterface $view
+	 * @param $sections
+	 * @param $options_group
+	 */
+	public function __construct( ConfigInterface $config, ViewInterface $view, $sections, $options_group ) {
+
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
 			$this->pagenow = \stripslashes( $_GET['page'] ); // Input var okay.
 		}
 
 		$this->config = $config;
 		$this->view = $view;
-		$this->settings = $settings;
+		$this->sections = $sections;
 		$this->options_group = $options_group;
 	}
 
@@ -191,7 +199,7 @@ class Pages
 
 		$out = '<ul>';
 
-		foreach ( $this->settings as $key => $setting ) {
+		foreach ($this->sections as $key => $setting ) {
 			if ( isset( $setting['show_on'] ) && false === $setting['show_on'] ) {
 				continue;
 			}
@@ -209,5 +217,4 @@ class Pages
 		echo $out; // XSS ok.
 		return '';
 	}
-
 }

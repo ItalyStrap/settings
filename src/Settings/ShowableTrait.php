@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
-trait ShowableTrait
-{
+trait ShowableTrait {
+
 	/**
 	 * Show on page
 	 *

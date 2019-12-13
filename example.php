@@ -29,12 +29,12 @@ if ( ! defined( 'ITALYSTRAP_BASENAME' ) ) {
 }
 
 $plugin = require __DIR__ . '/tests/_data/fixtures/config/plugin.php';
-$settings = require __DIR__ . '/tests/_data/fixtures/config/settings.php';
+$sections = require __DIR__ . '/tests/_data/fixtures/config/sections.php';
 $pages = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
 
 $settings_obj = new \ItalyStrap\Settings\Settings(
 	(array) \get_option( $plugin['options_name'] ),
-	$settings,
+	$sections,
 	new \ItalyStrap\Fields\Fields(),
 	$plugin['options_name'],
 	$plugin['options_group'],
@@ -50,7 +50,7 @@ $finder = new \ItalyStrap\View\ViewFinder();
 $finder->in( ITALYSTRAP_PLUGIN_PATH . 'src/Settings/view/' );
 $view = new \ItalyStrap\View\View( $finder );
 
-$pages = new \ItalyStrap\Settings\Pages( $config_pages, $view, $settings, $plugin['options_group'] );
+$pages = new \ItalyStrap\Settings\Pages( $config_pages, $view, $sections, $plugin['options_group'] );
 add_action( 'admin_menu', [ $pages, 'load'] );
 add_action( 'italystrap_after_settings_form', [ $pages, 'getAside' ] );
 

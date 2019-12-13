@@ -29,16 +29,6 @@ use ItalyStrap\View\ViewInterface;
 class Settings implements SettingsInterface {
 
 	/**
-	 * @var array
-	 */
-	private $plugin;
-
-	/**
-	 * @var array
-	 */
-	private $theme_mods;
-
-	/**
 	 * Definition of variables containing the configuration
 	 * to be applied to the various function calls wordpress
 	 *
@@ -47,39 +37,32 @@ class Settings implements SettingsInterface {
 	protected $capability;
 
 	/**
-	 * Get the current admin page name
-	 *
-	 * @var string
-	 */
-	protected $pagenow;
-
-	/**
 	 * Settings for plugin admin page
 	 *
 	 * @var array
 	 */
-	protected $settings = array();
+	protected $sections = [];
 
 	/**
 	 * The plugin options
 	 *
 	 * @var array
 	 */
-	protected $options = array();
+	protected $options = [];
 
 	/**
 	 * The type of fields to create
 	 *
 	 * @var FieldsInterface
 	 */
-	protected $fields_type;
+	protected $fields;
 
 	/**
 	 * The fields preregistered in the config file.
 	 *
 	 * @var array
 	 */
-	protected $fields = array();
+	protected $settingsFields = [];
 
 	/**
 	 * @var string
@@ -95,41 +78,31 @@ class Settings implements SettingsInterface {
 	 * Initialize Class
 	 *
 	 * @param array $options Get the plugin options.
-	 * @param array $settings The configuration array plugin fields.
+	 * @param array $sections The configuration array plugin fields.
 	 * @param array $plugin The configuration array for plugin.
 	 * @param array $theme_mods The theme options.
 	 * @param FieldsInterface $fields_type The Fields object.
 	 */
 	public function __construct(
 		array $options,
-		array $settings,
+		array $sections,
 		FieldsInterface $fields_type,
 		string $options_name,
 		string $options_group,
 		string $capability
 	) {
-		if ( isset( $_GET['page'] ) ) { // Input var okay.
-			$this->pagenow = \stripslashes( $_GET['page'] ); // Input var okay.
-		}
 
-		$this->settings = $settings;
+		$this->sections = $sections;
 
 		$this->options = $options;
 
-		$this->fields_type = $fields_type;
+		$this->fields = $fields_type;
 
-		$this->fields = $this->getSettingsFields();
+		$this->settingsFields = $this->getSettingsFields();
 
 		$this->options_name = $options_name;
 		$this->options_group = $options_group;
 		$this->capability = $capability;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getFields() : array {
-		return $this->fields;
 	}
 
 	/**
@@ -149,7 +122,7 @@ class Settings implements SettingsInterface {
 	 *
 	 */
 	private function addSections(): void {
-		foreach ( $this->settings as $setting ) {
+		foreach ($this->sections as $setting ) {
 			if ( isset( $setting[ 'show_on' ] ) && false === $setting[ 'show_on' ] ) {
 				continue;
 			}
@@ -188,7 +161,7 @@ class Settings implements SettingsInterface {
 			$this->options_name,
 			[
 				'sanitize_callback'	=>
-					[ ( new DataParser() )->setFields( $this->fields ), 'parse' ]
+					[ ( new DataParser() )->setFields( $this->settingsFields ), 'parse' ]
 			]
 		);
 	}
@@ -204,7 +177,7 @@ class Settings implements SettingsInterface {
 //			\call_user_func( $this->settings[ $args['id'] ]['desc'], $args );
 //		}
 
-		echo $this->settings[ $args['id'] ]['desc'] ?? ''; // XSS ok.
+		echo $this->sections[ $args['id'] ]['desc'] ?? ''; // XSS ok.
 	}
 
 	/**
@@ -214,7 +187,7 @@ class Settings implements SettingsInterface {
 	 */
 	public function renderField( array $args ) {
 		$args['_id'] = $args['_name'] = $this->options_name . '[' . $args['id'] . ']';
-		echo $this->fields_type->render( $args, $this->options ); // XSS ok.
+		echo $this->fields->render( $args, $this->options ); // XSS ok.
 	}
 
 	/**
@@ -225,7 +198,7 @@ class Settings implements SettingsInterface {
 	public function getSettingsFields() {
 
 		$fields = [];
-		foreach ( (array) $this->settings as $settings_value ) {
+		foreach ((array) $this->sections as $settings_value ) {
 			foreach ( $settings_value['fields'] as $fields_key => $fields_value ) {
 				$fields[ $fields_value['id'] ] = $fields_value['args'];
 			}
@@ -243,7 +216,7 @@ class Settings implements SettingsInterface {
 
 		$default_settings = array();
 
-		foreach ( (array) $this->fields as $key => $setting ) {
+		foreach ((array) $this->settingsFields as $key => $setting ) {
 			$default_settings[ $key ] = $setting['value'] ?? '';
 		}
 
@@ -278,7 +251,7 @@ class Settings implements SettingsInterface {
 	 */
 	private function setThemeMods( array $value = array() ) {
 
-		foreach ( (array) $this->fields as $key => $field ) {
+		foreach ((array) $this->settingsFields as $key => $field ) {
 			if ( isset( $field['option_type'] ) && 'theme_mod' === $field['option_type'] ) {
 				\set_theme_mod( $key, $value[ $key ] );
 			}
@@ -292,7 +265,7 @@ class Settings implements SettingsInterface {
 	 */
 	private function removeThemeMods( array $value = array() ) {
 
-		foreach ( (array) $this->fields as $key => $field ) {
+		foreach ((array) $this->settingsFields as $key => $field ) {
 			if ( isset( $field['option_type'] ) && 'theme_mod' === $field['option_type'] ) {
 				\remove_theme_mod( $key );
 			}

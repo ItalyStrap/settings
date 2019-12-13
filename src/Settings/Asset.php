@@ -5,8 +5,8 @@ namespace ItalyStrap\Settings;
 
 use ItalyStrap\Config\ConfigInterface;
 
-class Asset
-{
+class Asset {
+
 	/**
 	 * @var string
 	 */
@@ -41,5 +41,4 @@ class Asset
 			);
 		}
 	}
-
 }
