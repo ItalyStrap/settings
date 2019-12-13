@@ -94,8 +94,9 @@ class Settings implements SettingsInterface {
 		array $options,
 		array $settings,
 		array $plugin,
-		array $theme_mods,
-		FieldsInterface $fields_type
+		FieldsInterface $fields_type,
+		string $options_name,
+		string $options_group
 	) {
 
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
@@ -106,13 +107,13 @@ class Settings implements SettingsInterface {
 
 		$this->options = $options;
 
-		$this->plugin = $plugin;
-
 		$this->fields_type = $fields_type;
 
 		$this->fields = $this->getSettingsFields();
 
-		$this->theme_mods = $theme_mods;
+		$this->plugin = $plugin;
+		$this->options_name = $options_name;
+		$this->options_group = $options_group;
 
 		$this->capability = $plugin['capability'];
 	}
@@ -132,43 +133,49 @@ class Settings implements SettingsInterface {
 		// If the theme options doesn't exist, create them.
 		$this->preloadOption();
 
-		foreach ( $this->settings as $key => $setting ) {
-			if ( isset( $setting['show_on'] ) && false === $setting['show_on'] ) {
+		$this->addSections();
+
+		$this->registerSections();
+	}
+
+	/**
+	 *
+	 */
+	private function addSections(): void {
+		foreach ( $this->settings as $setting ) {
+			if ( isset( $setting[ 'show_on' ] ) && false === $setting[ 'show_on' ] ) {
 				continue;
 			}
 
 			\add_settings_section(
-				$setting['id'],
-				$setting['title'],
-				[$this, 'renderSectionCb'], //array( $this, $field['callback'] ),
-				$this->plugin['options_group'] //$setting['page']
+				$setting[ self::ID ],
+				$setting[ self::TITLE ],
+				[$this, 'renderSectionCallback'], //array( $this, $field['callback'] ),
+				$this->plugin[ 'options_group' ] //$setting['page']
 			);
 
-			foreach ( $setting['settings_fields'] as $key2 => $field ) {
-				if ( isset( $field['show_on'] ) && false === $field['show_on'] ) {
+			foreach ( $setting[ 'fields' ] as $field ) {
+				if ( isset( $field[ 'show_on' ] ) && false === $field[ 'show_on' ] ) {
 					continue;
 				}
 
 				\add_settings_field(
-					$field['id'],
-					$field['title'],
-					[$this, 'renderField'], //array( $this, $field['callback'] ),
-					$this->plugin['options_group'], //$field['page'],
-					empty( $field['section'] ) ? $key : $field['section'],
-					$field['args']
+					$field[ self::ID ],
+					$field[ self::TITLE ],
+					[ $this, 'renderField' ], //array( $this, $field['callback'] ),
+					$this->plugin[ 'options_group' ], //$field['page'],
+					$setting[ self::ID ],
+					$field[ 'args' ]
 				);
 			}
 		}
-
-		$this->register();
 	}
 
 	/**
 	 * Register settings.
 	 * This allow you to override this method.
 	 */
-	private function register() {
-
+	private function registerSections(): void {
 		\register_setting(
 			$this->plugin['options_group'],
 			$this->plugin['options_name'],
@@ -184,8 +191,13 @@ class Settings implements SettingsInterface {
 	 *
 	 * @param  array $args The arguments for section CB.
 	 */
-	public function renderSectionCb( array $args ) {
-		echo $args['callback'][0]->settings[ $args['id'] ]['desc'] ?? ''; // XSS ok.
+	public function renderSectionCallback( array $args ) {
+
+//		if ( \is_callable( $this->settings[ $args['id'] ]['desc'] ) ) {
+//			\call_user_func( $this->settings[ $args['id'] ]['desc'], $args );
+//		}
+
+		echo $this->settings[ $args['id'] ]['desc'] ?? ''; // XSS ok.
 	}
 
 	/**
@@ -207,7 +219,7 @@ class Settings implements SettingsInterface {
 
 		$fields = [];
 		foreach ( (array) $this->settings as $settings_value ) {
-			foreach ( $settings_value['settings_fields'] as $fields_key => $fields_value ) {
+			foreach ( $settings_value['fields'] as $fields_key => $fields_value ) {
 				$fields[ $fields_value['id'] ] = $fields_value['args'];
 			}
 		}

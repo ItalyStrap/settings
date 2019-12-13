@@ -82,8 +82,9 @@ $settings_obj = new \ItalyStrap\Settings\Settings(
 	(array) \get_option( $plugin['options_name'] ),
 	$settings,
 	$plugin,
-	(array) \get_theme_mods(),
-	new \ItalyStrap\Fields\Fields()
+	new \ItalyStrap\Fields\Fields(),
+	$plugin['options_name'],
+	$plugin['options_group']
 );
 add_action( 'admin_init', [ $settings_obj, 'load' ] );
 add_action( 'update_option', [ $settings_obj, 'save' ], 10, 3 );

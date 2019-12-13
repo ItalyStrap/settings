@@ -9,7 +9,7 @@ return [
 		ATTR::TITLE	=> __( 'Test Mode:', 'italystrap' ),
 //		'callback'	=> 'get_field_type',
 		// 'page'		=> 'italystrap_options_group',
-		// 'section'	=> 'content',
+		// 'section'	=> 'content', // Optional
 		'args'		=> [
 			'name'			=> __( 'Test Mode:', 'italystrap' ),
 			'desc'			=> __( 'If test mode is active the front-end form on submit will return an array with som edefault values.', 'italystrap' ),

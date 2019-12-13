@@ -6,22 +6,24 @@
  */
 declare(strict_types=1);
 
+use ItalyStrap\Settings\Settings as S;
+
 /**
  * Settings for the content area
  */
 return [
-	'general'	=> [
-		'tab_title'			=> __( 'General', 'italystrap' ),
-		'id'				=> 'general',
-		'title'				=> __( 'General options page', 'italystrap' ),
-		'desc'				=> __( 'General setting for ItalyStrap', 'italystrap' ),
-		'settings_fields'	=> require 'fields.php',
+	[
+		S::TAB_TITLE		=> __( 'General', 'italystrap' ),
+		S::ID				=> 'general',
+		S::TITLE			=> __( 'General options page', 'italystrap' ),
+		S::DESC				=> __( 'General setting for ItalyStrap', 'italystrap' ),
+		S::FIELDS			=> require 'fields.php',
 	],
-//	'advanced'	=> [
-//		'tab_title'			=> __( 'Advanced', 'italystrap' ),
-//		'id'				=> 'advanced',
-//		'title'				=> __( 'Advanced options page', 'italystrap' ),
-//		'desc'				=> __( 'Advanced setting for ItalyStrap', 'italystrap' ),
-//		'settings_fields'	=> require 'fields.php',
+//	[
+//		S::TAB_TITLE		=> __( 'Advanced', 'italystrap' ),
+//		S::ID				=> 'advanced',
+//		S::TITLE			=> __( 'Advanced options page', 'italystrap' ),
+//		S::DESC				=> __( 'Advanced setting for ItalyStrap', 'italystrap' ),
+//		S::FIELDS			=> require 'fields.php',
 //	],
 ];
