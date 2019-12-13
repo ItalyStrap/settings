@@ -102,15 +102,28 @@ $settings_obj = new \ItalyStrap\Settings\Settings(
 /**
  * Add Admin menù page
  */
-add_action( 'admin_menu', array( $settings_obj, 'addMenuPage') );
+//add_action( 'admin_menu', array( $settings_obj, 'addMenuPage') );
+
+$config_pages = \ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/config/pages.php' );
+
+//add_action( 'admin_footer', function () { d( ITALYSTRAP_PLUGIN_PATH . 'src/Settings/view/' ); } );
+
+$finder = new \ItalyStrap\View\ViewFinder();
+$finder->in( ITALYSTRAP_PLUGIN_PATH . 'src/Settings/view/' );
+$view = new \ItalyStrap\View\View( $finder );
+
+$pages = new \ItalyStrap\Settings\Pages( $config_pages, $view, $settings, $plugin['options_group'] );
+add_action( 'admin_menu', [ $pages, 'load'] );
+add_action( 'italystrap_after_settings_form', [ $pages, 'getAside' ] );
+
 
 add_action( 'admin_init', array( $settings_obj, 'settingsInit') );
 
 /**
  * Load script for ItalyStrap\Admin
  */
-$asset = new \ItalyStrap\Settings\Asset( \ItalyStrap\Config\ConfigFactory::make( $plugin ) );
-add_action( 'admin_enqueue_scripts', [ $asset, 'enqueue'] );
+//$asset = new \ItalyStrap\Settings\Asset( \ItalyStrap\Config\ConfigFactory::make( $plugin ) );
+//add_action( 'admin_enqueue_scripts', [ $asset, 'enqueue'] );
 
 /**
  * Add link in plugin activation panel
@@ -118,8 +131,6 @@ add_action( 'admin_enqueue_scripts', [ $asset, 'enqueue'] );
  */
 //add_filter( 'plugin_action_links_' . ITALYSTRAP_BASENAME, array( $settings_obj, 'pluginActionLinks' ) );
 //add_filter( 'plugin_row_meta' , array( $settings_obj, 'pluginRowMeta' ), 10, 4 );
-
-add_action( 'italystrap_after_settings_form', array( $settings_obj, 'getAside') );
 
 /**
  * Adjust priority to make sure this runs

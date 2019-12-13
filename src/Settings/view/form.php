@@ -6,29 +6,38 @@
  */
 declare(strict_types=1);
 
+$spinner = \ItalyStrap\HTML\void_tag( $this->options_group . '_spinner', 'img', [
+	\ItalyStrap\HTML\Attributes::CLASS_NAME	=> 'loading-gif',
+	'src'	=> \includes_url() . 'images/spinner.gif',
+	'alt'	=> 'spinner',
+	'style'	=> 'display: none',
+] );
+
 ?>
 <?php \do_action( 'italystrap_before_settings_page', $this ); ?>
-<div  id="tabs" class="wrap">
+<div id="tabs" class="wrap">
 	<div id="post-body">
 		<div class="postbox-container">
 			<?php do_action( 'italystrap_before_settings_form', $this ); ?>
-			<form action="options.php" id="italystrap_options" method="post">
+			<form action="options.php" id="<?php echo \esc_attr( $this->options_group ) ?>" method="post">
 				<?php
 				$this->createNavTab();
 				/**
 				 * Output nonce, action, and option_page fields for a settings page.
 				 */
-				\settings_fields( $this->plugin[ 'options_group' ] );
+				\settings_fields( $this->options_group );
+
 				/**
 				 * Output settings sections and fields
 				 */
-				$this->doSettingsSections( $this->plugin[ 'options_group' ] );
+				$this->doSettingsSections( $this->options_group );
+
 				/**
 				 * Output a submit button
 				 */
 				\submit_button();
+				echo $spinner;
 				?>
-				<img class="loading-gif" src="<?php echo \includes_url(); ?>images/spinner.gif" alt="spinner" style="display: none">
 				<div id="saveResult"></div>
 			</form>
 			<?php \do_action( 'italystrap_after_settings_form', $this ); ?>
@@ -44,7 +53,7 @@ declare(strict_types=1);
 <script type="text/javascript">
 	jQuery( document ).ready( function($) {
 		var spinner = $( '.loading-gif' );
-		$('#italystrap_options').submit(function() {
+		$('#<?php echo \esc_attr( $this->options_group ) ?>').submit(function() {
 			$( '.saveResult' ).empty();
 			spinner.fadeIn();
 			$(this).ajaxSubmit({

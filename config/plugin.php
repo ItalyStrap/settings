@@ -55,28 +55,6 @@ return [
 //	'home_url'					=> \get_home_url( null, '/' ),
 	'ajax_url'				=> \admin_url( 'admin-ajax.php' ),
 
-	'action'				=> 'custom_action_nonce',
-	'nonce'					=> 'italystrap-form-nonce-field',
-	'form_id'				=> 'italystrap-submit-form',
-
-	/**
-	 * Key for the transient limit in ajax request
-	 */
-	'concurrent_requests_key'=> 'concurrent_requests',
-
-	'tester_role'			=> [
-		'display_name'	=> 'Prospect',
-		'role'			=> 'prospect',
-	],
-
-	'debug_send_mail'	=> [
-//		'to'		=> 'assistenza@performize.it',
-		'to'		=> 'test@localhost.com',
-//		'from'		=> 'wordpress@performize.it',
-		'from'		=> 'test@localhost.com',
-		'subject'	=> 'Errore!!!',
-	],
-
 	'menu_page'				=> [
 		'page_title'		=> \__( 'ItalyStrap Dashboard', 'italystrap' ),
 		'menu_title'		=> \__( 'ItalyStrap', 'italystrap' ),
@@ -86,14 +64,14 @@ return [
 		'icon_url'			=> 'dashicons-performance',
 		'position'			=> null,
 	],
-	'submenu_pages'	=> [
-		[
-			'parent_slug'	=> 'italystrap-dashboard',
-			'page_title'	=> \__( 'Settings', 'italystrap' ),
-			'menu_title'	=> \__( 'Settings', 'italystrap' ),
-			// 'capability'	=> $this->capability,
-			'menu_slug'		=> 'italystrap-settings',
-			// 'function_cb'	=> array( $this, 'get_admin_view' ),
-		],
-	],
+//	'submenu_pages'	=> [
+//		[
+//			'parent_slug'	=> 'italystrap-dashboard',
+//			'page_title'	=> \__( 'Settings', 'italystrap' ),
+//			'menu_title'	=> \__( 'Settings', 'italystrap' ),
+//			// 'capability'	=> $this->capability,
+//			'menu_slug'		=> 'italystrap-settings',
+//			// 'function_cb'	=> array( $this, 'get_admin_view' ),
+//		],
+//	],
 ];
