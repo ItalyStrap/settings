@@ -43,11 +43,6 @@ class Settings implements SettingsInterface {
 	 * @var Sanitization
 	 */
 	private $sanitization;
-
-	/**
-	 * @var ViewInterface
-	 */
-	private $view;
 	/**
 	 * @var array
 	 */
@@ -137,15 +132,13 @@ class Settings implements SettingsInterface {
 	 * @param array $plugin The configuration array for plugin.
 	 * @param array $theme_mods The theme options.
 	 * @param FieldsInterface $fields_type The Fields object.
-	 * @param ViewInterface $view
 	 */
 	public function __construct(
 		array $options,
 		array $settings,
 		array $plugin,
 		array $theme_mods,
-		FieldsInterface $fields_type,
-		ViewInterface $view
+		FieldsInterface $fields_type
 	) {
 
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
@@ -165,8 +158,6 @@ class Settings implements SettingsInterface {
 		$this->theme_mods = $theme_mods;
 
 		$this->capability = $plugin['capability'];
-
-		$this->view = $view;
 	}
 
 	/**
@@ -179,7 +170,7 @@ class Settings implements SettingsInterface {
 	/**
 	 * Init settings for admin area
 	 */
-	public function settingsInit() {
+	public function load() {
 
 		// If the theme options doesn't exist, create them.
 		$this->addOption();

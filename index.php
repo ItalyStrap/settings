@@ -99,14 +99,10 @@ $settings_obj = new \ItalyStrap\Settings\Settings(
 	new \ItalyStrap\View\View( new \ItalyStrap\View\ViewFinder() )
 );
 
-/**
- * Add Admin menù page
- */
-//add_action( 'admin_menu', array( $settings_obj, 'addMenuPage') );
+add_action( 'admin_init', array( $settings_obj, 'load') );
+
 
 $config_pages = \ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/config/pages.php' );
-
-//add_action( 'admin_footer', function () { d( ITALYSTRAP_PLUGIN_PATH . 'src/Settings/view/' ); } );
 
 $finder = new \ItalyStrap\View\ViewFinder();
 $finder->in( ITALYSTRAP_PLUGIN_PATH . 'src/Settings/view/' );
@@ -115,9 +111,6 @@ $view = new \ItalyStrap\View\View( $finder );
 $pages = new \ItalyStrap\Settings\Pages( $config_pages, $view, $settings, $plugin['options_group'] );
 add_action( 'admin_menu', [ $pages, 'load'] );
 add_action( 'italystrap_after_settings_form', [ $pages, 'getAside' ] );
-
-
-add_action( 'admin_init', array( $settings_obj, 'settingsInit') );
 
 /**
  * Load script for ItalyStrap\Admin
