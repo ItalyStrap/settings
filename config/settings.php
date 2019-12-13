@@ -2,18 +2,19 @@
 /**
  * Settings file
  *
- * @package Perf_Metrics
+ * @package ItalyStrap
  */
 declare(strict_types=1);
+
 /**
  * Settings for the content area
  */
 return [
 	'general'	=> [
-		'tab_title'			=> __( 'General', 'perf-metrics' ),
+		'tab_title'			=> __( 'General', 'italystrap' ),
 		'id'				=> 'general',
-		'title'				=> __( 'General options page', 'perf-metrics' ),
-		'desc'				=> __( 'General setting for Perf_Metrics', 'perf-metrics' ),
+		'title'				=> __( 'General options page', 'italystrap' ),
+		'desc'				=> __( 'General setting for ItalyStrap', 'italystrap' ),
 		'settings_fields'	=> require 'fields.php',
 	],
 ];
