@@ -82,6 +82,16 @@ class Settings implements SettingsInterface {
 	protected $fields = array();
 
 	/**
+	 * @var string
+	 */
+	private $options_group;
+
+	/**
+	 * @var string
+	 */
+	private $options_name;
+
+	/**
 	 * Initialize Class
 	 *
 	 * @param array $options Get the plugin options.
@@ -93,12 +103,11 @@ class Settings implements SettingsInterface {
 	public function __construct(
 		array $options,
 		array $settings,
-		array $plugin,
 		FieldsInterface $fields_type,
 		string $options_name,
-		string $options_group
+		string $options_group,
+		string $capability
 	) {
-
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
 			$this->pagenow = \stripslashes( $_GET['page'] ); // Input var okay.
 		}
@@ -111,11 +120,9 @@ class Settings implements SettingsInterface {
 
 		$this->fields = $this->getSettingsFields();
 
-		$this->plugin = $plugin;
 		$this->options_name = $options_name;
 		$this->options_group = $options_group;
-
-		$this->capability = $plugin['capability'];
+		$this->capability = $capability;
 	}
 
 	/**
@@ -151,7 +158,7 @@ class Settings implements SettingsInterface {
 				$setting[ self::ID ],
 				$setting[ self::TITLE ],
 				[$this, 'renderSectionCallback'], //array( $this, $field['callback'] ),
-				$this->plugin[ 'options_group' ] //$setting['page']
+				$this->options_group //$setting['page']
 			);
 
 			foreach ( $setting[ 'fields' ] as $field ) {
@@ -163,7 +170,7 @@ class Settings implements SettingsInterface {
 					$field[ self::ID ],
 					$field[ self::TITLE ],
 					[ $this, 'renderField' ], //array( $this, $field['callback'] ),
-					$this->plugin[ 'options_group' ], //$field['page'],
+					$this->options_group, //$field['page'],
 					$setting[ self::ID ],
 					$field[ 'args' ]
 				);
@@ -177,8 +184,8 @@ class Settings implements SettingsInterface {
 	 */
 	private function registerSections(): void {
 		\register_setting(
-			$this->plugin['options_group'],
-			$this->plugin['options_name'],
+			$this->options_group,
+			$this->options_name,
 			[
 				'sanitize_callback'	=>
 					[ ( new DataParser() )->setFields( $this->fields ), 'parse' ]
@@ -206,7 +213,7 @@ class Settings implements SettingsInterface {
 	 * @param array $args Array with arguments.
 	 */
 	public function renderField( array $args ) {
-		$args['_id'] = $args['_name'] = $this->plugin['options_name'] . '[' . $args['id'] . ']';
+		$args['_id'] = $args['_name'] = $this->options_name . '[' . $args['id'] . ']';
 		echo $this->fields_type->render( $args, $this->options ); // XSS ok.
 	}
 
@@ -248,9 +255,9 @@ class Settings implements SettingsInterface {
 	 */
 	private function preloadOption() {
 
-		if ( false === \get_option( $this->plugin['options_name'] ) ) {
+		if ( false === \get_option( $this->options_name ) ) {
 			$default = $this->getPluginSettingsArrayDefault();
-			\add_option( $this->plugin['options_name'], $default );
+			\add_option( $this->options_name, $default );
 			$this->setThemeMods( (array) $default );
 		}
 	}
@@ -260,7 +267,7 @@ class Settings implements SettingsInterface {
 	 */
 	private function deleteOption() {
 
-		\delete_option( $this->plugin['options_name'] );
+		\delete_option( $this->options_name );
 		$this->removeThemeMods( $this->getPluginSettingsArrayDefault() );
 	}
 
@@ -303,11 +310,11 @@ class Settings implements SettingsInterface {
 	 */
 	public function save( $option, $old_value, $value ) {
 
-		if ( ! isset( $this->plugin['options_name'] ) ) {
+		if ( ! isset( $this->options_name ) ) {
 			return $option;
 		}
 
-		if ( $option !== $this->plugin['options_name'] ) {
+		if ( $option !== $this->options_name ) {
 			return $option;
 		}
 
