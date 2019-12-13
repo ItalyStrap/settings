@@ -75,20 +75,8 @@ if ( ! defined( 'ITALYSTRAP_BASENAME' ) ) {
 
 require( __DIR__ . '/vendor/autoload.php' );
 
-$plugin = require __DIR__ . '/config/plugin.php';
-$settings = require __DIR__ . '/config/settings.php';
-
-$injector = new  \Auryn\Injector();
-
-/**
- * @var \ItalyStrap\Settings\Settings
- */
-//$settings_obj = $injector->make( \ItalyStrap\Settings\Settings::class, [
-//	':options'		=> (array) \get_option( $plugin['options_name'] ),
-//	':settings'		=> $settings,
-//	':plugin'		=> $plugin,
-//	':theme_mods'	=> (array) \get_theme_mods()
-//] );
+$plugin = require __DIR__ . '/tests/_data/fixtures/config/plugin.php';
+$settings = require __DIR__ . '/tests/_data/fixtures/config/settings.php';
 
 $settings_obj = new \ItalyStrap\Settings\Settings(
 	(array) \get_option( $plugin['options_name'] ),
@@ -101,7 +89,7 @@ add_action( 'admin_init', [ $settings_obj, 'load' ] );
 add_action( 'update_option', [ $settings_obj, 'save' ], 10, 3 );
 
 
-$config_pages = \ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/config/pages.php' );
+$config_pages = \ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/pages.php' );
 
 $finder = new \ItalyStrap\View\ViewFinder();
 $finder->in( ITALYSTRAP_PLUGIN_PATH . 'src/Settings/view/' );
@@ -133,11 +121,3 @@ add_action( 'italystrap_after_settings_form', [ $pages, 'getAside' ] );
 	 */
 //	\load_plugin_textdomain( $plugin['options_name'], null, \dirname( ITALYSTRAP_BASENAME ) . '/languages' );
 }, 100 );
-
-/**
- * debug_example
- */
-function settings_example() {
-}
-
-add_action( 'wp_footer', 'settings_example' );

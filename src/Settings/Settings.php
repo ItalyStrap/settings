@@ -27,22 +27,12 @@ use ItalyStrap\View\ViewInterface;
  * Class for admin area
  */
 class Settings implements SettingsInterface {
+
 	/**
 	 * @var array
 	 */
 	private $plugin;
-	/**
-	 * @var Translator
-	 */
-	private $translator;
-	/**
-	 * @var Validation
-	 */
-	private $validation;
-	/**
-	 * @var Sanitization
-	 */
-	private $sanitization;
+
 	/**
 	 * @var array
 	 */
@@ -71,13 +61,6 @@ class Settings implements SettingsInterface {
 	protected $settings = array();
 
 	/**
-	 * The plugin name
-	 *
-	 * @var string
-	 */
-	protected $plugin_slug;
-
-	/**
 	 * The plugin options
 	 *
 	 * @var array
@@ -90,13 +73,6 @@ class Settings implements SettingsInterface {
 	 * @var FieldsInterface
 	 */
 	protected $fields_type;
-
-	/**
-	 * 	The array with all sub pages if exist
-	 *
-	 * @var array
-	 */
-	protected $submenus = array();
 
 	/**
 	 * The fields preregistered in the config file.
@@ -154,7 +130,7 @@ class Settings implements SettingsInterface {
 	public function load() {
 
 		// If the theme options doesn't exist, create them.
-		$this->addOption();
+		$this->preloadOption();
 
 		foreach ( $this->settings as $key => $setting ) {
 			if ( isset( $setting['show_on'] ) && false === $setting['show_on'] ) {
@@ -164,7 +140,7 @@ class Settings implements SettingsInterface {
 			\add_settings_section(
 				$setting['id'],
 				$setting['title'],
-				array( $this, 'renderSectionCb'), //array( $this, $field['callback'] ),
+				[$this, 'renderSectionCb'], //array( $this, $field['callback'] ),
 				$this->plugin['options_group'] //$setting['page']
 			);
 
@@ -176,7 +152,7 @@ class Settings implements SettingsInterface {
 				\add_settings_field(
 					$field['id'],
 					$field['title'],
-					array( $this, 'getFieldType'), //array( $this, $field['callback'] ),
+					[$this, 'renderField'], //array( $this, $field['callback'] ),
 					$this->plugin['options_group'], //$field['page'],
 					empty( $field['section'] ) ? $key : $field['section'],
 					$field['args']
@@ -184,14 +160,14 @@ class Settings implements SettingsInterface {
 			}
 		}
 
-		$this->registerSetting();
+		$this->register();
 	}
 
 	/**
 	 * Register settings.
 	 * This allow you to override this method.
 	 */
-	private function registerSetting() {
+	private function register() {
 
 		\register_setting(
 			$this->plugin['options_group'],
@@ -209,9 +185,7 @@ class Settings implements SettingsInterface {
 	 * @param  array $args The arguments for section CB.
 	 */
 	public function renderSectionCb( array $args ) {
-		echo isset( $args['callback'][0]->settings[ $args['id'] ]['desc'] )
-			? $args['callback'][0]->settings[ $args['id'] ]['desc']
-			: ''; // XSS ok.
+		echo $args['callback'][0]->settings[ $args['id'] ]['desc'] ?? ''; // XSS ok.
 	}
 
 	/**
@@ -219,13 +193,8 @@ class Settings implements SettingsInterface {
 	 *
 	 * @param array $args Array with arguments.
 	 */
-	public function getFieldType( array $args ) {
-
-		/**
-		 * Set field id and name
-		 */
+	public function renderField( array $args ) {
 		$args['_id'] = $args['_name'] = $this->plugin['options_name'] . '[' . $args['id'] . ']';
-
 		echo $this->fields_type->render( $args, $this->options ); // XSS ok.
 	}
 
@@ -256,7 +225,7 @@ class Settings implements SettingsInterface {
 		$default_settings = array();
 
 		foreach ( (array) $this->fields as $key => $setting ) {
-			$default_settings[ $key ] = isset( $setting['default'] ) ? $setting['default'] : '';
+			$default_settings[ $key ] = $setting['value'] ?? '';
 		}
 
 		return $default_settings;
@@ -265,7 +234,7 @@ class Settings implements SettingsInterface {
 	/**
 	 * Add option
 	 */
-	private function addOption() {
+	private function preloadOption() {
 
 		if ( false === \get_option( $this->plugin['options_name'] ) ) {
 			$default = $this->getPluginSettingsArrayDefault();

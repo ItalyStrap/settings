@@ -18,13 +18,12 @@ $key = \strtolower( \str_replace( ' ', '_', $plugin_name ) );
 
 return [
 
-	'basename'				=> ITALYSTRAP_BASENAME,
-
-	'admin_view_path'		=> ITALYSTRAP_PLUGIN_PATH . 'admin/view/',
+//	'basename'				=> ITALYSTRAP_BASENAME,
+//
 	'capability'			=> 'manage_options',
-
-	'plugin_name'			=> $plugin_name,
-	'page_slug'				=> $page_slug,
+//
+//	'plugin_name'			=> $plugin_name,
+//	'page_slug'				=> $page_slug,
 
 	// italystrap_options
 	'options_name'			=> $page_slug,

@@ -17,4 +17,11 @@ return [
 		'desc'				=> __( 'General setting for ItalyStrap', 'italystrap' ),
 		'settings_fields'	=> require 'fields.php',
 	],
+//	'advanced'	=> [
+//		'tab_title'			=> __( 'Advanced', 'italystrap' ),
+//		'id'				=> 'advanced',
+//		'title'				=> __( 'Advanced options page', 'italystrap' ),
+//		'desc'				=> __( 'Advanced setting for ItalyStrap', 'italystrap' ),
+//		'settings_fields'	=> require 'fields.php',
+//	],
 ];
