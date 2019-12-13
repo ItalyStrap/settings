@@ -57,8 +57,8 @@ add_action( 'italystrap_after_settings_form', [ $pages, 'getAside' ] );
 /**
  * Load script for ItalyStrap\Admin
  */
-//$asset = new \ItalyStrap\Settings\Asset( \ItalyStrap\Config\ConfigFactory::make( $plugin ) );
-//add_action( 'admin_enqueue_scripts', [ $asset, 'enqueue'] );
+$asset = new \ItalyStrap\Settings\Asset();
+add_action( 'admin_enqueue_scripts', [ $asset, 'enqueue'] );
 
 /**
  * Add link in plugin activation panel
