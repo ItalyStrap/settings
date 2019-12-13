@@ -95,8 +95,7 @@ $settings_obj = new \ItalyStrap\Settings\Settings(
 	$settings,
 	$plugin,
 	(array) \get_theme_mods(),
-	new \ItalyStrap\Fields\Fields(),
-	new \ItalyStrap\View\View( new \ItalyStrap\View\ViewFinder() )
+	new \ItalyStrap\Fields\Fields()
 );
 
 add_action( 'admin_init', array( $settings_obj, 'load') );
