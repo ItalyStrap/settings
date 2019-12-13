@@ -93,7 +93,7 @@ class DataParser {
 	 * @param array $fields
 	 * @return DataParser
 	 */
-	public function setFields( array $fields ): DataParser {
+	public function withFields( array $fields ): DataParser {
 		$this->fields = $fields;
 		return $this;
 	}

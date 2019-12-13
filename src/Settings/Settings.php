@@ -1,8 +1,5 @@
 <?php
 /**
- * Class for admin panel
- *
- * This class add some functions for use in admin panel
  *
  * @link http://codex.wordpress.org/Adding_Administration_Menus
  * @link http://code.tutsplus.com/tutorials/the-complete-guide-to-the-wordpress-settings-api-part-4-on-theme-options--wp-24902
@@ -17,11 +14,7 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
-use ItalyStrap\I18N\Translator;
 use ItalyStrap\Fields\FieldsInterface;
-use ItalyStrap\Cleaner\Validation;
-use ItalyStrap\Cleaner\Sanitization;
-use ItalyStrap\View\ViewInterface;
 
 /**
  * Class for admin area
@@ -162,7 +155,7 @@ class Settings implements SettingsInterface {
 			$this->options_name,
 			[
 				'sanitize_callback'	=>
-					[ ( new DataParser() )->setFields( $this->settingsFields ), 'parse' ]
+					[ ( new DataParser() )->withFields( $this->settingsFields ), 'parse' ]
 			]
 		);
 	}
@@ -266,7 +259,7 @@ class Settings implements SettingsInterface {
 	 */
 	private function removeThemeMods( array $value = array() ) {
 
-		foreach ((array) $this->settingsFields as $key => $field ) {
+		foreach ( (array) $this->settingsFields as $key => $field ) {
 			if ( isset( $field['option_type'] ) && 'theme_mod' === $field['option_type'] ) {
 				\remove_theme_mod( $key );
 			}
