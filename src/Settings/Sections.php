@@ -9,7 +9,7 @@ use ItalyStrap\Fields\FieldsInterface;
  * Class Sectons
  * @package ItalyStrap\Settings
  */
-class Sectons
+class Sections
 {
 	const TAB_TITLE = 'tab_title';
 	const ID = 'id';
@@ -64,9 +64,9 @@ class Sectons
 	 * @param string $options_group
 	 */
 	public function __construct(
+		FieldsInterface $fields_type,
 		array $options,
 		array $sections,
-		FieldsInterface $fields_type,
 		string $options_name,
 		string $options_group
 	) {
@@ -77,11 +77,20 @@ class Sectons
 
 		$this->fields = $fields_type;
 
-		$this->settingsFields = $this->getSectionsFields();
+//		$this->settingsFields = $this->getSectionsFields();
 
 		$this->options_name = $options_name;
 		$this->options_group = $options_group;
 	}
+
+	/**
+	 * Init settings for admin area
+	 */
+	public function load() {
+		$this->add();
+		$this->register();
+	}
+
 	/**
 	 *
 	 */
@@ -131,8 +140,8 @@ class Sectons
 			$this->options_group,
 			$this->options_name,
 			[
-				'sanitize_callback'	=>
-					[ ( new DataParser() )->withFields( $this->settingsFields ), 'parse' ]
+//				'sanitize_callback'	=>
+//					[ ( new DataParser() )->withFields( $this->settingsFields ), 'parse' ]
 			]
 		);
 	}

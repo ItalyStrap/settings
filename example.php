@@ -32,8 +32,17 @@ $plugin = require __DIR__ . '/tests/_data/fixtures/config/plugin.php';
 $sections = require __DIR__ . '/tests/_data/fixtures/config/sections.php';
 $pages = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
 
+$sections_obj = new \ItalyStrap\Settings\Sections(
+	new \ItalyStrap\Fields\Fields(),
+	(array) \get_option( $plugin['options_name'] ),
+	$sections,
+	$plugin['options_name'],
+	$plugin['options_group']
+);
+
 $settings_obj = new \ItalyStrap\Settings\Settings(
 	new \ItalyStrap\Fields\Fields(),
+	$sections_obj,
 	(array) \get_option( $plugin['options_name'] ),
 	$sections,
 	$plugin['options_name'],

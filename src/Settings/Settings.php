@@ -68,17 +68,23 @@ class Settings implements SettingsInterface {
 	private $options_name;
 
 	/**
+	 * @var Sections
+	 */
+	private $sections_obj;
+
+	/**
 	 * Initialize Class
 	 *
 	 * @param array $options Get the plugin options.
 	 * @param array $sections The configuration array plugin fields.
-	 * @param FieldsInterface $fields_type The Fields object.
+	 * @param FieldsInterface $fields The Fields object.
 	 * @param string $options_name
 	 * @param string $options_group
 	 * @param string $capability
 	 */
 	public function __construct(
-		FieldsInterface $fields_type,
+		FieldsInterface $fields,
+		Sections $sections_obj,
 		array $options,
 		array $sections,
 		string $options_name,
@@ -86,11 +92,12 @@ class Settings implements SettingsInterface {
 		string $capability
 	) {
 
+		$this->sections_obj = $sections_obj;
 		$this->sections = $sections;
 
 		$this->options = $options;
 
-		$this->fields = $fields_type;
+		$this->fields = $fields;
 
 		$this->settingsFields = $this->getSectionsFields();
 
@@ -106,10 +113,11 @@ class Settings implements SettingsInterface {
 
 		// If the theme options doesn't exist, create them.
 		$this->preloadOption();
+		$this->sections_obj->load();
 
-		$this->addSections();
-
-		$this->registerSections();
+//
+//		$this->addSections();
+//		$this->registerSections();
 	}
 
 	/**
