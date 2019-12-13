@@ -78,9 +78,9 @@ class Settings implements SettingsInterface {
 	 * @param string $capability
 	 */
 	public function __construct(
+		FieldsInterface $fields_type,
 		array $options,
 		array $sections,
-		FieldsInterface $fields_type,
 		string $options_name,
 		string $options_group,
 		string $capability
@@ -92,7 +92,7 @@ class Settings implements SettingsInterface {
 
 		$this->fields = $fields_type;
 
-		$this->settingsFields = $this->getSettingsFields();
+		$this->settingsFields = $this->getSectionsFields();
 
 		$this->options_name = $options_name;
 		$this->options_group = $options_group;
@@ -116,7 +116,7 @@ class Settings implements SettingsInterface {
 	 *
 	 */
 	private function addSections(): void {
-		foreach ($this->sections as $setting ) {
+		foreach ( $this->sections as $setting ) {
 			if ( isset( $setting[ 'show_on' ] ) && false === $setting[ 'show_on' ] ) {
 				continue;
 			}
@@ -189,11 +189,11 @@ class Settings implements SettingsInterface {
 	 *
 	 * @return array The plugin fields
 	 */
-	public function getSettingsFields() {
+	public function getSectionsFields() {
 
 		$fields = [];
-		foreach ((array) $this->sections as $settings_value ) {
-			foreach ( $settings_value['fields'] as $fields_key => $fields_value ) {
+		foreach ( (array) $this->sections as $section ) {
+			foreach ( $section['fields'] as $fields_value ) {
 				$fields[ $fields_value['id'] ] = $fields_value['args'];
 			}
 		}
