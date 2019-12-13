@@ -3,9 +3,8 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
-use ItalyStrap\Config\ConfigInterface;
-use ItalyStrap\View\View;
-use ItalyStrap\View\ViewInterface;
+use ItalyStrap\Config\ConfigInterface as Config;
+use ItalyStrap\View\ViewInterface as View;
 
 class Pages {
 
@@ -21,7 +20,7 @@ class Pages {
 	const POSITION = 'position';
 
 	/**
-	 * @var ConfigInterface
+	 * @var Config
 	 */
 	private $config;
 	private $capability;
@@ -29,7 +28,7 @@ class Pages {
 	private $sections;
 
 	/**
-	 * @var ViewInterface
+	 * @var View
 	 */
 	private $view;
 
@@ -40,12 +39,12 @@ class Pages {
 
 	/**
 	 * Pages constructor.
-	 * @param ConfigInterface $config
-	 * @param ViewInterface $view
-	 * @param $sections
-	 * @param $options_group
+	 * @param Config $config
+	 * @param View $view
+	 * @param array $sections
+	 * @param string $options_group
 	 */
-	public function __construct( ConfigInterface $config, ViewInterface $view, $sections, $options_group ) {
+	public function __construct( Config $config, View $view, array $sections, string $options_group ) {
 
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
 			$this->pagenow = \stripslashes( $_GET['page'] ); // Input var okay.
@@ -62,11 +61,7 @@ class Pages {
 	 */
 	public function load() {
 
-		if ( ! $this->config['page'] ) {
-			return;
-		}
-
-		$this->capability = $this->config['page']['capability'];
+		$this->capability = $this->config->get( 'page.capability', 'manage_options' );
 
 		\add_menu_page(
 			$this->config['page']['page_title'],
@@ -84,9 +79,9 @@ class Pages {
 	/**
 	 * Add sub menù pages for plugin's admin page
 	 * @param array $submenu_pages
-	 * @param $parent_slug
+	 * @param string $parent_slug
 	 */
-	private function addSubMenuPage( array $submenu_pages, $parent_slug ) {
+	private function addSubMenuPage( array $submenu_pages, string $parent_slug ) {
 
 		foreach ( $submenu_pages as $submenu ) {
 			if ( isset( $submenu['show_on'] ) && ! $this->showOn( $submenu[ 'show_on' ] ) ) {

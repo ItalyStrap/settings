@@ -79,9 +79,10 @@ class Settings implements SettingsInterface {
 	 *
 	 * @param array $options Get the plugin options.
 	 * @param array $sections The configuration array plugin fields.
-	 * @param array $plugin The configuration array for plugin.
-	 * @param array $theme_mods The theme options.
 	 * @param FieldsInterface $fields_type The Fields object.
+	 * @param string $options_name
+	 * @param string $options_group
+	 * @param string $capability
 	 */
 	public function __construct(
 		array $options,
