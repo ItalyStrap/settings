@@ -34,6 +34,7 @@ $pages = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
 
 $sections_obj = new \ItalyStrap\Settings\Sections(
 	new \ItalyStrap\Fields\Fields(),
+	new \ItalyStrap\Settings\DataParser(),
 	(array) \get_option( $plugin['options_name'] ),
 	$sections,
 	$plugin['options_name'],

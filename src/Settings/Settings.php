@@ -99,7 +99,7 @@ class Settings implements SettingsInterface {
 
 		$this->fields = $fields;
 
-		$this->settingsFields = $this->getSectionsFields();
+//		$this->settingsFields = $this->getSectionsFields();
 
 		$this->options_name = $options_name;
 		$this->options_group = $options_group;
@@ -114,82 +114,6 @@ class Settings implements SettingsInterface {
 		// If the theme options doesn't exist, create them.
 		$this->preloadOption();
 		$this->sections_obj->load();
-
-//
-//		$this->addSections();
-//		$this->registerSections();
-	}
-
-	/**
-	 *
-	 */
-	private function addSections(): void {
-		foreach ( $this->sections as $setting ) {
-			if ( isset( $setting[ 'show_on' ] ) && false === $setting[ 'show_on' ] ) {
-				continue;
-			}
-
-			\add_settings_section(
-				$setting[ self::ID ],
-				$setting[ self::TITLE ],
-				[$this, 'renderSectionCallback'], //array( $this, $field['callback'] ),
-				$this->options_group //$setting['page']
-			);
-
-			foreach ( $setting[ 'fields' ] as $field ) {
-				if ( isset( $field[ 'show_on' ] ) && false === $field[ 'show_on' ] ) {
-					continue;
-				}
-
-				\add_settings_field(
-					$field[ self::ID ],
-					$field[ self::TITLE ],
-					[ $this, 'renderField' ], //array( $this, $field['callback'] ),
-					$this->options_group, //$field['page'],
-					$setting[ self::ID ],
-					$field[ 'args' ]
-				);
-			}
-		}
-	}
-
-	/**
-	 * Register settings.
-	 * This allow you to override this method.
-	 */
-	private function registerSections(): void {
-		\register_setting(
-			$this->options_group,
-			$this->options_name,
-			[
-				'sanitize_callback'	=>
-					[ ( new DataParser() )->withFields( $this->settingsFields ), 'parse' ]
-			]
-		);
-	}
-
-	/**
-	 * Render section CB
-	 *
-	 * @param  array $args The arguments for section CB.
-	 */
-	public function renderSectionCallback( array $args ) {
-
-//		if ( \is_callable( $this->settings[ $args['id'] ]['desc'] ) ) {
-//			\call_user_func( $this->settings[ $args['id'] ]['desc'], $args );
-//		}
-
-		echo $this->sections[ $args['id'] ]['desc'] ?? ''; // XSS ok.
-	}
-
-	/**
-	 * Get the field type
-	 *
-	 * @param array $args Array with arguments.
-	 */
-	public function renderField( array $args ) {
-		$args['_id'] = $args['_name'] = $this->options_name . '[' . $args['id'] . ']';
-		echo $this->fields->render( $args, $this->options ); // XSS ok.
 	}
 
 	/**
@@ -197,17 +121,17 @@ class Settings implements SettingsInterface {
 	 *
 	 * @return array The plugin fields
 	 */
-	public function getSectionsFields() {
-
-		$fields = [];
-		foreach ( (array) $this->sections as $section ) {
-			foreach ( $section['fields'] as $fields_value ) {
-				$fields[ $fields_value['id'] ] = $fields_value['args'];
-			}
-		}
-
-		return $fields;
-	}
+//	public function getSectionsFields() {
+//
+//		$fields = [];
+//		foreach ( (array) $this->sections as $section ) {
+//			foreach ( $section['fields'] as $fields_value ) {
+//				$fields[ $fields_value['id'] ] = $fields_value['args'];
+//			}
+//		}
+//
+//		return $fields;
+//	}
 
 	/**
 	 * Get admin settings default value in an array
@@ -218,7 +142,7 @@ class Settings implements SettingsInterface {
 
 		$default_settings = array();
 
-		foreach ((array) $this->settingsFields as $key => $setting ) {
+		foreach ( (array) $this->settingsFields as $key => $setting ) {
 			$default_settings[ $key ] = $setting['value'] ?? '';
 		}
 

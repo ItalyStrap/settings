@@ -38,13 +38,6 @@ class Sections
 	protected $fields;
 
 	/**
-	 * The fields preregistered in the config file.
-	 *
-	 * @var array
-	 */
-	protected $settingsFields = [];
-
-	/**
 	 * @var string
 	 */
 	private $options_group;
@@ -53,6 +46,11 @@ class Sections
 	 * @var string
 	 */
 	private $options_name;
+
+	/**
+	 * @var DataParser
+	 */
+	private $parser;
 
 	/**
 	 * Initialize Class
@@ -65,19 +63,19 @@ class Sections
 	 */
 	public function __construct(
 		FieldsInterface $fields_type,
+		DataParser $parser,
 		array $options,
 		array $sections,
 		string $options_name,
 		string $options_group
 	) {
 
+		$this->fields = $fields_type;
+		$this->parser = $parser;
+
 		$this->sections = $sections;
 
 		$this->options = $options;
-
-		$this->fields = $fields_type;
-
-//		$this->settingsFields = $this->getSectionsFields();
 
 		$this->options_name = $options_name;
 		$this->options_group = $options_group;
@@ -115,7 +113,7 @@ class Sections
 	 * @param $setting
 	 */
 	private function addFields( $setting ): void {
-		foreach ($setting[ 'fields' ] as $field) {
+		foreach ( $setting[ 'fields' ] as $field ) {
 			if ( isset( $field[ 'show_on' ] ) && false === $field[ 'show_on' ] ) {
 				continue;
 			}
@@ -140,8 +138,10 @@ class Sections
 			$this->options_group,
 			$this->options_name,
 			[
-//				'sanitize_callback'	=>
-//					[ ( new DataParser() )->withFields( $this->settingsFields ), 'parse' ]
+				'sanitize_callback'	=>
+					[ $this->parser->withFields( $this->fieldsToArray() ), 'parse' ],
+				'show_in_rest'      => false,
+				'description'       => '',
 			]
 		);
 	}
@@ -168,5 +168,22 @@ class Sections
 	public function renderField( array $args ) {
 		$args['_id'] = $args['_name'] = $this->options_name . '[' . $args['id'] . ']';
 		echo $this->fields->render( $args, $this->options ); // XSS ok.
+	}
+
+	/**
+	 * Get the plugin fields
+	 *
+	 * @return array The plugin fields
+	 */
+	public function fieldsToArray() {
+
+		$fields = [];
+		foreach ( (array) $this->sections as $section ) {
+			foreach ( $section['fields'] as $fields_value ) {
+				$fields[ $fields_value['id'] ] = $fields_value['args'];
+			}
+		}
+
+		return $fields;
 	}
 }
