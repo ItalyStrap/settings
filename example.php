@@ -55,15 +55,18 @@ add_action( 'update_option', [ $settings_obj, 'save' ], 10, 3 );
  *
  * ===================================
  */
-$config_pages = \ItalyStrap\Config\ConfigFactory::make( $pages );
-
 $finder = new \ItalyStrap\View\ViewFinder();
 $finder->in( ITALYSTRAP_PLUGIN_PATH . 'src/Settings/view/' );
 $view = new \ItalyStrap\View\View( $finder );
 
-$pages = new \ItalyStrap\Settings\Pages( $config_pages, $view, $sections, $plugin['options_group'] );
-add_action( 'admin_menu', [ $pages, 'load'] );
-add_action( 'italystrap_after_settings_form', [ $pages, 'getAside' ] );
+$pages_obj = new \ItalyStrap\Settings\Pages(
+	\ItalyStrap\Config\ConfigFactory::make( $pages ),
+	$view,
+	$sections,
+	$plugin['options_group']
+);
+add_action( 'admin_menu', [ $pages_obj, 'load'] );
+add_action( 'italystrap_after_settings_form', [ $pages_obj, 'getAside' ] );
 
 /**
  * Load script for ItalyStrap\Admin
