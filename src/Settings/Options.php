@@ -54,8 +54,8 @@ class Options
 	 * @param array $value
 	 * @return bool
 	 */
-	public function add( array $value = [] ) {
-		return 	\add_option( $this->name, $value );
+	public function add( array $values = [] ) {
+		return 	\add_option( $this->name, $values );
 	}
 
 	/**
