@@ -47,7 +47,18 @@ class AdminPageCest
 		$page = $this->pages['page'][ P::SLUG ];
 		$I->amOnAdminPage( 'admin.php?page=' . $page );
 
-		$I->seeElement( 'input', [ 'name' => 'italystrap[test_mode]' ] );
+		$types = \ItalyStrap\Fields\ViewFactory::getTypes();
+
+//		foreach ( $this->options_from_fields as $field ) {
+//
+//			$I->seeElement( ['id' => 'italystrap[' . $field['args']['id'] . ']' ]
+////				, [ 'type' => $field['args']['type'] ]
+//			);
+//		}
+
+//					$I->seeElement( '#italystrap');
+
+		$I->seeElement( 'input', [ 'type' => 'checkbox' ] );
 
 		$I->checkOption([ 'name' => 'italystrap[test_mode]' ] );
 
