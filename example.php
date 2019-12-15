@@ -32,27 +32,29 @@ $plugin = require __DIR__ . '/tests/_data/fixtures/config/plugin.php';
 $sections = require __DIR__ . '/tests/_data/fixtures/config/sections.php';
 $pages = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
 
+$options_obj = new \ItalyStrap\Settings\Options( $plugin['options_name'], $plugin['options_group'] );
+
 $sections_obj = new \ItalyStrap\Settings\Sections(
 	new \ItalyStrap\Fields\Fields(),
 	new \ItalyStrap\Settings\DataParser(),
-	(array) \get_option( $plugin['options_name'] ),
-	$sections,
-	$plugin['options_name'],
-	$plugin['options_group']
+	$options_obj,
+	$sections
 );
 
 $settings_obj = new \ItalyStrap\Settings\Settings(
 	$sections_obj,
-	(array) \get_option( $plugin['options_name'] ),
+	$options_obj,
 	$sections,
-	$plugin['options_name'],
-	$plugin['options_group'],
 	$plugin['capability']
 );
 add_action( 'admin_init', [ $settings_obj, 'load' ] );
 add_action( 'update_option', [ $settings_obj, 'save' ], 10, 3 );
 
-
+/**
+ * ===================================
+ *
+ * ===================================
+ */
 $config_pages = \ItalyStrap\Config\ConfigFactory::make( $pages );
 
 $finder = new \ItalyStrap\View\ViewFinder();

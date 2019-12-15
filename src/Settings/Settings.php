@@ -68,19 +68,17 @@ class Settings implements SettingsInterface {
 	/**
 	 * Initialize Class
 	 *
-	 * @param array $options Get the plugin options.
+	 * @param Sections $sections_obj
+	 * @param Options $options Get the plugin options.
 	 * @param array $sections The configuration array plugin fields.
-	 * @param FieldsInterface $fields The Fields object.
 	 * @param string $options_name
 	 * @param string $options_group
 	 * @param string $capability
 	 */
 	public function __construct(
 		Sections $sections_obj,
-		array $options,
+		Options $options,
 		array $sections,
-		string $options_name,
-		string $options_group,
 		string $capability
 	) {
 
@@ -91,8 +89,6 @@ class Settings implements SettingsInterface {
 
 //		$this->settingsFields = $this->getSectionsFields();
 
-		$this->options_name = $options_name;
-		$this->options_group = $options_group;
 		$this->capability = $capability;
 	}
 
@@ -102,7 +98,7 @@ class Settings implements SettingsInterface {
 	public function load() {
 
 		// If the theme options doesn't exist, create them.
-		$this->preloadOption();
+//		$this->preloadOption();
 		$this->sections_obj->load();
 	}
 
@@ -144,9 +140,9 @@ class Settings implements SettingsInterface {
 	 */
 	private function preloadOption() {
 
-		if ( false === \get_option( $this->options_name ) ) {
+		if ( false === \get_option( $this->options->getName() ) ) {
 			$default = $this->getPluginSettingsArrayDefault();
-			\add_option( $this->options_name, $default );
+			\add_option( $this->options->getName(), $default );
 			$this->setThemeMods( (array) $default );
 		}
 	}
@@ -156,7 +152,7 @@ class Settings implements SettingsInterface {
 	 */
 	private function deleteOption() {
 
-		\delete_option( $this->options_name );
+		\delete_option( $this->options->getName() );
 		$this->removeThemeMods( $this->getPluginSettingsArrayDefault() );
 	}
 
@@ -199,11 +195,7 @@ class Settings implements SettingsInterface {
 	 */
 	public function save( $option, $old_value, $value ) {
 
-		if ( ! isset( $this->options_name ) ) {
-			return $option;
-		}
-
-		if ( $option !== $this->options_name ) {
+		if ( $option !== $this->options->getName() ) {
 			return $option;
 		}
 

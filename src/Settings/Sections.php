@@ -28,7 +28,7 @@ class Sections
 	 *
 	 * @var array
 	 */
-	protected $options = [];
+	protected $options_values = [];
 
 	/**
 	 * The type of fields to create
@@ -55,19 +55,16 @@ class Sections
 	/**
 	 * Initialize Class
 	 *
-	 * @param array $options Get the plugin options.
-	 * @param array $sections The configuration array plugin fields.
 	 * @param FieldsInterface $fields_type The Fields object.
-	 * @param string $options_name
-	 * @param string $options_group
+	 * @param DataParser $parser
+	 * @param Options $options Get the plugin options.
+	 * @param array $sections The configuration array plugin fields.
 	 */
 	public function __construct(
 		FieldsInterface $fields_type,
 		DataParser $parser,
-		array $options,
-		array $sections,
-		string $options_name,
-		string $options_group
+		Options $options,
+		array $sections
 	) {
 
 		$this->fields = $fields_type;
@@ -77,22 +74,21 @@ class Sections
 
 		$this->options = $options;
 
-		$this->options_name = $options_name;
-		$this->options_group = $options_group;
+		$this->options_values = (array) $options->get();
 	}
 
 	/**
 	 * Init settings for admin area
 	 */
 	public function load() {
-		$this->add();
+		$this->loadSection();
 		$this->register();
 	}
 
 	/**
 	 *
 	 */
-	private function add(): void {
+	private function loadSection(): void {
 		foreach ( $this->sections as $setting ) {
 			if ( isset( $setting[ 'show_on' ] ) && false === $setting[ 'show_on' ] ) {
 				continue;
@@ -102,17 +98,17 @@ class Sections
 				$setting[ self::ID ],
 				$setting[ self::TITLE ],
 				[$this, 'renderSectionCallback'], //array( $this, $field['callback'] ),
-				$this->options_group //$setting['page']
+				$this->options->getGroup() //$setting['page']
 			);
 
-			$this->addFields( $setting );
+			$this->loadFields( $setting );
 		}
 	}
 
 	/**
 	 * @param $setting
 	 */
-	private function addFields( $setting ): void {
+	private function loadFields( $setting ): void {
 		foreach ( $setting[ 'fields' ] as $field ) {
 			if ( isset( $field[ 'show_on' ] ) && false === $field[ 'show_on' ] ) {
 				continue;
@@ -122,7 +118,7 @@ class Sections
 				$field[ self::ID ],
 				$field[ self::TITLE ],
 				[$this, 'renderField'], //array( $this, $field['callback'] ),
-				$this->options_group, //$field['page'],
+				$this->options->getGroup(), //$field['page'],
 				$setting[ self::ID ],
 				$field[ 'args' ]
 			);
@@ -135,8 +131,8 @@ class Sections
 	 */
 	private function register(): void {
 		\register_setting(
-			$this->options_group,
-			$this->options_name,
+			$this->options->getGroup(),
+			$this->options->getName(),
 			[
 				'sanitize_callback'	=>
 					[ $this->parser->withFields( $this->fieldsToArray() ), 'parse' ],
@@ -166,8 +162,8 @@ class Sections
 	 * @param array $args Array with arguments.
 	 */
 	public function renderField( array $args ) {
-		$args['_id'] = $args['_name'] = $this->options_name . '[' . $args['id'] . ']';
-		echo $this->fields->render( $args, $this->options ); // XSS ok.
+		$args['_id'] = $args['_name'] = $this->options->getName() . '[' . $args['id'] . ']';
+		echo $this->fields->render( $args, $this->options_values ); // XSS ok.
 	}
 
 	/**
