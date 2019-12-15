@@ -42,7 +42,6 @@ $sections_obj = new \ItalyStrap\Settings\Sections(
 );
 
 $settings_obj = new \ItalyStrap\Settings\Settings(
-	new \ItalyStrap\Fields\Fields(),
 	$sections_obj,
 	(array) \get_option( $plugin['options_name'] ),
 	$sections,

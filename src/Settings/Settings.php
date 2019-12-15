@@ -44,13 +44,6 @@ class Settings implements SettingsInterface {
 	protected $options = [];
 
 	/**
-	 * The type of fields to create
-	 *
-	 * @var FieldsInterface
-	 */
-	protected $fields;
-
-	/**
 	 * The fields preregistered in the config file.
 	 *
 	 * @var array
@@ -83,7 +76,6 @@ class Settings implements SettingsInterface {
 	 * @param string $capability
 	 */
 	public function __construct(
-		FieldsInterface $fields,
 		Sections $sections_obj,
 		array $options,
 		array $sections,
@@ -96,8 +88,6 @@ class Settings implements SettingsInterface {
 		$this->sections = $sections;
 
 		$this->options = $options;
-
-		$this->fields = $fields;
 
 //		$this->settingsFields = $this->getSectionsFields();
 

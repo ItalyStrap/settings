@@ -45,7 +45,7 @@ class AdminPageCest
 		codecept_debug( $option );
 
 		$page = $this->pages['page'][ P::SLUG ];
-		$I->amOnAdminPage( 'admin.php??page=' . $page );
+		$I->amOnAdminPage( 'admin.php?page=' . $page );
 
 		$I->seeElement( 'input', [ 'name' => 'italystrap[test_mode]' ] );
 
