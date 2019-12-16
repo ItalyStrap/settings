@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
+use ItalyStrap\Config\Config;
 use ItalyStrap\Fields\FieldsInterface;
 
 /**
@@ -48,13 +49,13 @@ class Sections
 	 * @param FieldsInterface $fields_type The Fields object.
 	 * @param DataParser $parser
 	 * @param Options $options Get the plugin options.
-	 * @param array $sections The configuration array plugin fields.
+	 * @param Config $sections The configuration array plugin fields.
 	 */
 	public function __construct(
 		FieldsInterface $fields_type,
 		DataParser $parser,
 		Options $options,
-		array $sections
+		Config $sections
 	) {
 
 		$this->fields = $fields_type;

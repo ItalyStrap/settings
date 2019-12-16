@@ -38,7 +38,7 @@ $sections_obj = new \ItalyStrap\Settings\Sections(
 	new \ItalyStrap\Fields\Fields(),
 	new \ItalyStrap\Settings\DataParser(),
 	$options_obj,
-	$sections
+	\ItalyStrap\Config\ConfigFactory::make( $sections )
 );
 
 $settings_obj = new \ItalyStrap\Settings\Settings(
