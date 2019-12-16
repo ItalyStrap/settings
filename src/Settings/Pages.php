@@ -88,7 +88,7 @@ class Pages {
 				continue;
 			}
 
-			$callable = $submenu[ self::VIEW_CALLBACK ];
+			$callable = $submenu[ self::VIEW_CALLBACK ] ?? false;
 
 			\add_submenu_page(
 				$parent_slug,
