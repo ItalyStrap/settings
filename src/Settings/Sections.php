@@ -22,7 +22,7 @@ class Sections
 	 *
 	 * @var array
 	 */
-	protected $sections = [];
+	protected $config = [];
 
 	/**
 	 * The plugin options
@@ -49,19 +49,19 @@ class Sections
 	 * @param FieldsInterface $fields_type The Fields object.
 	 * @param DataParser $parser
 	 * @param Options $options Get the plugin options.
-	 * @param Config $sections The configuration array plugin fields.
+	 * @param Config $config The configuration array plugin fields.
 	 */
 	public function __construct(
 		FieldsInterface $fields_type,
 		DataParser $parser,
 		Options $options,
-		Config $sections
+		Config $config
 	) {
 
 		$this->fields = $fields_type;
 		$this->parser = $parser;
 
-		$this->sections = $sections;
+		$this->config = $config;
 
 		$this->options = $options;
 
@@ -72,7 +72,7 @@ class Sections
 	 * @return array
 	 */
 	public function getSections(): array {
-		return $this->sections;
+		return $this->config->toArray();
 	}
 
 	/**
@@ -87,7 +87,7 @@ class Sections
 	 *
 	 */
 	private function loadSection(): void {
-		foreach ( $this->sections as $setting ) {
+		foreach ($this->config as $setting ) {
 			if ( isset( $setting[ 'show_on' ] ) && false === $setting[ 'show_on' ] ) {
 				continue;
 			}
@@ -151,7 +151,7 @@ class Sections
 //			\call_user_func( $this->settings[ $args['id'] ]['desc'], $args );
 //		}
 
-		echo $this->sections[ $args['id'] ]['desc'] ?? ''; // XSS ok.
+		echo $this->config[ $args['id'] ]['desc'] ?? ''; // XSS ok.
 	}
 
 	/**
@@ -172,7 +172,7 @@ class Sections
 	public function fieldsToArray() {
 
 		$fields = [];
-		foreach ( (array) $this->sections as $section ) {
+		foreach ((array) $this->config as $section ) {
 			foreach ( $section['fields'] as $fields_value ) {
 				$fields[ $fields_value['id'] ] = $fields_value['args'];
 			}
