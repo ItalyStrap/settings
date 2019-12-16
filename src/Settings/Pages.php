@@ -11,13 +11,14 @@ class Pages {
 	use ShowableTrait;
 
 	const DS = DIRECTORY_SEPARATOR;
-	const PAGE_TITLE = 'page_title';
-	const MENU_TITLE = 'menu_title';
-	const CAPABILITY = 'capability';
-	const SLUG = 'menu_slug';
-	const CALLBACK = 'callback';
-	const ICON = 'icon_url';
-	const POSITION = 'position';
+	const PAGE_TITLE	= 'page_title';
+	const MENU_TITLE	= 'menu_title';
+	const CAPABILITY	= 'capability';
+	const SLUG			= 'menu_slug';
+	const CALLBACK		= 'callback';
+	const ICON			= 'icon_url';
+	const POSITION		= 'position';
+	const VIEW			= 'view';
 
 	/**
 	 * @var Config
@@ -42,7 +43,6 @@ class Pages {
 	 * @param Config $config
 	 * @param View $view
 	 * @param Sections $sections
-	 * @param string $options_group
 	 */
 	public function __construct( Config $config, View $view, Sections $sections ) {
 
@@ -105,22 +105,12 @@ class Pages {
 	public function getView() {
 
 		if ( ! \current_user_can( $this->capability ) ) {
-			\wp_die( \esc_attr__( 'You do not have sufficient permissions to access this page.' ) );
+			\wp_die( \esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
 		$file_path = \file_exists( $this->config['admin_view_path'] . $this->pagenow . '.php' )
 			? $this->config['admin_view_path'] . $this->pagenow . '.php'
 			: __DIR__ . self::DS . 'view' . self::DS . 'form.php';
-
-//		try {
-//			echo $this->view->render( $this->pagenow );
-//			echo $this->view->render('form', [
-//				'createNavTab' 			=> [ $this, 'createNavTab' ],
-//				'doSettingsSections'	=> [ $this, 'doSettingsSections' ]
-//			] );
-//		} catch (\Exception $e) {
-//			require( $file_path );
-//		}
 
 		require $file_path;
 	}
@@ -144,8 +134,8 @@ class Pages {
 	 * to output all the sections and fields that were added to that $page with
 	 * add_settings_section() and add_settings_field()
 	 *
-	 * @global $wp_settings_sections Storage array of all settings sections added to admin pages
-	 * @global $wp_settings_fields Storage array of settings fields and info about their pages/sections
+	 * @global array $wp_settings_sections Storage array of all settings sections added to admin pages
+	 * @global array $wp_settings_fields Storage array of settings fields and info about their pages/sections
 	 * @since 2.7.0
 	 *
 	 * @param string $page The slug name of the page whose settings sections you want to output.
