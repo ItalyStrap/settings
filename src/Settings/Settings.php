@@ -34,7 +34,7 @@ class Settings implements SettingsInterface {
 	 *
 	 * @var array
 	 */
-	protected $sections = [];
+	protected $sections_array = [];
 
 	/**
 	 * The plugin options
@@ -49,16 +49,6 @@ class Settings implements SettingsInterface {
 	 * @var array
 	 */
 	protected $settingsFields = [];
-
-	/**
-	 * @var string
-	 */
-	private $options_group;
-
-	/**
-	 * @var string
-	 */
-	private $options_name;
 
 	/**
 	 * @var Sections
@@ -78,12 +68,10 @@ class Settings implements SettingsInterface {
 	public function __construct(
 		Sections $sections_obj,
 		Options $options,
-		array $sections,
 		string $capability
 	) {
 
 		$this->sections_obj = $sections_obj;
-		$this->sections = $sections;
 
 		$this->options = $options;
 
@@ -110,7 +98,7 @@ class Settings implements SettingsInterface {
 //	public function getSectionsFields() {
 //
 //		$fields = [];
-//		foreach ( (array) $this->sections as $section ) {
+//		foreach ( (array) $this->sections->getSections() as $section ) {
 //			foreach ( $section['fields'] as $fields_value ) {
 //				$fields[ $fields_value['id'] ] = $fields_value['args'];
 //			}

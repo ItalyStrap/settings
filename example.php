@@ -44,7 +44,6 @@ $sections_obj = new \ItalyStrap\Settings\Sections(
 $settings_obj = new \ItalyStrap\Settings\Settings(
 	$sections_obj,
 	$options_obj,
-	$sections,
 	$plugin['capability']
 );
 add_action( 'admin_init', [ $settings_obj, 'load' ] );
