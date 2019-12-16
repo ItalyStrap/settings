@@ -29,6 +29,15 @@ class ViewPage
 	 */
 	private $options_group;
 
+	/**
+	 * @var string
+	 */
+	private $pagenow;
+
+	private $config;
+
+	private $sections;
+
 	public function __construct( FinderInterface $finder ) {
 
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
@@ -50,7 +59,7 @@ class ViewPage
 	}
 
 	/**
-	 * @param $view
+	 * @param string $view
 	 * @return string
 	 */
 	public function render( $view ) {

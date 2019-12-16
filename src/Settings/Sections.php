@@ -20,9 +20,9 @@ class Sections
 	/**
 	 * Settings for plugin admin page
 	 *
-	 * @var array
+	 * @var Config
 	 */
-	protected $config = [];
+	protected $config;
 
 	/**
 	 * The plugin options
@@ -42,6 +42,11 @@ class Sections
 	 * @var DataParser
 	 */
 	private $parser;
+
+	/**
+	 * @var Options
+	 */
+	private $options;
 
 	/**
 	 * Initialize Class
@@ -102,7 +107,7 @@ class Sections
 	}
 
 	/**
-	 * @param $setting
+	 * @param array $setting
 	 */
 	private function loadFields( $setting ): void {
 		foreach ( $setting[ 'fields' ] as $field ) {

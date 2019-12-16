@@ -51,7 +51,7 @@ class Options
 	}
 
 	/**
-	 * @param array $value
+	 * @param array $values
 	 * @return bool
 	 */
 	public function add( array $values = [] ) {

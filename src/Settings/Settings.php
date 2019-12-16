@@ -39,9 +39,9 @@ class Settings implements SettingsInterface {
 	/**
 	 * The plugin options
 	 *
-	 * @var array
+	 * @var Options
 	 */
-	protected $options = [];
+	protected $options;
 
 	/**
 	 * The fields preregistered in the config file.
@@ -58,11 +58,8 @@ class Settings implements SettingsInterface {
 	/**
 	 * Initialize Class
 	 *
-	 * @param Sections $sections
+	 * @param Sections $sections The configuration array plugin fields.
 	 * @param Options $options Get the plugin options.
-	 * @param array $sections The configuration array plugin fields.
-	 * @param string $options_name
-	 * @param string $options_group
 	 * @param string $capability
 	 */
 	public function __construct(
