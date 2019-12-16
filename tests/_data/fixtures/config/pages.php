@@ -16,13 +16,13 @@ return [
 		P::ICON			=> 'dashicons-performance',
 		P::POSITION		=> null,
 		P::VIEW			=> '',
-		'pages'	=> [
-			[
-				P::PAGE_TITLE	=> \__( 'Settings', 'italystrap' ),
-				P::MENU_TITLE	=> \__( 'Settings', 'italystrap' ),
-				P::SLUG		=> 'italystrap-settings',
-				// P::VIEW_CALLBACK	=> function () { echo 'Settings Page' },
-			],
-		],
+//		'pages'	=> [
+//			[
+//				P::PAGE_TITLE	=> \__( 'Settings', 'italystrap' ),
+//				P::MENU_TITLE	=> \__( 'Settings', 'italystrap' ),
+//				P::SLUG		=> 'italystrap-settings',
+//				// P::VIEW_CALLBACK	=> function () { echo 'Settings Page' },
+//			],
+//		],
 	],
 ];
