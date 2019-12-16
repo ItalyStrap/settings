@@ -56,11 +56,11 @@ add_action( 'update_option', [ $settings_obj, 'save' ], 10, 3 );
  */
 $finder = new \ItalyStrap\View\ViewFinder();
 $finder->in( ITALYSTRAP_PLUGIN_PATH . 'src/Settings/view/' );
-$view = new \ItalyStrap\View\View( $finder );
+
+$view_page = new \ItalyStrap\Settings\ViewPage( $finder );
 
 $pages_obj = new \ItalyStrap\Settings\Pages(
 	\ItalyStrap\Config\ConfigFactory::make( $pages ),
-	$view,
 	$sections_obj
 );
 add_action( 'admin_menu', [ $pages_obj, 'load'] );

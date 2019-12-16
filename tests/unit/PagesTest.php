@@ -26,7 +26,7 @@ class PagesTest extends \Codeception\Test\Unit
 		$sections = $this->make( \ItalyStrap\Settings\Sections::class, [
 			'options'	=> $this->make( \ItalyStrap\Settings\Options::class ),
 		] );
-		$sut = new \ItalyStrap\Settings\Pages( $config, $view, $sections );
+		$sut = new \ItalyStrap\Settings\Pages( $config, $sections );
 		$this->assertInstanceOf( \ItalyStrap\Settings\Pages::class, $sut, '' );
 		return $sut;
     }

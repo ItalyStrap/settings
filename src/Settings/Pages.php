@@ -41,17 +41,15 @@ class Pages {
 	/**
 	 * Pages constructor.
 	 * @param Config $config
-	 * @param View $view
 	 * @param Sections $sections
 	 */
-	public function __construct( Config $config, View $view, Sections $sections ) {
+	public function __construct( Config $config, Sections $sections ) {
 
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
 			$this->pagenow = \stripslashes( $_GET['page'] ); // Input var okay.
 		}
 
 		$this->config = $config;
-		$this->view = $view;
 		$this->sections = $sections;
 		$this->options_group = $sections->getGroup();
 	}
