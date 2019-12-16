@@ -34,8 +34,8 @@ class PagesTest extends \Codeception\TestCase\WPTestCase
 		$sections = $this->make( \ItalyStrap\Settings\Sections::class, [
 			'options'	=> $this->make( \ItalyStrap\Settings\Options::class ),
 		] );
-		$sut = new \ItalyStrap\Settings\Pages( $config, $sections );
-		$this->assertInstanceOf( \ItalyStrap\Settings\Pages::class, $sut, '' );
+		$sut = new \ItalyStrap\Settings\Page( $config, $sections );
+		$this->assertInstanceOf( \ItalyStrap\Settings\Page::class, $sut, '' );
 		return $sut;
 	}
 

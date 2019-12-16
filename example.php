@@ -59,7 +59,7 @@ $finder->in( ITALYSTRAP_PLUGIN_PATH . 'src/Settings/view/' );
 
 $view_page = new \ItalyStrap\Settings\ViewPage( $finder );
 
-$pages_obj = new \ItalyStrap\Settings\Pages(
+$pages_obj = new \ItalyStrap\Settings\Page(
 	\ItalyStrap\Config\ConfigFactory::make( $pages_config ),
 	$sections_obj
 );

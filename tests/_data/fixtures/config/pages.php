@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use ItalyStrap\Settings\Pages as P;
+use ItalyStrap\Settings\Page as P;
 
 return [
 
