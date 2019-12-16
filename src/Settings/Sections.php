@@ -38,16 +38,6 @@ class Sections
 	protected $fields;
 
 	/**
-	 * @var string
-	 */
-	private $options_group;
-
-	/**
-	 * @var string
-	 */
-	private $options_name;
-
-	/**
 	 * @var DataParser
 	 */
 	private $parser;
@@ -75,6 +65,13 @@ class Sections
 		$this->options = $options;
 
 		$this->options_values = (array) $options->get();
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getSections(): array {
+		return $this->sections;
 	}
 
 	/**
@@ -184,9 +181,9 @@ class Sections
 	}
 
 	/**
-	 * @return mixed
+	 * @return string
 	 */
-	private function getGroup(): mixed {
-		return $this->options->getGroup();
+	private function getGroup(): string {
+		return $this->options->getName() . '_options_group';
 	}
 }

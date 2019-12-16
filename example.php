@@ -62,7 +62,7 @@ $view = new \ItalyStrap\View\View( $finder );
 $pages_obj = new \ItalyStrap\Settings\Pages(
 	\ItalyStrap\Config\ConfigFactory::make( $pages ),
 	$view,
-	$sections,
+	$sections_obj,
 	$plugin['options_group']
 );
 add_action( 'admin_menu', [ $pages_obj, 'load'] );

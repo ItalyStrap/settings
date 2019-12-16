@@ -41,10 +41,10 @@ class Pages {
 	 * Pages constructor.
 	 * @param Config $config
 	 * @param View $view
-	 * @param array $sections
+	 * @param Sections $sections
 	 * @param string $options_group
 	 */
-	public function __construct( Config $config, View $view, array $sections, string $options_group ) {
+	public function __construct( Config $config, View $view, Sections $sections, string $options_group ) {
 
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
 			$this->pagenow = \stripslashes( $_GET['page'] ); // Input var okay.
@@ -194,7 +194,7 @@ class Pages {
 
 		$out = '<ul>';
 
-		foreach ($this->sections as $key => $setting ) {
+		foreach ( $this->sections->getSections() as $key => $setting ) {
 			if ( isset( $setting['show_on'] ) && false === $setting['show_on'] ) {
 				continue;
 			}
