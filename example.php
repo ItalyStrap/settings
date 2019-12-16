@@ -35,10 +35,10 @@ $pages = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
 $options_obj = new \ItalyStrap\Settings\Options( $plugin['options_name'], $plugin['options_group'] );
 
 $sections_obj = new \ItalyStrap\Settings\Sections(
+	\ItalyStrap\Config\ConfigFactory::make( $sections ),
 	new \ItalyStrap\Fields\Fields(),
 	new \ItalyStrap\Settings\DataParser(),
-	$options_obj,
-	\ItalyStrap\Config\ConfigFactory::make( $sections )
+	$options_obj
 );
 
 $settings_obj = new \ItalyStrap\Settings\Settings(

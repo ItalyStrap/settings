@@ -46,25 +46,23 @@ class Sections
 	/**
 	 * Initialize Class
 	 *
-	 * @param FieldsInterface $fields_type The Fields object.
+	 * @param FieldsInterface $fields The Fields object.
 	 * @param DataParser $parser
 	 * @param Options $options Get the plugin options.
 	 * @param Config $config The configuration array plugin fields.
 	 */
 	public function __construct(
-		FieldsInterface $fields_type,
+		Config $config,
+		FieldsInterface $fields,
 		DataParser $parser,
-		Options $options,
-		Config $config
+		Options $options
 	) {
-
-		$this->fields = $fields_type;
-		$this->parser = $parser;
-
 		$this->config = $config;
 
-		$this->options = $options;
+		$this->fields = $fields;
+		$this->parser = $parser;
 
+		$this->options = $options;
 		$this->options_values = (array) $options->get();
 	}
 
@@ -172,7 +170,7 @@ class Sections
 	public function fieldsToArray() {
 
 		$fields = [];
-		foreach ((array) $this->config as $section ) {
+		foreach ( (array) $this->config as $section ) {
 			foreach ( $section['fields'] as $fields_value ) {
 				$fields[ $fields_value['id'] ] = $fields_value['args'];
 			}
