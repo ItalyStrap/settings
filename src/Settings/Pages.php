@@ -15,7 +15,7 @@ class Pages {
 	const MENU_TITLE	= 'menu_title';
 	const CAPABILITY	= 'capability';
 	const SLUG			= 'menu_slug';
-	const CALLBACK		= 'callback';
+	const VIEW_CALLBACK	= 'callback';
 	const ICON			= 'icon_url';
 	const POSITION		= 'position';
 	const VIEW			= 'view';
@@ -61,12 +61,14 @@ class Pages {
 
 		$this->capability = $this->config->get( 'page.capability', 'manage_options' );
 
+		$callable = $this->config->get( 'page.' . self::VIEW_CALLBACK );
+
 		\add_menu_page(
 			$this->config['page']['page_title'],
 			$this->config['page']['menu_title'],
 			$this->capability,
 			$this->config['page']['menu_slug'],
-			[ $this, 'getView' ],
+			\is_callable( $callable ) ? $callable : [ $this, 'getView' ],
 			$this->config['page']['icon_url'],
 			$this->config['page']['position']
 		);
@@ -86,13 +88,15 @@ class Pages {
 				continue;
 			}
 
+			$callable = $submenu[ self::VIEW_CALLBACK ];
+
 			\add_submenu_page(
 				$parent_slug,
 				$submenu['page_title'],
 				$submenu['menu_title'],
-				$this->capability, // $submenu['capability'],
+				$this->capability,
 				$submenu['menu_slug'],
-				[ $this, 'getView'] // $submenu['function_cb']
+				\is_callable( $callable ) ? $callable : [ $this, 'getView']
 			);
 		}
 	}

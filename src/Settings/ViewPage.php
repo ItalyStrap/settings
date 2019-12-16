@@ -62,7 +62,7 @@ class ViewPage
 		}
 
 		try {
-			$this->finder->find( $view );
+			require $this->finder->find( $view );
 		} catch ( ViewNotFoundException $exception ) {
 			// Fail silently and load default form view
 			require __DIR__ . self::DS . 'view' . self::DS . 'form.php';
