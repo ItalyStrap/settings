@@ -183,7 +183,7 @@ class Sections
 	/**
 	 * @return string
 	 */
-	private function getGroup(): string {
+	public function getGroup(): string {
 		return $this->options->getName() . '_options_group';
 	}
 }

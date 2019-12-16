@@ -44,7 +44,7 @@ class Pages {
 	 * @param Sections $sections
 	 * @param string $options_group
 	 */
-	public function __construct( Config $config, View $view, Sections $sections, string $options_group ) {
+	public function __construct( Config $config, View $view, Sections $sections ) {
 
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
 			$this->pagenow = \stripslashes( $_GET['page'] ); // Input var okay.
@@ -53,7 +53,7 @@ class Pages {
 		$this->config = $config;
 		$this->view = $view;
 		$this->sections = $sections;
-		$this->options_group = $options_group;
+		$this->options_group = $sections->getGroup();
 	}
 
 	/**

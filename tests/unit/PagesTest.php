@@ -23,7 +23,8 @@ class PagesTest extends \Codeception\Test\Unit
 	private function getInstance() {
     	$config = $this->make( \ItalyStrap\Config\Config::class );
     	$view = $this->make( \ItalyStrap\View\View::class );
-		$sut = new \ItalyStrap\Settings\Pages( $config, $view, $this->sections, $this->plugin['options_group'] );
+		$sections = $this->make( \ItalyStrap\Settings\Sections::class );
+		$sut = new \ItalyStrap\Settings\Pages( $config, $view, $sections );
 		$this->assertInstanceOf( \ItalyStrap\Settings\Pages::class, $sut, '' );
 		return $sut;
     }
