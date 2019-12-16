@@ -98,7 +98,7 @@ class Sections
 				$setting[ self::ID ],
 				$setting[ self::TITLE ],
 				[$this, 'renderSectionCallback'], //array( $this, $field['callback'] ),
-				$this->options->getGroup() //$setting['page']
+				$this->getGroup() //$setting['page']
 			);
 
 			$this->loadFields( $setting );
@@ -118,7 +118,7 @@ class Sections
 				$field[ self::ID ],
 				$field[ self::TITLE ],
 				[$this, 'renderField'], //array( $this, $field['callback'] ),
-				$this->options->getGroup(), //$field['page'],
+				$this->getGroup(), //$field['page'],
 				$setting[ self::ID ],
 				$field[ 'args' ]
 			);
@@ -131,7 +131,7 @@ class Sections
 	 */
 	private function register(): void {
 		\register_setting(
-			$this->options->getGroup(),
+			$this->getGroup(),
 			$this->options->getName(),
 			[
 				'sanitize_callback'	=>
@@ -181,5 +181,12 @@ class Sections
 		}
 
 		return $fields;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	private function getGroup(): mixed {
+		return $this->options->getGroup();
 	}
 }
