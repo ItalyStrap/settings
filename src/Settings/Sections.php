@@ -143,7 +143,7 @@ class Sections implements \Countable, SectionsInterface
 	}
 
 	public function renderField( array $args ) {
-		$args['_id'] = $args['_name'] = $this->options->getName() . '[' . $args['id'] . ']';
+		$args['id'] = $args['name'] = $this->options->getName() . '[' . $args['id'] . ']';
 		echo $this->fields->render( $args, $this->options_values ); // XSS ok.
 	}
 
