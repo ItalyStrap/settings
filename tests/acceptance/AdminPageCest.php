@@ -63,8 +63,6 @@ class AdminPageCest
 		codecept_debug( $option );
 
 		$I->seeOptionInDatabase( [ 'option_name' => $this->plugin['options_name'] ] );
-
-		\PHPUnit\Framework\Assert::assertCount( \count( $this->options_from_fields ), $option, '' );
     }
 
 }
