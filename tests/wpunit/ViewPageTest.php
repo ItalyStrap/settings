@@ -32,7 +32,9 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 	private function getSections() {
 		$sections = $this->make( \ItalyStrap\Settings\Sections::class, [
 			'count'		=> 1,
-			'getGroup'	=> 'group_name'
+			'getGroup'	=> function () {
+				return 'group_name';
+			},
 		] );
 
 		return $sections;
@@ -53,7 +55,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 		$sut->withSections( $this->getSections() );
 		$sut->render( '' );
 		$output = $this->getActualOutputForAssertion();
-		$this->assertStringContainsString( '<form method="post" action="options.php">', $output, '' );
+		$this->assertStringContainsString( '<form method="post" action="options.php"', $output, '' );
 	}
 
 	/**
