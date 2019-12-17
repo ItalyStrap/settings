@@ -6,11 +6,7 @@ namespace ItalyStrap\Settings;
 use ItalyStrap\Config\Config;
 use ItalyStrap\Fields\FieldsInterface;
 
-/**
- * Class Sectons
- * @package ItalyStrap\Settings
- */
-class Sections implements \Countable
+class Sections implements \Countable, SectionsInterface
 {
 	const TAB_TITLE = 'tab_title';
 	const ID = 'id';
@@ -71,16 +67,10 @@ class Sections implements \Countable
 		$this->options_values = (array) $options->get();
 	}
 
-	/**
-	 * @return array
-	 */
 	public function getSections(): array {
 		return $this->config->toArray();
 	}
 
-	/**
-	 * Init settings for admin area
-	 */
 	public function load() {
 		$this->loadSection();
 		$this->register();
@@ -143,11 +133,6 @@ class Sections implements \Countable
 		);
 	}
 
-	/**
-	 * Render section CB
-	 *
-	 * @param  array $args The arguments for section CB.
-	 */
 	public function renderSectionCallback( array $args ) {
 
 //		if ( \is_callable( $this->settings[ $args['id'] ]['desc'] ) ) {
@@ -157,21 +142,11 @@ class Sections implements \Countable
 		echo $this->config[ $args['id'] ]['desc'] ?? ''; // XSS ok.
 	}
 
-	/**
-	 * Get the field type
-	 *
-	 * @param array $args Array with arguments.
-	 */
 	public function renderField( array $args ) {
 		$args['_id'] = $args['_name'] = $this->options->getName() . '[' . $args['id'] . ']';
 		echo $this->fields->render( $args, $this->options_values ); // XSS ok.
 	}
 
-	/**
-	 * Get the plugin fields
-	 *
-	 * @return array The plugin fields
-	 */
 	public function fieldsToArray() {
 
 		$fields = [];
@@ -184,16 +159,10 @@ class Sections implements \Countable
 		return $fields;
 	}
 
-	/**
-	 * @return string
-	 */
 	public function getGroup(): string {
 		return $this->options->getName() . '_options_group';
 	}
 
-	/**
-	 * @inheritDoc
-	 */
 	public function count(): int {
 		return $this->config->count();
 	}

@@ -30,11 +30,11 @@ class PagesTest extends \Codeception\TestCase\WPTestCase
 
 	private function getInstance() {
 		$config = $this->make( \ItalyStrap\Config\Config::class );
-		$view = $this->make( \ItalyStrap\View\View::class );
+		$view = $this->make( \ItalyStrap\Settings\ViewPage::class );
 		$sections = $this->make( \ItalyStrap\Settings\Sections::class, [
 			'options'	=> $this->make( \ItalyStrap\Settings\Options::class ),
 		] );
-		$sut = new \ItalyStrap\Settings\Page( $config, $sections );
+		$sut = new \ItalyStrap\Settings\Page( $config, $sections, $view );
 		$this->assertInstanceOf( \ItalyStrap\Settings\Page::class, $sut, '' );
 		return $sut;
 	}

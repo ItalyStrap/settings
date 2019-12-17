@@ -51,19 +51,19 @@ class Settings implements SettingsInterface {
 	protected $settingsFields = [];
 
 	/**
-	 * @var Sections
+	 * @var SectionsInterface
 	 */
 	private $sections;
 
 	/**
 	 * Initialize Class
 	 *
-	 * @param Sections $sections The configuration array plugin fields.
+	 * @param SectionsInterface $sections The configuration array plugin fields.
 	 * @param Options $options Get the plugin options.
 	 * @param string $capability
 	 */
 	public function __construct(
-		Sections $sections,
+		SectionsInterface $sections,
 		Options $options,
 		string $capability
 	) {

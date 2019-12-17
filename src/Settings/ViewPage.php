@@ -29,6 +29,9 @@ class ViewPage
 	 */
 	private $pagenow;
 
+	/**
+	 * @var SectionsInterface
+	 */
 	private $sections;
 
 	public function __construct() {
@@ -50,9 +53,9 @@ class ViewPage
 	}
 
 	/**
-	 * @param Sections $sections
+	 * @param SectionsInterface $sections
 	 */
-	public function withSections( Sections $sections ): void {
+	public function withSections( SectionsInterface $sections ): void {
 		$this->sections = $sections;
 	}
 
@@ -67,13 +70,20 @@ class ViewPage
 	/**
 	 * The add_submenu_page callback
 	 */
-	private function findView( $file_name =  'form.php' ) {
+	private function findView( $file_name ) {
 
 		if ( ! \is_readable( $file_name ) ) {
 			return __DIR__ . self::DS . 'view' . self::DS . 'form.php';
 		}
 
 		return $file_name;
+	}
+
+	/**
+	 * @return string
+	 */
+	private function getGroup() {
+		return $this->sections->getGroup();
 	}
 
 	/**
@@ -137,12 +147,12 @@ class ViewPage
 
 		$out = '<ul>';
 
-		foreach ( $this->sections->getSections() as $key => $setting ) {
-			if ( isset( $setting['show_on'] ) && false === $setting['show_on'] ) {
+		foreach ( $this->sections->getSections() as $key => $section ) {
+			if ( isset( $section['show_on'] ) && false === $section['show_on'] ) {
 				continue;
 			}
 
-			$out .= '<li><a href="#tabs-' . $count . '">' . $setting['tab_title'] . '</a></li>';
+			$out .= '<li><a href="#tabs-' . $count . '">' . $section['tab_title'] . '</a></li>';
 			$count++;
 		}
 
@@ -152,12 +162,15 @@ class ViewPage
 		return '';
 	}
 
-	/**
-	 *
-	 */
 	private function assertCurrentUserCanSeeThePage(): void {
 		if ( ! \current_user_can( $this->capability ) ) {
 			\wp_die( \esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+		}
+	}
+
+	private function assertHasSections() {
+		if ( ! $this->sections ) {
+			throw new \RuntimeException( 'You must assign ' );
 		}
 	}
 }

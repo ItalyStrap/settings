@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace ItalyStrap\Settings;
 
 use ItalyStrap\Config\ConfigInterface as Config;
-use ItalyStrap\View\ViewInterface as View;
 
 class Page {
 
@@ -30,7 +29,7 @@ class Page {
 	private $sections;
 
 	/**
-	 * @var View
+	 * @var ViewPage
 	 */
 	private $view;
 
@@ -40,11 +39,17 @@ class Page {
 	private $options_group;
 
 	/**
+	 * @var string
+	 */
+	private $view_file = '';
+
+	/**
 	 * Pages constructor.
 	 * @param Config $config
-	 * @param Sections $sections
+	 * @param SectionsInterface $sections
+	 * @param ViewPage $view
 	 */
-	public function __construct( Config $config, Sections $sections ) {
+	public function __construct( Config $config, SectionsInterface $sections, ViewPage $view ) {
 
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
 			$this->pagenow = \stripslashes( $_GET['page'] ); // Input var okay.
@@ -53,6 +58,8 @@ class Page {
 		$this->config = $config;
 		$this->sections = $sections;
 		$this->options_group = $sections->getGroup();
+		$this->view = $view;
+		$this->view->withSections( $this->sections );
 	}
 
 	/**
@@ -63,6 +70,7 @@ class Page {
 		$this->capability = $this->config->get( 'page.capability', 'manage_options' );
 
 		$callable = $this->config->get( 'page.' . self::VIEW_CALLBACK );
+		$this->view_file =  $this->config->get( 'page.' . self::VIEW );
 
 		\add_menu_page(
 			$this->config['page']['page_title'],
@@ -90,6 +98,7 @@ class Page {
 			}
 
 			$callable = $submenu[ self::VIEW_CALLBACK ] ?? false;
+			$this->view_file =  $submenu[ self::VIEW ];
 
 			\add_submenu_page(
 				$parent_slug,
@@ -106,12 +115,13 @@ class Page {
 	 * The add_submenu_page callback
 	 */
 	public function getView() {
-
-		if ( ! \current_user_can( $this->capability ) ) {
-			\wp_die( \esc_html__( 'You do not have sufficient permissions to access this page.' ) );
-		}
-
-		require __DIR__ . self::DS . 'view' . self::DS . 'form.php';
+		$this->view->render( $this->view_file );
+//
+//		if ( ! \current_user_can( $this->capability ) ) {
+//			\wp_die( \esc_html__( 'You do not have sufficient permissions to access this page.' ) );
+//		}
+//
+//		require __DIR__ . self::DS . 'view' . self::DS . 'form.php';
 	}
 
 	/**

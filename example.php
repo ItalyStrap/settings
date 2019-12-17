@@ -58,7 +58,8 @@ $view_page = new \ItalyStrap\Settings\ViewPage();
 
 $pages_obj = new \ItalyStrap\Settings\Page(
 	\ItalyStrap\Config\ConfigFactory::make( $pages_config ),
-	$sections_obj
+	$sections_obj,
+	$view_page
 );
 
 add_action( 'admin_menu', [ $pages_obj, 'load'] );
