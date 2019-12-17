@@ -1,11 +1,18 @@
 <?php
 declare(strict_types=1);
 
-use ItalyStrap\HTML\Attributes as ATTR;
-
 return [
 	[
-		'label'			=> __( 'Test Mode', 'italystrap' ),
+//		'label'			=> __( 'Test Mode', 'italystrap' ),
+		'name'			=> __( 'Test Mode', 'italystrap' ),
+		'desc'			=> __( 'If test mode is active the front-end form on submit will return an array with som edefault values.', 'italystrap' ),
+		'id'			=> 'text',
+		'type'			=> 'text',
+		'value'			=> true,
+		'sanitize'		=> 'sanitize_text_field',
+	],
+	[
+//		'label'			=> __( 'Test Mode', 'italystrap' ),
 		'name'			=> __( 'Test Mode', 'italystrap' ),
 		'desc'			=> __( 'If test mode is active the front-end form on submit will return an array with som edefault values.', 'italystrap' ),
 		'id'			=> 'test_mode',

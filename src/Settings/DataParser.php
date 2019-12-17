@@ -27,7 +27,7 @@ class DataParser {
 	public function __construct() {
 		$this->validation = new Validation;
 		$this->sanitization = new Sanitization;
-		$this->translator = new Translator( 'Perf_Metrics' );
+		$this->translator = new Translator( 'ItalyStrap' );
 	}
 
 	/**

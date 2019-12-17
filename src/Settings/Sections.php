@@ -111,7 +111,8 @@ class Sections implements \Countable, SectionsInterface
 	 */
 	private function loadFields( $section ): void {
 		foreach ( $section[ 'fields' ] as $field ) {
-			if ( isset( $field[ 'show_on' ] ) && false === $field[ 'show_on' ] ) {
+			$this->parseFieldWithDefault( $field );
+			if ( ! $this->showOn( $field[ 'show_on' ] ) ) {
 				continue;
 			}
 
@@ -121,9 +122,22 @@ class Sections implements \Countable, SectionsInterface
 				[$this, 'renderField'], //array( $this, $field['callback'] ),
 				$this->getGroup(), //$field['page'],
 				$section[ self::ID ],
-				$field
+				$field // $args
 			);
 		}
+	}
+
+	private function parseFieldWithDefault( array &$field ) {
+		$field = \array_merge( [
+			'show_on'	=> true,
+			'label_for'	=> $this->getStringForLabel( $field ),
+			'class'		=> '',
+		], $field );
+	}
+
+	public function renderField( array $args ) {
+		$args['id'] = $args['name'] = $this->getStringForLabel( $args );
+		echo $this->fields->render( $args, $this->options_values ); // XSS ok.
 	}
 
 	/**
@@ -143,17 +157,12 @@ class Sections implements \Countable, SectionsInterface
 		);
 	}
 
-	public function renderField( array $args ) {
-		$args['id'] = $args['name'] = $this->options->getName() . '[' . $args['id'] . ']';
-		echo $this->fields->render( $args, $this->options_values ); // XSS ok.
-	}
-
 	public function fieldsToArray() {
 
 		$fields = [];
 		foreach ( (array) $this->config as $section ) {
-			foreach ( $section['fields'] as $fields_value ) {
-				$fields[ $fields_value['id'] ] = $fields_value;
+			foreach ( $section['fields'] as $field ) {
+				$fields[] = $field;
 			}
 		}
 
@@ -179,5 +188,13 @@ class Sections implements \Countable, SectionsInterface
 			'show_on'	=> true,
 			'tab_title'	=> \ucfirst( \strval( $title[0] ) ),
 		], $section );
+	}
+
+	/**
+	 * @param array $args
+	 * @return string
+	 */
+	private function getStringForLabel( array $args ): string {
+		return $this->options->getName() . '[' . $args[ 'id' ] . ']';
 	}
 }
