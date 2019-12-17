@@ -115,13 +115,6 @@ class Page {
 	}
 
 	/**
-	 * Get Aside for settings page
-	 */
-	public function getAside() {
-		require __DIR__ . self::DS . 'view' . self::DS . 'aside.php';
-	}
-
-	/**
 	 * Prints out all settings sections added to a particular settings page
 	 *
 	 * Part of the Settings API. Use this in a settings page callback function

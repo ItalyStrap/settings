@@ -6,13 +6,10 @@
  */
 declare(strict_types=1);
 
-use ItalyStrap\HTML\Attributes;
-use function ItalyStrap\HTML\close_tag_e;
-use function ItalyStrap\HTML\open_tag_e;
-use function ItalyStrap\HTML\void_tag;
+use function ItalyStrap\{HTML\close_tag_e, HTML\open_tag_e, HTML\void_tag};
 
 $spinner = void_tag( $this->options_group . '_spinner', 'img', [
-	Attributes::CLASS_NAME	=> 'loading-gif',
+	'class'	=> 'loading-gif',
 	'src'	=> \includes_url() . 'images/spinner.gif',
 	'alt'	=> 'spinner',
 	'style'	=> 'display: none',

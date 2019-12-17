@@ -20,11 +20,6 @@ class ViewPage
 	private $capability = 'manage_options';
 
 	/**
-	 * @var FinderInterface
-	 */
-	private $finder;
-
-	/**
 	 * @var string
 	 */
 	private $options_group;
@@ -34,17 +29,13 @@ class ViewPage
 	 */
 	private $pagenow;
 
-	private $config;
-
 	private $sections;
 
-	public function __construct( FinderInterface $finder ) {
+	public function __construct() {
 
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
 			$this->pagenow = \stripslashes( $_GET['page'] ); // Input var okay.
 		}
-
-		$this->finder = $finder;
 
 		$this->options_group = '';
 	}
@@ -59,51 +50,30 @@ class ViewPage
 	}
 
 	/**
-	 * @param string $view
-	 * @return string
+	 * @param Sections $sections
 	 */
-	public function render( $view ) {
-		$this->assertCurrentUserCan();
+	public function withSections( Sections $sections ): void {
+		$this->sections = $sections;
+	}
 
-		if ( \is_readable( $view ) ) {
-			require $view;
-			return '';
-		}
-
-		try {
-			require $this->finder->find( $view );
-		} catch ( ViewNotFoundException $exception ) {
-			// Fail silently and load default form view
-			require __DIR__ . self::DS . 'view' . self::DS . 'form.php';
-		}
-
-		return '';
+	/**
+	 * @param string $view
+	 */
+	public function render( $view ): void {
+		$this->assertCurrentUserCanSeeThePage();
+		require $this->findView( $view );
 	}
 
 	/**
 	 * The add_submenu_page callback
 	 */
-	public function getView() {
+	private function findView( $file_name =  'form.php' ) {
 
-		$this->assertCurrentUserCan();
+		if ( ! \is_readable( $file_name ) ) {
+			return __DIR__ . self::DS . 'view' . self::DS . 'form.php';
+		}
 
-		$file_path = \file_exists( $this->config['admin_view_path'] . $this->pagenow . '.php' )
-			? $this->config['admin_view_path'] . $this->pagenow . '.php'
-			: __DIR__ . self::DS . 'view' . self::DS . 'form.php';
-
-		require $file_path;
-	}
-
-	/**
-	 * Get Aside for settings page
-	 */
-	public function getAside() {
-
-		$file_path = \file_exists( $this->config['admin_view_path'] . 'aside.php' )
-			? $this->config['admin_view_path'] . 'aside.php'
-			: __DIR__ . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'aside.php';
-
-		require $file_path;
+		return $file_name;
 	}
 
 	/**
@@ -159,6 +129,10 @@ class ViewPage
 	 */
 	public function createNavTab() {
 
+		if ( $this->sections->count() <= 2 ) {
+			return '';
+		}
+
 		$count = 1;
 
 		$out = '<ul>';
@@ -174,16 +148,15 @@ class ViewPage
 
 		$out .= '</ul>';
 
-		if ( $count <= 2 ) {
-			return '';
-		}
-
 		echo $out; // XSS ok.
 		return '';
 	}
 
-	private function assertCurrentUserCan(): void {
-		if ( !\current_user_can( $this->capability ) ) {
+	/**
+	 *
+	 */
+	private function assertCurrentUserCanSeeThePage(): void {
+		if ( ! \current_user_can( $this->capability ) ) {
 			\wp_die( \esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 	}
