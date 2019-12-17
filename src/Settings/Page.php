@@ -19,6 +19,7 @@ class Page {
 	const ICON			= 'icon_url';
 	const POSITION		= 'position';
 	const VIEW			= 'view';
+	const PARENT		= 'parent';
 
 	/**
 	 * @var Config
@@ -110,23 +111,14 @@ class Page {
 			\wp_die( \esc_html__( 'You do not have sufficient permissions to access this page.' ) );
 		}
 
-		$file_path = \file_exists( $this->config['admin_view_path'] . $this->pagenow . '.php' )
-			? $this->config['admin_view_path'] . $this->pagenow . '.php'
-			: __DIR__ . self::DS . 'view' . self::DS . 'form.php';
-
-		require $file_path;
+		require __DIR__ . self::DS . 'view' . self::DS . 'form.php';
 	}
 
 	/**
 	 * Get Aside for settings page
 	 */
 	public function getAside() {
-
-		$file_path = \file_exists( $this->config['admin_view_path'] . 'aside.php' )
-			? $this->config['admin_view_path'] . 'aside.php'
-			: __DIR__ . DIRECTORY_SEPARATOR . 'view' . DIRECTORY_SEPARATOR . 'aside.php';
-
-		require $file_path;
+		require __DIR__ . self::DS . 'view' . self::DS . 'aside.php';
 	}
 
 	/**
