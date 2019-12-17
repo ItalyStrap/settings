@@ -31,7 +31,8 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 
 	private function getSections() {
 		$sections = $this->make( \ItalyStrap\Settings\Sections::class, [
-			'count'	=> 1,
+			'count'		=> 1,
+			'getGroup'	=> 'group_name'
 		] );
 
 		return $sections;
