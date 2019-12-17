@@ -6,8 +6,13 @@
  */
 declare(strict_types=1);
 
-$spinner = \ItalyStrap\HTML\void_tag( $this->options_group . '_spinner', 'img', [
-	\ItalyStrap\HTML\Attributes::CLASS_NAME	=> 'loading-gif',
+use ItalyStrap\HTML\Attributes;
+use function ItalyStrap\HTML\close_tag_e;
+use function ItalyStrap\HTML\open_tag_e;
+use function ItalyStrap\HTML\void_tag;
+
+$spinner = void_tag( $this->options_group . '_spinner', 'img', [
+	Attributes::CLASS_NAME	=> 'loading-gif',
 	'src'	=> \includes_url() . 'images/spinner.gif',
 	'alt'	=> 'spinner',
 	'style'	=> 'display: none',
@@ -19,7 +24,11 @@ $spinner = \ItalyStrap\HTML\void_tag( $this->options_group . '_spinner', 'img', 
 	<div id="post-body">
 		<div class="postbox-container">
 			<?php do_action( 'italystrap_before_settings_form', $this ); ?>
-			<form action="options.php" id="<?php echo \esc_attr( $this->options_group ) ?>" method="post">
+			<?php open_tag_e( $this->options_group . 'form', 'form', [
+				'method'	=> 'post',
+				'action'	=> 'options.php',
+				'id'		=> $this->options_group,
+			] ); ?>
 				<?php
 				$this->createNavTab();
 				/**
@@ -39,7 +48,7 @@ $spinner = \ItalyStrap\HTML\void_tag( $this->options_group . '_spinner', 'img', 
 				echo $spinner;
 				?>
 				<div id="saveResult"></div>
-			</form>
+			<?php close_tag_e( $this->options_group . 'form' ); ?>
 			<?php \do_action( 'italystrap_after_settings_form', $this ); ?>
 		</div>
 	</div>

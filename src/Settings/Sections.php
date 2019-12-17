@@ -10,7 +10,7 @@ use ItalyStrap\Fields\FieldsInterface;
  * Class Sectons
  * @package ItalyStrap\Settings
  */
-class Sections
+class Sections implements \Countable
 {
 	const TAB_TITLE = 'tab_title';
 	const ID = 'id';
@@ -189,5 +189,12 @@ class Sections
 	 */
 	public function getGroup(): string {
 		return $this->options->getName() . '_options_group';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function count(): int {
+		return $this->config->count();
 	}
 }

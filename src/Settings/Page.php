@@ -132,6 +132,8 @@ class Page {
 	 * @global array $wp_settings_fields Storage array of settings fields and info about their pages/sections
 	 * @since 2.7.0
 	 *
+	 * @see do_settings_sections()
+	 *
 	 * @param string $page The slug name of the page whose settings sections you want to output.
 	 */
 	public function doSettingsSections( $page ) {
@@ -161,7 +163,7 @@ class Page {
 			) {
 				continue;
 			}
-			echo '<table class="form-table">';
+			echo '<table class="form-table" role="presentation">';
 			\do_settings_fields( $page, $section['id'] );
 			echo '</table>';
 			echo '</div>';
@@ -173,6 +175,10 @@ class Page {
 	 * Create the nav tabs for section in admin plugin area
 	 */
 	public function createNavTab() {
+
+		if ( $this->sections->count() <= 2 ) {
+			return '';
+		}
 
 		$count = 1;
 
@@ -188,10 +194,6 @@ class Page {
 		}
 
 		$out .= '</ul>';
-
-		if ( $count <= 2 ) {
-			return '';
-		}
 
 		echo $out; // XSS ok.
 		return '';
