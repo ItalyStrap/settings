@@ -3,14 +3,7 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
-use ItalyStrap\Finder\FinderInterface;
-use ItalyStrap\View\Exceptions\ViewNotFoundException;
-
-/**
- * Class ViewPage
- * @package ItalyStrap\Settings
- */
-class ViewPage
+class ViewPage implements ViewPageInterface
 {
 	const DS = DIRECTORY_SEPARATOR;
 
@@ -18,11 +11,6 @@ class ViewPage
 	 * @var string
 	 */
 	private $capability = 'manage_options';
-
-	/**
-	 * @var string
-	 */
-	private $options_group;
 
 	/**
 	 * @var string
@@ -39,31 +27,29 @@ class ViewPage
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
 			$this->pagenow = \stripslashes( $_GET['page'] ); // Input var okay.
 		}
-
-		$this->options_group = '';
 	}
 
 	/**
-	 * @param mixed $capability
-	 * @return ViewPage
+	 * @inheritDoc
 	 */
-	public function withCapability( $capability ): ViewPage {
+	public function withCapability( $capability ): ViewPageInterface {
 		$this->capability = $capability;
 		return $this;
 	}
 
 	/**
-	 * @param SectionsInterface $sections
+	 * @inheritDoc
 	 */
 	public function withSections( SectionsInterface $sections ): void {
 		$this->sections = $sections;
 	}
 
 	/**
-	 * @param string $view
+	 * @inheritDoc
 	 */
-	public function render( $view ): void {
+	public function render( $view = '' ): void {
 		$this->assertCurrentUserCanSeeThePage();
+		$this->assertHasSections();
 		require $this->findView( $view );
 	}
 
@@ -99,7 +85,7 @@ class ViewPage
 	 *
 	 * @param string $page The slug name of the page whose settings sections you want to output.
 	 */
-	public function doSettingsSections( $page ) {
+	private function doSettingsSections( $page ) {
 
 		global $wp_settings_sections, $wp_settings_fields;
 
@@ -137,9 +123,9 @@ class ViewPage
 	/**
 	 * Create the nav tabs for section in admin plugin area
 	 */
-	public function createNavTab() {
+	private function createNavTab() {
 
-		if ( $this->sections->count() <= 2 ) {
+		if ( $this->sections->count() <= 1 ) {
 			return '';
 		}
 
@@ -170,7 +156,7 @@ class ViewPage
 
 	private function assertHasSections() {
 		if ( ! $this->sections ) {
-			throw new \RuntimeException( 'You must assign ' );
+			throw new \RuntimeException( 'You must assign ' . SectionsInterface::class . ' before calling ' . __CLASS__ . '::render()' );
 		}
 	}
 }
