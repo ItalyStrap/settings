@@ -27,7 +27,12 @@ class AdminPageCest
 
 		$this->pages = require codecept_data_dir( 'fixtures/config/' ) . 'pages.php';
 		$this->options_from_fields = require codecept_data_dir( 'fixtures/config/' ) . 'fields.php';
+		$this->options_from_advanced_fields = require codecept_data_dir( 'fixtures/config/' ) . 'fields-advanced.php';
 		$this->plugin = require codecept_data_dir( 'fixtures/config/' ) . 'plugin.php';
+
+		$this->all_options = \array_merge( $this->options_from_fields, $this->options_from_advanced_fields );
+
+		$this->count_options = \count( $this->all_options );
 
 		$I->loginAsAdmin();
 		$page = $this->pages['page'][ P::SLUG ];
@@ -74,6 +79,6 @@ class AdminPageCest
 
 		$I->seeOptionInDatabase( [ 'option_name' => $this->plugin['options_name'] ] );
 
-		\PHPUnit\Framework\Assert::assertCount( \count( $this->options_from_fields ), $option, '' );
+		\PHPUnit\Framework\Assert::assertCount( $this->count_options, $option, '' );
 	}
 }

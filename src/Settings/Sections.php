@@ -8,6 +8,8 @@ use ItalyStrap\Fields\FieldsInterface;
 
 class Sections implements \Countable, SectionsInterface
 {
+	use ShowableTrait;
+
 	const TAB_TITLE = 'tab_title';
 	const ID = 'id';
 	const TITLE = 'title';
@@ -67,10 +69,6 @@ class Sections implements \Countable, SectionsInterface
 		$this->options_values = (array) $options->get();
 	}
 
-	public function getSections(): array {
-		return $this->config->toArray();
-	}
-
 	public function load() {
 		$this->loadSection();
 		$this->register();
@@ -80,27 +78,39 @@ class Sections implements \Countable, SectionsInterface
 	 *
 	 */
 	private function loadSection(): void {
-		foreach ($this->config as $setting ) {
-			if ( isset( $setting[ 'show_on' ] ) && false === $setting[ 'show_on' ] ) {
+		foreach ( $this->config as $key => $section ) {
+			$this->parseSectionWithDefault( $section );
+			$this->config[ $key ] = $section;
+
+			if ( ! $this->showOn( $section[ 'show_on' ] ) ) {
 				continue;
 			}
 
 			\add_settings_section(
-				$setting[ self::ID ],
-				$setting[ self::TITLE ],
-				[$this, 'renderSectionCallback'], //array( $this, $field['callback'] ),
-				$this->getGroup() //$setting['page']
+				$section[ self::ID ],
+				$section[ self::TITLE ],
+				[ $this, 'renderSectionCallback' ], //array( $this, $field['callback'] ),
+				$this->getGroup() //$section['page']
 			);
 
-			$this->loadFields( $setting );
+			$this->loadFields( $section );
 		}
 	}
 
+	public function renderSectionCallback( array $args ) {
+
+//		if ( \is_callable( $this->settings[ $args['id'] ]['desc'] ) ) {
+//			\call_user_func( $this->settings[ $args['id'] ]['desc'], $args );
+//		}
+
+		echo $this->config[ $args['id'] ]['desc'] ?? ''; // XSS ok.
+	}
+
 	/**
-	 * @param array $setting
+	 * @param array $section
 	 */
-	private function loadFields( $setting ): void {
-		foreach ( $setting[ 'fields' ] as $field ) {
+	private function loadFields( $section ): void {
+		foreach ( $section[ 'fields' ] as $field ) {
 			if ( isset( $field[ 'show_on' ] ) && false === $field[ 'show_on' ] ) {
 				continue;
 			}
@@ -110,7 +120,7 @@ class Sections implements \Countable, SectionsInterface
 				$field[ self::TITLE ],
 				[$this, 'renderField'], //array( $this, $field['callback'] ),
 				$this->getGroup(), //$field['page'],
-				$setting[ self::ID ],
+				$section[ self::ID ],
 				$field[ 'args' ]
 			);
 		}
@@ -131,15 +141,6 @@ class Sections implements \Countable, SectionsInterface
 				'description'       => '',
 			]
 		);
-	}
-
-	public function renderSectionCallback( array $args ) {
-
-//		if ( \is_callable( $this->settings[ $args['id'] ]['desc'] ) ) {
-//			\call_user_func( $this->settings[ $args['id'] ]['desc'], $args );
-//		}
-
-		echo $this->config[ $args['id'] ]['desc'] ?? ''; // XSS ok.
 	}
 
 	public function renderField( array $args ) {
@@ -163,7 +164,20 @@ class Sections implements \Countable, SectionsInterface
 		return $this->options->getName() . '_options_group';
 	}
 
+	public function getSections(): array {
+		return $this->config->toArray();
+	}
+
 	public function count(): int {
 		return $this->config->count();
+	}
+
+	private function parseSectionWithDefault( array &$section ) {
+		$title = (array) \explode( ' ', $section[ self::TITLE ] );
+
+		$section = \array_merge( [
+			'show_on'	=> true,
+			'tab_title'	=> \ucfirst( \strval( $title[0] ) ),
+		], $section );
 	}
 }

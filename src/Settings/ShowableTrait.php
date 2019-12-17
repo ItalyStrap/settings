@@ -11,7 +11,7 @@ trait ShowableTrait {
 	 * @param string|bool $condition The config array.
 	 * @return bool         Return true if conditions are resolved.
 	 */
-	private function showOn( $condition ) {
+	private function showOn( $condition ): bool {
 
 		if ( \is_bool( $condition ) ) {
 			return $condition;
