@@ -117,11 +117,11 @@ class Sections implements \Countable, SectionsInterface
 
 			\add_settings_field(
 				$field[ self::ID ],
-				$field[ self::TITLE ],
+				$field[ 'name' ],
 				[$this, 'renderField'], //array( $this, $field['callback'] ),
 				$this->getGroup(), //$field['page'],
 				$section[ self::ID ],
-				$field[ 'args' ]
+				$field
 			);
 		}
 	}
@@ -153,7 +153,7 @@ class Sections implements \Countable, SectionsInterface
 		$fields = [];
 		foreach ( (array) $this->config as $section ) {
 			foreach ( $section['fields'] as $fields_value ) {
-				$fields[ $fields_value['id'] ] = $fields_value['args'];
+				$fields[ $fields_value['id'] ] = $fields_value;
 			}
 		}
 
