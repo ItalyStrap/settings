@@ -52,6 +52,7 @@ class DataParser {
 
 			/**
 			 * Validate fields if $field['validate'] is set
+			 * @todo add_settings_error()
 			 */
 			if ( isset( $field['validate'] ) ) {
 				$this->validation->addRules( $field['validate'] );

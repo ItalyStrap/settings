@@ -43,11 +43,8 @@ $sections_obj = new \ItalyStrap\Settings\Sections(
 add_action( 'admin_init', [ $sections_obj, 'register'] );
 
 
-$settings_obj = new \ItalyStrap\Settings\Settings(
-	$options_obj
-);
-
-add_action( 'update_option', [ $settings_obj, 'save' ], 10, 3 );
+$options_parser = new \ItalyStrap\Settings\OptionsParser(	$options_obj );
+add_action( 'update_option', [ $options_parser, 'save' ], 10, 3 );
 
 /**
  * ===================================

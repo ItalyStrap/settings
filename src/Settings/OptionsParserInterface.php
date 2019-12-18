@@ -13,11 +13,5 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
-interface SettingsInterface {
-
-	const TAB_TITLE = 'tab_title';
-	const ID = 'id';
-	const TITLE = 'title';
-	const DESC = 'desc';
-	const FIELDS = 'fields';
+interface OptionsParserInterface {
 }
