@@ -15,6 +15,8 @@ class Sections implements \Countable, SectionsInterface
 	const TITLE = 'title';
 	const DESC = 'desc';
 	const FIELDS = 'fields';
+	const LABEL_CLASS = 'class_for_label';
+
 	/**
 	 * Settings for plugin admin page
 	 *
@@ -45,6 +47,11 @@ class Sections implements \Countable, SectionsInterface
 	 * @var Options
 	 */
 	private $options;
+
+	/**
+	 * @var array
+	 */
+	private $field_class;
 
 	/**
 	 * Initialize Class
@@ -116,6 +123,9 @@ class Sections implements \Countable, SectionsInterface
 				continue;
 			}
 
+			$this->field_class[ $field[ self::ID ] ] = $field['class'];
+			$field['class'] = $field[ self::LABEL_CLASS ];
+
 			\add_settings_field(
 				$field[ self::ID ],
 				$field[ 'label' ],
@@ -129,15 +139,17 @@ class Sections implements \Countable, SectionsInterface
 
 	private function parseFieldWithDefault( array &$field ) {
 		$field = \array_merge( [
-			'show_on'	=> true,
-			'label_for'	=> $this->getStringForLabel( $field ),
-			'class'		=> '',
+			'show_on'			=> true,
+			'label_for'			=> $this->getStringForLabel( $field ),
+			'class'				=> '',
+			self::LABEL_CLASS	=> '',
 		], $field );
 	}
 
 	public function renderField( array $args ): void {
 		// Unset label because it is already rendered by settings_field API
-		unset( $args['label'], $args['show_on'], $args['label_for'] );
+		unset( $args['label'], $args['show_on'], $args['label_for'], $args[ self::LABEL_CLASS ] );
+		$args['class'] = $this->field_class[ $args['id'] ];
 		$args['id'] = $args['name'] = $this->getStringForLabel( $args );
 		echo $this->fields->render( $args, $this->options_values ); // XSS ok.
 	}

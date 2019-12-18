@@ -48,12 +48,12 @@ class AdminPageCest
     	$page = $this->pages['page'][ P::SLUG ];
     	$I->amOnAdminPage( '?page=' . $page );
 
-    	$I->seeElement( 'input', [ 'name' => 'italystrap[test_mode]' ] );
+//    	$I->seeElement( 'input', [ 'name' => 'italystrap[checkbox]' ] );
 
-    	$I->checkOption([ 'name' => 'italystrap[test_mode]' ] );
+		$I->checkOption([ 'name' => 'italystrap[checkbox]' ] );
 
 		$formFields =  [
-			'italystrap[test_mode]'	=> 'on',
+//			'italystrap[checkbox]'	=> 'on',
 		];
 
 		// Submit the form as a user would submit it.

@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 
+use ItalyStrap\Settings\Sections as S;
+
 return [
 	[
 		'label'			=> __( 'Text', 'italystrap' ),
@@ -15,8 +17,9 @@ return [
 		'desc'			=> __( 'Description.', 'italystrap' ),
 		'id'			=> 'button',
 		'type'			=> 'button',
-//		'class'			=> 'button button-primary', // Per ora c'è un problema, class viene usata per la label dei settings
 		'value'			=> 'Click',
+		'class'			=> 'button button-primary', // CSS class for field
+		S::LABEL_CLASS	=> 'ciao', // CSS class for the label of the add_settings_field
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
