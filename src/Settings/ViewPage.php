@@ -157,8 +157,14 @@ class ViewPage implements ViewPageInterface {
 	}
 
 	private function assertHasSections() {
-		if ( ! $this->sections ) {
-			throw new \RuntimeException( 'You must assign ' . SectionsInterface::class . ' before calling ' . __CLASS__ . '::render()' );
+		if ( ! $this->sections instanceof SectionsInterface ) {
+			$message = \sprintf(
+				'You must assign %s before calling %s::render()',
+				SectionsInterface::class,
+				__CLASS__
+			);
+
+			throw new \RuntimeException( $message );
 		}
 	}
 }

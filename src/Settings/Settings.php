@@ -58,7 +58,6 @@ class Settings implements SettingsInterface {
 	/**
 	 * Initialize Class
 	 *
-	 * @param SectionsInterface $sections The configuration array plugin fields.
 	 * @param Options $options Get the plugin options.
 	 * @param string $capability
 	 */
