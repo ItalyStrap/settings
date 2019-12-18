@@ -6,7 +6,9 @@
  */
 declare(strict_types=1);
 
-use function ItalyStrap\{HTML\close_tag_e, HTML\open_tag_e, HTML\void_tag};
+use function ItalyStrap\HTML\close_tag_e;
+use function ItalyStrap\HTML\open_tag_e;
+use function ItalyStrap\HTML\void_tag;
 
 $spinner = void_tag( $this->getGroup() . '_spinner', 'img', [
 	'class'	=> 'loading-gif',
@@ -55,6 +57,12 @@ $spinner = void_tag( $this->getGroup() . '_spinner', 'img', [
 /**
  * https://www.wpoptimus.com/434/save-plugin-theme-setting-options-ajax-wordpress/
  */
+
+$updated = \sprintf(
+	'<div class="updated"><p>%s</p></div>',
+	\htmlentities( \__('Settings Saved Successfully', 'wp'), ENT_QUOTES )
+);
+
 ?>
 <script type="text/javascript">
 	jQuery( document ).ready( function($) {
@@ -65,7 +73,7 @@ $spinner = void_tag( $this->getGroup() . '_spinner', 'img', [
 			$(this).ajaxSubmit({
 				success: function(){
 					$('#saveResult').html("<div id='saveMessage' class='successModal'></div>");
-					$('#saveMessage').append("<div class=\"updated\"><p><?php echo \htmlentities(__('Settings Saved Successfully', 'wp'), ENT_QUOTES); ?></p></div>").show();
+					$('#saveMessage').append('<?php echo $updated; ?>').show();
 					spinner.fadeOut();
 				},
 				error: function( data ) {

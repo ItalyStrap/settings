@@ -2,32 +2,40 @@
 
 class SectionsTest extends \Codeception\TestCase\WPTestCase
 {
-    /**
-     * @var \WpunitTester
-     */
-    protected $tester;
+	/**
+	 * @var \WpunitTester
+	 */
+	protected $tester;
 
-    public function setUp(): void
-    {
-        // Before...
-        parent::setUp();
+	public function setUp(): void {
+		// Before...
+		parent::setUp();
 
-        // Your set up methods here.
-    }
+		// Your set up methods here.
+	}
 
-    public function tearDown(): void
-    {
-        // Your tear down methods here.
+	public function tearDown(): void {
+		// Your tear down methods here.
 
-        // Then...
-        parent::tearDown();
-    }
+		// Then...
+		parent::tearDown();
+	}
 
-    // Tests
-    public function test_it_works()
-    {
-		$post = static::factory()->post->create_and_get();
+	private function getInstance(): \ItalyStrap\Settings\Sections {
+		$config = \ItalyStrap\Config\ConfigFactory::make();
+		$fields = new \ItalyStrap\Fields\Fields();
+		$parser = new \ItalyStrap\Settings\DataParser();
+		$options = new \ItalyStrap\Settings\Options( 'italystrap' );
+		$sut = new \ItalyStrap\Settings\Sections( $config, $fields, $parser, $options );
+		$this->assertInstanceOf( \ItalyStrap\Settings\SectionsInterface::class, $sut, '' );
+		$this->assertInstanceOf( \ItalyStrap\Settings\Sections::class, $sut, '' );
+		return $sut;
+	}
 
-		$this->assertInstanceOf(\WP_Post::class, $post);
-    }
+	/**
+	 * @test
+	 */
+	public function ItShouldBeInstantiable() {
+		$sut = $this->getInstance();
+	}
 }

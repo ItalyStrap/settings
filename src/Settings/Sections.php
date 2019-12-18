@@ -6,8 +6,8 @@ namespace ItalyStrap\Settings;
 use ItalyStrap\Config\Config;
 use ItalyStrap\Fields\FieldsInterface;
 
-class Sections implements \Countable, SectionsInterface
-{
+class Sections implements \Countable, SectionsInterface {
+
 	use ShowableTrait;
 
 	const TAB_TITLE = 'tab_title';
@@ -51,7 +51,8 @@ class Sections implements \Countable, SectionsInterface
 	/**
 	 * @var array
 	 */
-	private $field_class;
+	private $field_class = [];
+	private $section_key;
 
 	/**
 	 * Initialize Class
@@ -76,18 +77,21 @@ class Sections implements \Countable, SectionsInterface
 		$this->options_values = (array) $options->get();
 	}
 
-	public function load() {
-		$this->loadSection();
-		$this->register();
+	/**
+	 * @inheritDoc
+	 */
+	public function register() {
+		$this->addSettingsSections();
+		$this->registerSetting();
 	}
 
 	/**
 	 *
 	 */
-	private function loadSection(): void {
+	private function addSettingsSections(): void {
 		foreach ( $this->config as $key => $section ) {
 			$this->parseSectionWithDefault( $section );
-			$this->config[ $key ] = $section;
+			$this->section_key[ $section[ self::ID ] ] = $key;
 
 			if ( ! $this->showOn( $section[ 'show_on' ] ) ) {
 				continue;
@@ -100,23 +104,25 @@ class Sections implements \Countable, SectionsInterface
 				$this->getGroup() //$section['page']
 			);
 
-			$this->loadFields( $section );
+			$this->addSettingsFields( $section );
 		}
 	}
 
 	public function renderSection( array $args ) {
 
-//		if ( \is_callable( $this->settings[ $args['id'] ]['desc'] ) ) {
-//			\call_user_func( $this->settings[ $args['id'] ]['desc'], $args );
-//		}
+		$section = $this->config->get( $this->section_key[ $args[ self::ID ] ] . '.desc', '' );
 
-		echo $this->config[ $args['id'] ]['desc'] ?? ''; // XSS ok.
+		if ( \is_callable( $section ) ) {
+			$section = \call_user_func( $section, $args );
+		}
+
+		echo $section; // XSS ok.
 	}
 
 	/**
 	 * @param array $section
 	 */
-	private function loadFields( $section ): void {
+	private function addSettingsFields( $section ): void {
 		foreach ( $section[ 'fields' ] as $field ) {
 			$this->parseFieldWithDefault( $field );
 			if ( ! $this->showOn( $field[ 'show_on' ] ) ) {
@@ -128,8 +134,8 @@ class Sections implements \Countable, SectionsInterface
 
 			\add_settings_field(
 				$field[ self::ID ],
-				$field[ 'label' ],
-				[$this, 'renderField'], //array( $this, $field['callback'] ),
+				$field['label'],
+				[ $this, 'renderField' ], //array( $this, $field['callback'] ),
 				$this->getGroup(), //$field['page'],
 				$section[ self::ID ],
 				$field // $args
@@ -143,22 +149,30 @@ class Sections implements \Countable, SectionsInterface
 			'label_for'			=> $this->getStringForLabel( $field ),
 			'class'				=> '',
 			self::LABEL_CLASS	=> '',
+			'callback'			=> null,
 		], $field );
 	}
 
-	public function renderField( array $args ): void {
+	public function renderField( array $args ) {
+
+		if ( \is_callable( $args['callback'] ) ) {
+			return \call_user_func( $args['callback'], $args );
+		}
+
 		// Unset label because it is already rendered by settings_field API
-		unset( $args['label'], $args['show_on'], $args['label_for'], $args[ self::LABEL_CLASS ] );
+		unset( $args['label'], $args['show_on'], $args['label_for'], $args[ self::LABEL_CLASS ], $args['callback'] );
+
 		$args['class'] = $this->field_class[ $args['id'] ];
 		$args['id'] = $args['name'] = $this->getStringForLabel( $args );
 		echo $this->fields->render( $args, $this->options_values ); // XSS ok.
+		return '';
 	}
 
 	/**
 	 * Register settings.
 	 * This allow you to override this method.
 	 */
-	private function register(): void {
+	private function registerSetting(): void {
 		\register_setting(
 			$this->getGroup(),
 			$this->options->getName(),
@@ -171,7 +185,7 @@ class Sections implements \Countable, SectionsInterface
 		);
 	}
 
-	public function fieldsToArray() {
+	private function fieldsToArray() {
 
 		$fields = [];
 		foreach ( (array) $this->config as $section ) {

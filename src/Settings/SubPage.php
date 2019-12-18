@@ -7,7 +7,7 @@ namespace ItalyStrap\Settings;
  * Class SubPage
  * @package ItalyStrap\Settings
  */
-class SubPage
-{
+class SubPage {
+
 
 }

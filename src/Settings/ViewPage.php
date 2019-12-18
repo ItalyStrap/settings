@@ -3,8 +3,8 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
-class ViewPage implements ViewPageInterface
-{
+class ViewPage implements ViewPageInterface {
+
 	use ShowableTrait;
 
 	const DS = DIRECTORY_SEPARATOR;
@@ -136,7 +136,6 @@ class ViewPage implements ViewPageInterface
 		$out = '<ul>';
 
 		foreach ( $this->sections->getSections() as $key => $section ) {
-
 			if ( isset( $section[ 'show_on' ] ) && ! $this->showOn( $section[ 'show_on' ] ) ) {
 				continue;
 			}

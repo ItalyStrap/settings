@@ -2,13 +2,12 @@
 
 namespace ItalyStrap\Settings;
 
-
 /**
  * Class Sectons
  * @package ItalyStrap\Settings
  */
-interface SectionsInterface
-{
+interface SectionsInterface {
+
 	/**
 	 * @return array
 	 */
@@ -17,7 +16,7 @@ interface SectionsInterface
 	/**
 	 * Init settings for admin area
 	 */
-	public function load();
+	public function register();
 
 	/**
 	 * Render section CB
@@ -32,13 +31,6 @@ interface SectionsInterface
 	 * @param array $args Array with arguments.
 	 */
 	public function renderField( array $args );
-
-	/**
-	 * Get the plugin fields
-	 *
-	 * @return array The plugin fields
-	 */
-	public function fieldsToArray();
 
 	/**
 	 * @return string

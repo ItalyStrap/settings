@@ -40,10 +40,10 @@ $sections_obj = new \ItalyStrap\Settings\Sections(
 	new \ItalyStrap\Settings\DataParser(),
 	$options_obj
 );
-add_action( 'admin_init', [ $sections_obj, 'load' ] );
+add_action( 'admin_init', [ $sections_obj, 'register'] );
 
 $settings_obj = new \ItalyStrap\Settings\Settings(
-	$sections_obj,
+//	$sections_obj,
 	$options_obj,
 	$plugin['capability']
 );

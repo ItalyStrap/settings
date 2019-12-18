@@ -2,13 +2,12 @@
 
 namespace ItalyStrap\Settings;
 
-
 /**
  * Class ViewPage
  * @package ItalyStrap\Settings
  */
-interface ViewPageInterface
-{
+interface ViewPageInterface {
+
 	/**
 	 * @param mixed $capability
 	 * @return ViewPageInterface

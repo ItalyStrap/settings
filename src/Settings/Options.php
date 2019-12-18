@@ -7,8 +7,8 @@ namespace ItalyStrap\Settings;
  * Class Options
  * @package ItalyStrap\Settings
  */
-class Options
-{
+class Options {
+
 	/**
 	 * @var string
 	 */
