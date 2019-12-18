@@ -61,15 +61,13 @@ class Settings implements SettingsInterface {
 	 * @param Options $options Get the plugin options.
 	 * @param string $capability
 	 */
-	public function __construct( Options $options, string $capability ) {
+	public function __construct( Options $options ) {
 
 //		$this->sections = $sections;
 
 		$this->options = $options;
 
 //		$this->settingsFields = $this->getSectionsFields();
-
-		$this->capability = $capability;
 	}
 
 	/**

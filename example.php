@@ -42,12 +42,11 @@ $sections_obj = new \ItalyStrap\Settings\Sections(
 );
 add_action( 'admin_init', [ $sections_obj, 'register'] );
 
+
 $settings_obj = new \ItalyStrap\Settings\Settings(
-//	$sections_obj,
-	$options_obj,
-	$plugin['capability']
+	$options_obj
 );
-//add_action( 'admin_init', [ $settings_obj, 'load' ] );
+
 add_action( 'update_option', [ $settings_obj, 'save' ], 10, 3 );
 
 /**
