@@ -6,7 +6,7 @@
  */
 declare(strict_types=1);
 
-use ItalyStrap\Settings\OptionsParser as S;
+use ItalyStrap\Settings\Sections as S;
 
 /**
  * Settings for the content area

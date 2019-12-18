@@ -51,12 +51,12 @@ add_action( 'update_option', [ $options_parser, 'save' ], 10, 3 );
  *
  * ===================================
  */
-$view_page = new \ItalyStrap\Settings\ViewPage();
+$view = new \ItalyStrap\Settings\ViewPage();
 
 $pages_obj = new \ItalyStrap\Settings\Page(
 	\ItalyStrap\Config\ConfigFactory::make( $pages_config ),
 	$sections_obj,
-	$view_page
+	$view
 );
 
 add_action( 'admin_menu', [ $pages_obj, 'load'] );
