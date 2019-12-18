@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
-use ItalyStrap\Config\Config;
+use ItalyStrap\Config\ConfigInterface as Config;
 use ItalyStrap\Fields\FieldsInterface;
 
 class Sections implements \Countable, SectionsInterface {
@@ -108,6 +108,15 @@ class Sections implements \Countable, SectionsInterface {
 		}
 	}
 
+	private function parseSectionWithDefault( array &$section ) {
+		$title = (array) \explode( ' ', $section[ self::TITLE ] );
+
+		$section = \array_merge( [
+			'show_on'	=> true,
+			'tab_title'	=> \ucfirst( \strval( $title[0] ) ),
+		], $section );
+	}
+
 	public function renderSection( array $args ) {
 
 		$section = $this->config->get( $this->section_key[ $args[ self::ID ] ] . '.desc', '' );
@@ -207,15 +216,6 @@ class Sections implements \Countable, SectionsInterface {
 
 	public function count(): int {
 		return $this->config->count();
-	}
-
-	private function parseSectionWithDefault( array &$section ) {
-		$title = (array) \explode( ' ', $section[ self::TITLE ] );
-
-		$section = \array_merge( [
-			'show_on'	=> true,
-			'tab_title'	=> \ucfirst( \strval( $title[0] ) ),
-		], $section );
 	}
 
 	/**

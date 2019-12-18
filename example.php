@@ -28,11 +28,13 @@ if ( ! defined( 'ITALYSTRAP_BASENAME' ) ) {
 	define( 'ITALYSTRAP_BASENAME', plugin_basename( ITALYSTRAP_FILE ) );
 }
 
-$plugin = require __DIR__ . '/tests/_data/fixtures/config/plugin.php';
+$option_name = 'italystrap';
+$option_group = 'italystrap_options_group';
+
 $sections = require __DIR__ . '/tests/_data/fixtures/config/sections.php';
 $pages_config = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
 
-$options_obj = new \ItalyStrap\Settings\Options( $plugin['options_name'], $plugin['options_group'] );
+$options_obj = new \ItalyStrap\Settings\Options( $option_name, $option_group );
 
 $sections_obj = new \ItalyStrap\Settings\Sections(
 	\ItalyStrap\Config\ConfigFactory::make( $sections ),
@@ -77,9 +79,9 @@ add_action( 'admin_enqueue_scripts', [ $asset, 'enqueue'] );
 /**
  * Adjust priority to make sure this runs
  */
-\add_action( 'init', function () use ( $plugin ) {
+//\add_action( 'init', function () use ( $plugin ) {
 	/**
 	 * Load po file
 	 */
 //	\load_plugin_textdomain( $plugin['options_name'], null, \dirname( ITALYSTRAP_BASENAME ) . '/languages' );
-}, 100 );
+//}, 100 );

@@ -22,12 +22,35 @@ class DataParser {
 	 */
 	private $translator;
 
+	/**
+	 * @var array
+	 */
 	private $fields = [];
 
-	public function __construct() {
+	/**
+	 * @var array
+	 */
+	private $filters;
+
+	public function __construct( array $fields = [] ) {
+		$this->fields = $fields;
 		$this->validation = new Validation;
 		$this->sanitization = new Sanitization;
 		$this->translator = new Translator( 'ItalyStrap' );
+	}
+
+	/**
+	 * @param array $fields
+	 * @return DataParser
+	 */
+	public function withFields( array $fields ): DataParser {
+		$this->fields = \array_replace_recursive( $this->fields, $fields );
+		return $this;
+	}
+
+	public function withFilters( FilterableInterface ...$filters ): DataParser {
+		$this->filters = \array_merge( $this->filters, $filters );
+		return $this;
 	}
 
 	/**
@@ -36,7 +59,7 @@ class DataParser {
 	 * @param  array $data The input array.
 	 * @return array           Return the array sanitized
 	 */
-	public function parse( $data ) {
+	public function parse( array $data ): array {
 
 		foreach ( $this->fields as $field ) {
 			if ( ! isset( $data[ $field['id'] ] ) ) {
@@ -88,14 +111,5 @@ class DataParser {
 		}
 
 		return $data;
-	}
-
-	/**
-	 * @param array $fields
-	 * @return DataParser
-	 */
-	public function withFields( array $fields ): DataParser {
-		$this->fields = $fields;
-		return $this;
 	}
 }
