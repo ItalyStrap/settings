@@ -24,7 +24,7 @@ interface SectionsInterface
 	 *
 	 * @param array $args The arguments for section CB.
 	 */
-	public function renderSectionCallback( array $args );
+	public function renderSection( array $args );
 
 	/**
 	 * Get the field type

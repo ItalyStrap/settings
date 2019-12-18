@@ -89,7 +89,7 @@ class Sections implements \Countable, SectionsInterface
 			\add_settings_section(
 				$section[ self::ID ],
 				$section[ self::TITLE ],
-				[ $this, 'renderSectionCallback' ], //array( $this, $field['callback'] ),
+				[ $this, 'renderSection' ], //array( $this, $field['callback'] ),
 				$this->getGroup() //$section['page']
 			);
 
@@ -97,7 +97,7 @@ class Sections implements \Countable, SectionsInterface
 		}
 	}
 
-	public function renderSectionCallback( array $args ) {
+	public function renderSection( array $args ) {
 
 //		if ( \is_callable( $this->settings[ $args['id'] ]['desc'] ) ) {
 //			\call_user_func( $this->settings[ $args['id'] ]['desc'], $args );
@@ -118,7 +118,7 @@ class Sections implements \Countable, SectionsInterface
 
 			\add_settings_field(
 				$field[ self::ID ],
-				$field[ 'name' ],
+				$field[ 'label' ],
 				[$this, 'renderField'], //array( $this, $field['callback'] ),
 				$this->getGroup(), //$field['page'],
 				$section[ self::ID ],
@@ -135,7 +135,9 @@ class Sections implements \Countable, SectionsInterface
 		], $field );
 	}
 
-	public function renderField( array $args ) {
+	public function renderField( array $args ): void {
+		// Unset label because it is already rendered by settings_field API
+		unset( $args['label'], $args['show_on'], $args['label_for'] );
 		$args['id'] = $args['name'] = $this->getStringForLabel( $args );
 		echo $this->fields->render( $args, $this->options_values ); // XSS ok.
 	}
