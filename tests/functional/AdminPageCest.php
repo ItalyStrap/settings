@@ -37,7 +37,7 @@ class AdminPageCest
 		$I->loginAsAdmin();
 		$page = $this->pages['page'][ P::SLUG ];
 		$I->amOnAdminPage( 'admin.php?page=' . $page );
-		$I->seeElement( 'input', [ 'name' => 'italystrap[test_mode]' ] );
+		$I->seeElement( 'input', [ 'name' => 'italystrap[text]' ] );
     }
 
 	/**
@@ -65,10 +65,10 @@ class AdminPageCest
 
 		$I->seeElement( 'input', [ 'type' => 'checkbox' ] );
 
-		$I->checkOption([ 'name' => 'italystrap[test_mode]' ] );
+		$I->checkOption([ 'name' => 'italystrap[checkbox]' ] );
 
 		$formFields =  [
-			'italystrap[test_mode]'	=> 'on',
+			'italystrap[text]'	=> 'on',
 		];
 
 		// Submit the form as a user would submit it.
