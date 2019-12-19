@@ -246,7 +246,7 @@ class DataParserTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	private function ItShouldParseArrayInDataValue() {
+	public function ItShouldParseArrayInDataValue() {
 
 		$sut = $this->getInstance();
 
