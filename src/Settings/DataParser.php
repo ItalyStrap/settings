@@ -47,26 +47,12 @@ class DataParser {
 		foreach ( $this->schema as $schema ) {
 			$this->mergeWithDefault( $schema );
 			$key = $schema['id'];
-
-			if ( ! isset( $data[ $key ] ) ) {
-				$data[ $key ] = '';
-			}
+			$data = $this->assertDataHasValue( $data, $key );
 
 			if ( empty( $this->filters ) ) {
 				$data[ $key ] = \trim( \strip_tags( $data[ $key ] ) );
 			}
 
-			/**
-			 * @todo Fare il controllo che $data[ $key ] non sia un array
-			 *       Nel caso fosse un array bisogna fare un sanitize apposito,
-			 *       per ora ho aggiunto un metodo ::sanitize_select_multiple() che
-			 *       sanitizza i valori nell'array ma bisogna sempre indicarlo
-			 *       nella configurazione del widget/option altrimenti da errore.
-			 *       Valutare anche in futuro di fare un metodo ricorsivo per array
-			 *       multidimensionali.
-			 *       Altre possibilità sono gli array con valori boleani o float e int
-			 *       Per ora sanitizza come fossero stringhe.
-			 */
 //			if ( isset( $field['capability'] ) && true === $field['capability'] ) {
 ////				$data[ $key ] = $data[ $key ];
 //				continue;
@@ -92,5 +78,17 @@ class DataParser {
 		];
 
 		$schema = \array_replace_recursive( $default, $schema );
+	}
+
+	/**
+	 * @param array $data
+	 * @param $key
+	 * @return array
+	 */
+	private function assertDataHasValue( array $data, $key ): array {
+		if ( !isset( $data[ $key ] ) ) {
+			$data[ $key ] = '';
+		}
+		return $data;
 	}
 }
