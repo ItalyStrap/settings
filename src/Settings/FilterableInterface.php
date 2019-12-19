@@ -6,5 +6,5 @@ namespace ItalyStrap\Settings;
 
 interface FilterableInterface
 {
-
+	public function filter( $schema, $data );
 }

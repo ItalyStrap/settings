@@ -187,7 +187,7 @@ class Sections implements \Countable, SectionsInterface {
 			$this->options->getName(),
 			[
 				'sanitize_callback'	=>
-					[ $this->parser->withFields( $this->fieldsToArray() ), 'parse' ],
+					[ $this->parser->withSchema( $this->fieldsToArray() ), 'parse' ],
 				'show_in_rest'      => false,
 				'description'       => '',
 			]
