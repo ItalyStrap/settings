@@ -24,6 +24,9 @@ class TranslateFilter implements FilterableInterface
 	public function filter( array $schema, array $data ) {
 
 		if ( $schema['translate'] ) {
+			/**
+			 * @todo Maybe add some kind of error if no strings are registered
+			 */
 			$this->translator->registerString( $schema['id'], strip_tags( $data[ $schema['id'] ] ) );
 		}
 

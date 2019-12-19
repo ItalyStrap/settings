@@ -31,15 +31,22 @@ if ( ! defined( 'ITALYSTRAP_BASENAME' ) ) {
 $option_name = 'italystrap';
 $option_group = 'italystrap_options_group';
 
-$sections = require __DIR__ . '/tests/_data/fixtures/config/sections.php';
-$pages_config = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
-
 $options_obj = new \ItalyStrap\Settings\Options( $option_name, $option_group );
+
+
+$sections = require __DIR__ . '/tests/_data/fixtures/config/sections.php';
+
+$data_parser = new \ItalyStrap\Settings\DataParser();
+$data_parser->withFilters(
+	new \ItalyStrap\Settings\Filters\SanitizeFilter( new \ItalyStrap\Cleaner\Sanitization() ),
+	new \ItalyStrap\Settings\Filters\ValidateFilter( new \ItalyStrap\Cleaner\Validation() ),
+	new \ItalyStrap\Settings\Filters\TranslateFilter( new \ItalyStrap\I18N\Translator( 'ItalyStrap' ) )
+);
 
 $sections_obj = new \ItalyStrap\Settings\Sections(
 	\ItalyStrap\Config\ConfigFactory::make( $sections ),
 	new \ItalyStrap\Fields\Fields(),
-	new \ItalyStrap\Settings\DataParser(),
+	$data_parser,
 	$options_obj
 );
 add_action( 'admin_init', [ $sections_obj, 'register'] );
@@ -49,6 +56,7 @@ add_action( 'admin_init', [ $sections_obj, 'register'] );
  *
  * ===================================
  */
+$pages_config = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
 
 $pages_obj = new \ItalyStrap\Settings\Page(
 	\ItalyStrap\Config\ConfigFactory::make( $pages_config ),
@@ -64,7 +72,7 @@ add_action( 'admin_menu', [ $pages_obj, 'load'] );
 $asset = new \ItalyStrap\Settings\Asset();
 add_action( 'admin_enqueue_scripts', [ $asset, 'enqueue'] );
 
-$options_parser = new \ItalyStrap\Settings\OptionsParser(	$options_obj );
+$options_parser = new \ItalyStrap\Settings\OptionsParser( $options_obj );
 add_action( 'update_option', [ $options_parser, 'save' ], 10, 3 );
 
 /**
