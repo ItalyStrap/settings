@@ -65,9 +65,9 @@ class DataParser {
 	 */
 	public function parse( array $data ): array {
 
-		foreach ($this->schema as $field ) {
-			$this->mergeWithDefault( $field );
-			$key = $field['id'];
+		foreach ( $this->schema as $schema ) {
+			$this->mergeWithDefault( $schema );
+			$key = $schema['id'];
 
 			if ( ! isset( $data[ $key ] ) ) {
 				$data[ $key ] = '';
@@ -77,27 +77,11 @@ class DataParser {
 				$data[ $key ] = \trim( \strip_tags( $data[ $key ] ) );
 			}
 
-			foreach ( $this->filters as $filter ) {
-				$data[ $key ] = $filter->filter( $field, $data );
-			}
-
 			/**
 			 * Register string for translation
 			 */
 //			if ( isset( $field['translate'] ) && true === $field['translate'] ) {
 //				$this->translator->registerString( $key, strip_tags( $data[ $key ] ) );
-//			}
-
-			/**
-			 * Validate fields if $field['validate'] is set
-			 * @todo add_settings_error()
-			 */
-//			if ( isset( $field['validate'] ) ) {
-//				$this->validation->addRules( $field['validate'] );
-//
-//				if ( false === $this->validation->validate( $data[ $key ] ) ) {
-//					$data[ $key ] = '';
-//				}
 //			}
 
 			/**
@@ -115,14 +99,10 @@ class DataParser {
 ////				$data[ $key ] = $data[ $key ];
 //				continue;
 //			}
-//
-//			if ( isset( $field['sanitize'] ) ) {
-//				$this->sanitization->addRules( $field['sanitize'] );
-//			} else {
-//				$this->sanitization->addRules( 'strip_tags|trim' );
-//			}
-//
-//			$data[ $key ] = $this->sanitization->sanitize( $data[ $key ] );
+
+			foreach ( $this->filters as $filter ) {
+				$data[ $key ] = $filter->filter( $schema, $data );
+			}
 		}
 
 		return $data;
