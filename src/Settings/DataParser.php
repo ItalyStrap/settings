@@ -78,13 +78,6 @@ class DataParser {
 			}
 
 			/**
-			 * Register string for translation
-			 */
-//			if ( isset( $field['translate'] ) && true === $field['translate'] ) {
-//				$this->translator->registerString( $key, strip_tags( $data[ $key ] ) );
-//			}
-
-			/**
 			 * @todo Fare il controllo che $data[ $key ] non sia un array
 			 *       Nel caso fosse un array bisogna fare un sanitize apposito,
 			 *       per ora ho aggiunto un metodo ::sanitize_select_multiple() che

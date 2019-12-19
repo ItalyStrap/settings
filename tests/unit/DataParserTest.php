@@ -205,4 +205,41 @@ class DataParserTest extends \Codeception\Test\Unit
 		$data = $sut->parse( [ 'email' => '<p>test@localhost.com</p>' ] );
 		$this->assertEquals( [ 'email' => 'test@localhost.com' ], $data, '' );
     }
+
+	/**
+	 * @test
+	 */
+	public function ItShouldReturnEmptyStringIfValidationFailrehaerhadsgsd() {
+
+		$sut = $this->getInstance();
+
+		$san = new \ItalyStrap\Cleaner\Sanitization();
+		$filter_san = new \ItalyStrap\Settings\Filters\SanitizeFilter( $san );
+
+		$val = new \ItalyStrap\Cleaner\Validation();
+		$filter_val = new \ItalyStrap\Settings\Filters\ValidateFilter( $val );
+
+		$tras = new \ItalyStrap\I18N\Translator( 'name' );
+		$filter_tras = new \ItalyStrap\Settings\Filters\TranslateFilter( $tras );
+
+		$sut->withFilters( $filter_san, $filter_val, $filter_tras );
+
+		$sut->withSchema(
+			[
+				[
+					'id'			=> 'email',
+					'sanitize'		=> [
+						function ( $string ) {
+							return \filter_var( $string, FILTER_SANITIZE_STRING );
+						},
+					],
+					'validate'		=> 'is_email',
+					'translate'		=> true,
+				],
+			]
+		);
+
+		$data = $sut->parse( [ 'email' => '<p>test@localhost.com</p>' ] );
+		$this->assertEquals( [ 'email' => 'test@localhost.com' ], $data, '' );
+    }
 }

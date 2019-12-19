@@ -44,30 +44,28 @@ $sections_obj = new \ItalyStrap\Settings\Sections(
 );
 add_action( 'admin_init', [ $sections_obj, 'register'] );
 
-
-$options_parser = new \ItalyStrap\Settings\OptionsParser(	$options_obj );
-add_action( 'update_option', [ $options_parser, 'save' ], 10, 3 );
-
 /**
  * ===================================
  *
  * ===================================
  */
-$view = new \ItalyStrap\Settings\ViewPage();
 
 $pages_obj = new \ItalyStrap\Settings\Page(
 	\ItalyStrap\Config\ConfigFactory::make( $pages_config ),
 	$sections_obj,
-	$view
+	new \ItalyStrap\Settings\ViewPage()
 );
 
 add_action( 'admin_menu', [ $pages_obj, 'load'] );
 
 /**
- * Load script for ItalyStrap\Admin
+ * Load script for Tabbed admin page
  */
 $asset = new \ItalyStrap\Settings\Asset();
 add_action( 'admin_enqueue_scripts', [ $asset, 'enqueue'] );
+
+$options_parser = new \ItalyStrap\Settings\OptionsParser(	$options_obj );
+add_action( 'update_option', [ $options_parser, 'save' ], 10, 3 );
 
 /**
  * Add link in plugin activation panel
