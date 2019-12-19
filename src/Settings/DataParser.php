@@ -64,7 +64,6 @@ class DataParser {
 	 * @return array           Return the array sanitized
 	 */
 	public function parse( array $data ): array {
-
 		foreach ( $this->schema as $schema ) {
 			$this->mergeWithDefault( $schema );
 			$key = $schema['id'];
@@ -93,11 +92,11 @@ class DataParser {
 //				continue;
 //			}
 
+
 			foreach ( $this->filters as $filter ) {
 				$data[ $key ] = $filter->filter( $schema, $data );
 			}
 		}
-
 		return $data;
 	}
 

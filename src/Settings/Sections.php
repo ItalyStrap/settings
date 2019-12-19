@@ -172,8 +172,10 @@ class Sections implements \Countable, SectionsInterface {
 		unset( $args['label'], $args['show_on'], $args['label_for'], $args[ self::LABEL_CLASS ], $args['callback'] );
 
 		$args['class'] = $this->field_class[ $args['id'] ];
+
+		$args['value'] = $this->options_values[ $args['id'] ] ?? '';
 		$args['id'] = $args['name'] = $this->getStringForLabel( $args );
-		echo $this->fields->render( $args, $this->options_values ); // XSS ok.
+		echo $this->fields->render( $args ); // XSS ok.
 		return '';
 	}
 
@@ -186,8 +188,7 @@ class Sections implements \Countable, SectionsInterface {
 			$this->getGroup(),
 			$this->options->getName(),
 			[
-				'sanitize_callback'	=>
-					[ $this->parser->withSchema( $this->fieldsToArray() ), 'parse' ],
+				'sanitize_callback'	=> [ $this->parser->withSchema( $this->fieldsToArray() ), 'parse' ],
 				'show_in_rest'      => false,
 				'description'       => '',
 			]

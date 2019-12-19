@@ -176,7 +176,7 @@ class DataParserTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnEmptyStringIfValidationFailrehaerha() {
+	public function ItShouldReturnSanitizedAndValidatedEmail() {
 
 		$sut = $this->getInstance();
 
@@ -209,7 +209,7 @@ class DataParserTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnEmptyStringIfValidationFailrehaerhadsgsd() {
+	public function ItShouldReturnSanitizedValidatedAnsTranslatedEmail() {
 
 		$sut = $this->getInstance();
 
@@ -241,5 +241,65 @@ class DataParserTest extends \Codeception\Test\Unit
 
 		$data = $sut->parse( [ 'email' => '<p>test@localhost.com</p>' ] );
 		$this->assertEquals( [ 'email' => 'test@localhost.com' ], $data, '' );
+    }
+
+	/**
+	 * @test
+	 */
+	private function ItShouldParseArrayInDataValue() {
+
+		$sut = $this->getInstance();
+
+		$san = new \ItalyStrap\Cleaner\Sanitization();
+		$filter_san = new \ItalyStrap\Settings\Filters\SanitizeFilter( $san );
+
+		$val = new \ItalyStrap\Cleaner\Validation();
+		$filter_val = new \ItalyStrap\Settings\Filters\ValidateFilter( $val );
+
+		$tras = new \ItalyStrap\I18N\Translator( 'name' );
+		$filter_tras = new \ItalyStrap\Settings\Filters\TranslateFilter( $tras );
+
+		$sut->withFilters(
+			$filter_san
+//			$filter_val,
+//			$filter_tras
+		);
+
+		$sut->withSchema(
+			[
+				[
+					'id'			=> 'emails',
+					'sanitize'		=> [
+						function ( $string ) {
+							return \filter_var( $string, FILTER_SANITIZE_STRING );
+						},
+					],
+//					'validate'		=> 'is_email',
+//					'translate'		=> true,
+				],
+			]
+		);
+
+		$data_to_parse = [
+			'emails' => [
+				'<p>test@localhost.com</p>',
+				'<p>test@localhost.com</p>',
+			],
+		];
+
+		$expected = [
+			'emails' => [
+				'test@localhost.com',
+				'test@localhost.com',
+			],
+		];
+
+//		codecept_debug( $data_to_parse );
+
+		$data = $sut->parse( $data_to_parse );
+
+//		codecept_debug( $data );
+
+		$this->assertEquals( $expected, $data, '' );
     }
 }

@@ -28,11 +28,15 @@ if ( ! defined( 'ITALYSTRAP_BASENAME' ) ) {
 	define( 'ITALYSTRAP_BASENAME', plugin_basename( ITALYSTRAP_FILE ) );
 }
 
+$plugin_name = 'ItalyStrap';
 $option_name = 'italystrap';
 $option_group = 'italystrap_options_group';
 
 $options_obj = new \ItalyStrap\Settings\Options( $option_name, $option_group );
 
+\add_action( 'admin_footer', function () use ( $options_obj ) {
+//	d( $options_obj->get() );
+} );
 
 $sections = require __DIR__ . '/tests/_data/fixtures/config/sections.php';
 
@@ -40,7 +44,7 @@ $data_parser = new \ItalyStrap\Settings\DataParser();
 $data_parser->withFilters(
 	new \ItalyStrap\Settings\Filters\SanitizeFilter( new \ItalyStrap\Cleaner\Sanitization() ),
 	new \ItalyStrap\Settings\Filters\ValidateFilter( new \ItalyStrap\Cleaner\Validation() ),
-	new \ItalyStrap\Settings\Filters\TranslateFilter( new \ItalyStrap\I18N\Translator( 'ItalyStrap' ) )
+	new \ItalyStrap\Settings\Filters\TranslateFilter( new \ItalyStrap\I18N\Translator( $plugin_name ) )
 );
 
 $sections_obj = new \ItalyStrap\Settings\Sections(
@@ -63,7 +67,6 @@ $pages_obj = new \ItalyStrap\Settings\Page(
 	$sections_obj,
 	new \ItalyStrap\Settings\ViewPage()
 );
-
 add_action( 'admin_menu', [ $pages_obj, 'load'] );
 
 /**

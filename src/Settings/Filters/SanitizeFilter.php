@@ -25,7 +25,12 @@ class SanitizeFilter implements FilterableInterface
 	 * @inheritDoc
 	 */
 	public function filter( array $schema, array $data ) {
-		$this->sanitization->addRules( $schema['sanitize'] );
-		return $this->sanitization->sanitize( $data[ $schema['id'] ] );
+
+		foreach ( (array) $data[ $schema['id'] ] as $value  ) {
+			$this->sanitization->addRules( $schema['sanitize'] );
+			$data = $this->sanitization->sanitize( $value );
+		}
+
+		return $data;
 	}
 }
