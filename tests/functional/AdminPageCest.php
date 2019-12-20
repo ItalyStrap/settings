@@ -37,7 +37,7 @@ class AdminPageCest
 		$this->count_options = \count( $this->all_options );
 
 		$I->loginAsAdmin();
-		$page = $this->pages['page'][ P::SLUG ];
+		$page = $this->pages[0][ P::SLUG ];
 		$I->amOnAdminPage( 'admin.php?page=' . $page );
     }
 
@@ -50,7 +50,7 @@ class AdminPageCest
 		$option = $I->grabOptionFromDatabase( $this->plugin['options_name'] );
 		\PHPUnit\Framework\Assert::assertNotEmpty( $option );
 
-		$page = $this->pages['page'][ P::SLUG ];
+		$page = $this->pages[0][ P::SLUG ];
 		$I->amOnAdminPage( 'admin.php?page=' . $page );
 
 		$types = \ItalyStrap\Fields\ViewFactory::getTypes();

@@ -124,52 +124,6 @@ class Page {
 		$config = \array_replace_recursive( $default, $config );
 	}
 
-	private function parentPage() {
-
-		$this->capability = $this->config->get( 'page.capability', 'manage_options' );
-
-		$callable = $this->config->get( 'page.' . self::CALLBACK );
-		$this->view_file =  $this->config->get( 'page.' . self::VIEW );
-
-		\add_menu_page(
-			$this->config['page']['page_title'],
-			$this->config['page']['menu_title'],
-			$this->capability,
-			$this->config['page']['menu_slug'],
-			\is_callable( $callable ) ? $callable : [ $this, 'getView' ],
-			$this->config['page']['icon_url'],
-			$this->config['page']['position']
-		);
-
-		$this->addSubMenuPage( $this->config->get( 'page.pages', [] ), $this->config['page']['menu_slug'] );
-	}
-
-	/**
-	 * Add sub menù pages for plugin's admin page
-	 * @param array $submenu_pages
-	 * @param string $parent_slug
-	 */
-	private function addSubMenuPage( array $submenu_pages, string $parent_slug ) {
-
-		foreach ( $submenu_pages as $submenu ) {
-			if ( isset( $submenu['show_on'] ) && ! $this->showOn( $submenu[ 'show_on' ] ) ) {
-				continue;
-			}
-
-			$callable = $submenu[ self::CALLBACK ] ?? false;
-			$this->view_file =  $submenu[ self::VIEW ];
-
-			\add_submenu_page(
-				$parent_slug,
-				$submenu['page_title'],
-				$submenu['menu_title'],
-				$this->capability,
-				$submenu['menu_slug'],
-				\is_callable( $callable ) ? $callable : [ $this, 'getView']
-			);
-		}
-	}
-
 	/**
 	 * @param $config
 	 */

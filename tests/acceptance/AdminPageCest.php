@@ -42,7 +42,7 @@ class AdminPageCest
 	 */
     public function CanSeeSettingsPageWithFieldsAndSubmit(AcceptanceTester $I)
     {
-    	$page = $this->pages['page'][ P::SLUG ];
+		$page = $this->pages[0][ P::SLUG ];
     	$I->amOnAdminPage( '?page=' . $page );
 
 		// Submit the form as a user would submit it.
