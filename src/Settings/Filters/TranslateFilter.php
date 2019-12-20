@@ -21,15 +21,15 @@ class TranslateFilter implements FilterableInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function filter( array $schema, array $data ) {
+	public function filter( $data, array $rules ) {
 
-		if ( $schema['translate'] ) {
+		if ( $rules['translate'] ) {
 			/**
 			 * @todo Maybe add some kind of error if no strings are registered
 			 */
-			$this->translator->registerString( $schema['id'], strip_tags( $data[ $schema['id'] ] ) );
+			$this->translator->registerString( $rules['id'], strip_tags( $data ) );
 		}
 
-		return $data[ $schema['id'] ];
+		return $data;
 	}
 }

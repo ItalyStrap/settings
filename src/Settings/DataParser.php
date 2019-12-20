@@ -58,9 +58,7 @@ class DataParser {
 //				continue;
 //			}
 
-			foreach ( $this->filters as $filter ) {
-				$data[ $key ] = $filter->filter( $schema, $data );
-			}
+			$data = $this->applyFilters( $data, $key, $schema );
 		}
 
 		return $data;
@@ -88,6 +86,27 @@ class DataParser {
 	private function assertDataHasValue( array $data, $key ): array {
 		if ( !isset( $data[ $key ] ) ) {
 			$data[ $key ] = '';
+		}
+		return $data;
+	}
+
+	/**
+	 * @param array $data
+	 * @param $key
+	 * @param $schema
+	 * @return array
+	 */
+	private function applyFilters( array $data, $key, $schema ): array {
+		foreach ( $this->filters as $filter ) {
+
+			if ( !\is_array( $data[ $key ] ) ) {
+				$data[ $key ] = $filter->filter( $data[ $key ], $schema );
+				continue;
+			}
+
+			foreach ((array)$data[ $key ] as $index => $value) {
+				$data[ $key ][ $index ] = $filter->filter( $value, $schema );
+			}
 		}
 		return $data;
 	}

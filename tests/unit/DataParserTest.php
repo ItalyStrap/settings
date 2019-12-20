@@ -67,10 +67,10 @@ class DataParserTest extends \Codeception\Test\Unit
 				return new \ItalyStrap\Cleaner\Sanitization();
 			}
 
-			public function filter( array $schema, array $data ) {
+			public function filter( $data , array $rules ) {
 				$san = $this->getSanitize();
-				$san->addRules( $schema['sanitize'] );
-				return $san->sanitize( $data[ $schema['id'] ] );
+				$san->addRules( $rules['sanitize'] );
+				return $san->sanitize( $data );
 			}
 		};
 
@@ -260,9 +260,9 @@ class DataParserTest extends \Codeception\Test\Unit
 		$filter_tras = new \ItalyStrap\Settings\Filters\TranslateFilter( $tras );
 
 		$sut->withFilters(
-			$filter_san
-//			$filter_val,
-//			$filter_tras
+			$filter_san,
+			$filter_val,
+			$filter_tras
 		);
 
 		$sut->withSchema(

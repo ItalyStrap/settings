@@ -24,15 +24,15 @@ class ValidateFilter implements FilterableInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function filter( array $schema, array $data ) {
+	public function filter( $data, array $rules ) {
 
-		if ( ! $schema['validate'] ) {
-			return $data[ $schema['id'] ];
+		if ( ! $rules['validate'] ) {
+			return $data;
 		}
 
-		$this->validation->addRules( $schema['validate'] );
+		$this->validation->addRules( $rules['validate'] );
 
-		if ( false === $this->validation->validate( $data[ $schema['id'] ] ) ) {
+		if ( false === $this->validation->validate( $data ) ) {
 
 			/**
 			 * Validate fields if $field['validate'] is set
@@ -41,6 +41,6 @@ class ValidateFilter implements FilterableInterface
 			return '';
 		}
 
-		return $data[ $schema['id'] ];
+		return $data;
 	}
 }

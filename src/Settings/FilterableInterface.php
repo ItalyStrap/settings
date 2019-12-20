@@ -10,9 +10,13 @@ namespace ItalyStrap\Settings;
 interface FilterableInterface
 {
 	/**
-	 * @param array $schema
+	 * The filter accept a data value {int|string} and apply a filter method
+	 *
+	 * The return value could be the type of int or string
+	 *
 	 * @param array $data
+	 * @param array $rules
 	 * @return mixed
 	 */
-	public function filter( array $schema, array $data );
+	public function filter( $data, array $rules );
 }
