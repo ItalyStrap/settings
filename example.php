@@ -40,17 +40,10 @@ $options_obj = new \ItalyStrap\Settings\Options( $option_name, $option_group );
 
 $sections = require __DIR__ . '/tests/_data/fixtures/config/sections.php';
 
-$data_parser = new \ItalyStrap\Settings\DataParser();
-$data_parser->withFilters(
-	new \ItalyStrap\Settings\Filters\SanitizeFilter( new \ItalyStrap\Cleaner\Sanitization() ),
-	new \ItalyStrap\Settings\Filters\ValidateFilter( new \ItalyStrap\Cleaner\Validation() ),
-	new \ItalyStrap\Settings\Filters\TranslateFilter( new \ItalyStrap\I18N\Translator( $plugin_name ) )
-);
-
 $sections_obj = new \ItalyStrap\Settings\Sections(
 	\ItalyStrap\Config\ConfigFactory::make( $sections ),
 	new \ItalyStrap\Fields\Fields(),
-	$data_parser,
+	\ItalyStrap\Settings\DataParserFactory::make( $plugin_name ),
 	$options_obj
 );
 add_action( 'admin_init', [ $sections_obj, 'register'] );

@@ -67,9 +67,9 @@ class DataParserTest extends \Codeception\Test\Unit
 				return new \ItalyStrap\Cleaner\Sanitization();
 			}
 
-			public function filter( $data , array $rules ) {
+			public function filter( $data , array $schema ) {
 				$san = $this->getSanitize();
-				$san->addRules( $rules['sanitize'] );
+				$san->addRules( $schema['sanitize'] );
 				return $san->sanitize( $data );
 			}
 		};

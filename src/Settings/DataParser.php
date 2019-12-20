@@ -44,19 +44,17 @@ class DataParser {
 	 * @return array           Return the array sanitized
 	 */
 	public function parse( array $data ): array {
+
+
+
 		foreach ( $this->schema as $schema ) {
 			$this->mergeWithDefault( $schema );
 			$key = $schema['id'];
-			$data = $this->assertDataHasValue( $data, $key );
+			$data = $this->assertDataValueIsSet( $data, $key );
 
 			if ( empty( $this->filters ) ) {
 				$data[ $key ] = \trim( \strip_tags( $data[ $key ] ) );
 			}
-
-//			if ( isset( $field['capability'] ) && true === $field['capability'] ) {
-////				$data[ $key ] = $data[ $key ];
-//				continue;
-//			}
 
 			$data = $this->applyFilters( $data, $key, $schema );
 		}
@@ -83,8 +81,8 @@ class DataParser {
 	 * @param $key
 	 * @return array
 	 */
-	private function assertDataHasValue( array $data, $key ): array {
-		if ( !isset( $data[ $key ] ) ) {
+	private function assertDataValueIsSet( array $data, $key ): array {
+		if ( ! isset( $data[ $key ] ) ) {
 			$data[ $key ] = '';
 		}
 		return $data;
@@ -92,19 +90,19 @@ class DataParser {
 
 	/**
 	 * @param array $data
-	 * @param $key
-	 * @param $schema
+	 * @param string $key
+	 * @param array $schema
 	 * @return array
 	 */
-	private function applyFilters( array $data, $key, $schema ): array {
+	private function applyFilters( array $data, string $key, array $schema ): array {
 		foreach ( $this->filters as $filter ) {
 
-			if ( !\is_array( $data[ $key ] ) ) {
+			if ( ! \is_array( $data[ $key ] ) ) {
 				$data[ $key ] = $filter->filter( $data[ $key ], $schema );
 				continue;
 			}
 
-			foreach ((array)$data[ $key ] as $index => $value) {
+			foreach ( (array)$data[ $key ] as $index => $value ) {
 				$data[ $key ][ $index ] = $filter->filter( $value, $schema );
 			}
 		}

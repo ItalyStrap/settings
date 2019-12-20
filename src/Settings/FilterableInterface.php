@@ -15,8 +15,8 @@ interface FilterableInterface
 	 * The return value could be the type of int or string
 	 *
 	 * @param array $data
-	 * @param array $rules
+	 * @param array $schema
 	 * @return mixed
 	 */
-	public function filter( $data, array $rules );
+	public function filter( $data, array $schema );
 }

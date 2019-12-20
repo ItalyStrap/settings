@@ -7,15 +7,15 @@ use ItalyStrap\Settings\FilterableInterface;
 
 /**
  * Class NullFilter
+ * FILTER_UNSAFE_RAW
  * @package ItalyStrap\Settings\Filters
  */
 class NullFilter implements FilterableInterface
 {
-
 	/**
 	 * @inheritDoc
 	 */
-	public function filter( array $rules, array $data ) {
-		return $data[ $rules['id'] ];
+	public function filter( $data, array $schema ) {
+		return $data;
 	}
 }

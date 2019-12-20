@@ -24,13 +24,13 @@ class ValidateFilter implements FilterableInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function filter( $data, array $rules ) {
+	public function filter( $data, array $schema ) {
 
-		if ( ! $rules['validate'] ) {
+		if ( ! $schema['validate'] ) {
 			return $data;
 		}
 
-		$this->validation->addRules( $rules['validate'] );
+		$this->validation->addRules( $schema['validate'] );
 
 		if ( false === $this->validation->validate( $data ) ) {
 
