@@ -24,7 +24,7 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase
 	private function getInstance(): \ItalyStrap\Settings\Sections {
 		$config = \ItalyStrap\Config\ConfigFactory::make();
 		$fields = new \ItalyStrap\Fields\Fields();
-		$parser = new \ItalyStrap\Settings\DataParserInterface();
+		$parser = new \ItalyStrap\Settings\DataParser();
 		$options = new \ItalyStrap\Settings\Options( 'italystrap' );
 		$sut = new \ItalyStrap\Settings\Sections( $config, $fields, $parser, $options );
 		$this->assertInstanceOf( \ItalyStrap\Settings\SectionsInterface::class, $sut, '' );
