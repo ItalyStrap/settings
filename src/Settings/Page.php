@@ -87,10 +87,9 @@ class Page {
 					$config[ self::MENU_TITLE ],
 					$this->capability,
 					$config[ self::SLUG ],
-					\is_callable( $callable ) ? $callable : function () use ( $config ) {
-						$this->getView( $config );
-					}
+					$this->getCallable( $callable, $config )
 				);
+
 				continue;
 			}
 
@@ -99,20 +98,11 @@ class Page {
 				$config[ self::MENU_TITLE ],
 				$this->capability,
 				$config[ self::SLUG ],
-				\is_callable( $callable ) ? $callable : function () use ( $config ) {
-					$this->getView( $config );
-				},
+				$this->getCallable( $callable, $config ),
 				$config[ self::ICON ],
 				$config[ self::POSITION ]
 			);
 		}
-	}
-
-	/**
-	 * The add_submenu_page callback
-	 */
-	public function getView( array $config = [] ) {
-		$this->view->render( $config[ self::VIEW ] );
 	}
 
 	private function parseWithDefault( array &$config ) {
@@ -191,5 +181,24 @@ class Page {
 		if ( !isset( $config[ self::SLUG ] ) ) {
 			throw new \RuntimeException( \sprintf( '%s must be not empty', self::SLUG ) );
 		}
+	}
+
+	/**
+	 * The add_submenu_page callback
+	 * @param array $config
+	 */
+	private function getView( array $config = [] ) {
+		$this->view->render( $config[ self::VIEW ] );
+	}
+
+	/**
+	 * @param $callable
+	 * @param $config
+	 * @return callable|\Closure
+	 */
+	private function getCallable( $callable, $config ) {
+		return \is_callable( $callable ) ? $callable : function () use ( $config ) {
+			$this->getView( $config );
+		};
 	}
 }
