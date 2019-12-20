@@ -3,19 +3,31 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
+use ItalyStrap\Cleaner\Sanitization;
+use ItalyStrap\Cleaner\Validation;
+use ItalyStrap\I18N\Translator;
+use ItalyStrap\Settings\{Filters\SanitizeFilter, Filters\TranslateFilter, Filters\ValidateFilter};
+
 /**
  * Class DataParserFactory
  * @package ItalyStrap\Settings
  */
 class DataParserFactory
 {
-	public static function make( string $plugin_name = '' ) {
+	/**
+	 * @param string $plugin_name
+	 * @return DataParser
+	 */
+	public static function make( string $plugin_name = '' ): DataParser {
 
 		$filters = [
-			new \ItalyStrap\Settings\Filters\SanitizeFilter( new \ItalyStrap\Cleaner\Sanitization() ),
-			new \ItalyStrap\Settings\Filters\ValidateFilter( new \ItalyStrap\Cleaner\Validation() ),
-			new \ItalyStrap\Settings\Filters\TranslateFilter( new \ItalyStrap\I18N\Translator( $plugin_name ) )
+			new SanitizeFilter( new Sanitization() ),
+			new ValidateFilter( new Validation() )
 		];
+
+		if ( ! empty( $plugin_name ) ) {
+			$filters[] = new TranslateFilter( new Translator( $plugin_name ) );
+		}
 
 		return ( new \ItalyStrap\Settings\DataParser() )->withFilters( ...$filters	);
 	}

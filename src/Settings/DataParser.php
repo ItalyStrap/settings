@@ -3,7 +3,12 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
-class DataParser {
+/**
+ * Class DataParser
+ * @package ItalyStrap\Settings
+ */
+class DataParser implements DataParserInterface
+{
 
 	/**
 	 * @var array
@@ -15,13 +20,16 @@ class DataParser {
 	 */
 	private $filters = [];
 
+	/**
+	 * DataParser constructor.
+	 * @param array $schema
+	 */
 	public function __construct( array $schema = [] ) {
 		$this->schema = $schema;
 	}
 
 	/**
-	 * @param array $schema
-	 * @return DataParser
+	 * @inheritDoc
 	 */
 	public function withSchema( array $schema ): DataParser {
 		$this->schema = \array_replace_recursive( $this->schema, $schema );
@@ -29,8 +37,7 @@ class DataParser {
 	}
 
 	/**
-	 * @param FilterableInterface ...$filters
-	 * @return DataParser
+	 * @inheritDoc
 	 */
 	public function withFilters( FilterableInterface ...$filters ): DataParser {
 		$this->filters = \array_merge( $this->filters, $filters );
@@ -38,14 +45,9 @@ class DataParser {
 	}
 
 	/**
-	 * Sanitize the input data
-	 *
-	 * @param  array $data The input array.
-	 * @return array           Return the array sanitized
+	 * @inheritDoc
 	 */
 	public function parse( array $data ): array {
-
-
 
 		foreach ( $this->schema as $schema ) {
 			$this->mergeWithDefault( $schema );

@@ -42,27 +42,12 @@ class AdminPageCest
 	 */
     public function CanSeeSettingsPageWithFieldsAndSubmit(AcceptanceTester $I)
     {
-		$option = $I->grabOptionFromDatabase( $this->plugin['options_name'] );
-		codecept_debug( $option );
-
     	$page = $this->pages['page'][ P::SLUG ];
     	$I->amOnAdminPage( '?page=' . $page );
 
-//    	$I->seeElement( 'input', [ 'name' => 'italystrap[checkbox]' ] );
-
-		$I->checkOption([ 'name' => 'italystrap[checkbox]' ] );
-
-		$formFields =  [
-//			'italystrap[checkbox]'	=> 'on',
-		];
-
 		// Submit the form as a user would submit it.
-		$I->submitForm( '#' . $this->plugin['options_group'], $formFields );
-
-		$option = $I->grabOptionFromDatabase( $this->plugin['options_name'] );
-		codecept_debug( $option );
+		$I->submitForm( '#' . $this->plugin['options_group'], [] );
 
 		$I->seeOptionInDatabase( [ 'option_name' => $this->plugin['options_name'] ] );
     }
-
 }

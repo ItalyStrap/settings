@@ -39,7 +39,7 @@ class Sections implements \Countable, SectionsInterface {
 	protected $fields;
 
 	/**
-	 * @var DataParser
+	 * @var DataParserInterface
 	 */
 	private $parser;
 
@@ -58,14 +58,14 @@ class Sections implements \Countable, SectionsInterface {
 	 * Initialize Class
 	 *
 	 * @param FieldsInterface $fields The Fields object.
-	 * @param DataParser $parser
+	 * @param DataParserInterface $parser
 	 * @param Options $options Get the plugin options.
 	 * @param Config $config The configuration array plugin fields.
 	 */
 	public function __construct(
 		Config $config,
 		FieldsInterface $fields,
-		DataParser $parser,
+		DataParserInterface $parser,
 		Options $options
 	) {
 		$this->config = $config;
