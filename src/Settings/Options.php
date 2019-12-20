@@ -15,17 +15,12 @@ class Options {
 	private $name;
 
 	/**
-	 * @var string
-	 */
-	private $group;
-	/**
 	 * @var array
 	 */
 	private $default;
 
-	public function __construct( string $name, string $group = '', $default = [] ) {
+	public function __construct( string $name, $default = [] ) {
 		$this->name = $name;
-		$this->group = $group;
 		$this->default = $default;
 	}
 
@@ -34,13 +29,6 @@ class Options {
 	 */
 	public function getName() {
 		return $this->name;
-	}
-
-	/**
-	 * @return mixed
-	 */
-	public function getGroup() {
-		return $this->group;
 	}
 
 	/**
@@ -55,7 +43,7 @@ class Options {
 	 * @return bool
 	 */
 	public function add( array $values = [] ) {
-		return 	\add_option( $this->name, $values );
+		return \add_option( $this->name, $values );
 	}
 
 	/**

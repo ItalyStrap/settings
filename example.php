@@ -32,7 +32,7 @@ $plugin_name = 'ItalyStrap';
 $option_name = 'italystrap';
 $option_group = 'italystrap_options_group';
 
-$options_obj = new \ItalyStrap\Settings\Options( $option_name, $option_group );
+$options_obj = new \ItalyStrap\Settings\Options( $option_name );
 
 \add_action( 'admin_footer', function () use ( $options_obj ) {
 //	d( $options_obj->get() );

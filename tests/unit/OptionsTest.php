@@ -33,7 +33,7 @@ class OptionsTest extends \Codeception\Test\Unit
 	}
 
 	public function getIntance( $name = '', $group = '', $values = [] ): \ItalyStrap\Settings\Options {
-		$sut = new \ItalyStrap\Settings\Options( $name, $group, $values );
+		$sut = new \ItalyStrap\Settings\Options( $name, $values );
 		$this->assertInstanceOf( \ItalyStrap\Settings\Options::class, $sut );
 		return $sut;
 	}
