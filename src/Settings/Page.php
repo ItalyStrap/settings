@@ -9,12 +9,12 @@ class Page {
 
 	use ShowableTrait;
 
-	const DS = DIRECTORY_SEPARATOR;
+	const DS 			= DIRECTORY_SEPARATOR;
 	const PAGE_TITLE	= 'page_title';
 	const MENU_TITLE	= 'menu_title';
 	const CAPABILITY	= 'capability';
 	const SLUG			= 'menu_slug';
-	const VIEW_CALLBACK	= 'callback';
+	const CALLBACK		= 'callback';
 	const ICON			= 'icon_url';
 	const POSITION		= 'position';
 	const VIEW			= 'view';
@@ -65,11 +65,70 @@ class Page {
 	/**
 	 * Add plugin primary page in admin panel
 	 */
-	public function load() {
+	public function register() {
+
+		foreach ( $this->config as $config ) {
+			$this->assertHasMinimumValueSet( $config );
+			$this->parseWithDefault( $config );
+
+			$this->capability = $config[ self::CAPABILITY ];
+
+			$callable = $config[ self::CALLBACK ];
+			$this->view_file =  $config[ self::VIEW ];
+
+			if ( $config[ self::PARENT ] ) {
+
+				if ( isset( $config['show_on'] ) && ! $this->showOn( $config[ 'show_on' ] ) ) {
+					continue;
+				}
+
+				\add_submenu_page(
+					$config[ self::PARENT ],
+					$config[ self::PAGE_TITLE ],
+					$config[ self::MENU_TITLE ],
+					$this->capability,
+					$config['menu_slug'],
+					\is_callable( $callable ) ? $callable : [ $this, 'getView']
+				);
+				continue;
+			}
+
+			\add_menu_page(
+				$config[ self::PAGE_TITLE ],
+				$config[ self::MENU_TITLE ],
+				$this->capability,
+				$config[ self::SLUG ],
+				\is_callable( $callable ) ? $callable : [ $this, 'getView' ],
+				$config[ self::ICON ],
+				$config[ self::POSITION ]
+			);
+		}
+	}
+
+	private function parseWithDefault( array &$config ) {
+
+		$default = [
+			self::PAGE_TITLE	=> '',
+			self::MENU_TITLE	=> '',
+			self::CAPABILITY	=> 'manage_options',
+			self::SLUG			=> '',
+			self::CALLBACK		=> null,
+			self::ICON			=> '',
+			self::POSITION		=> null,
+			self::VIEW			=> '',
+
+			// For child pages
+			self::PARENT		=> false,
+		];
+
+		$config = \array_replace_recursive( $default, $config );
+	}
+
+	private function parentPage() {
 
 		$this->capability = $this->config->get( 'page.capability', 'manage_options' );
 
-		$callable = $this->config->get( 'page.' . self::VIEW_CALLBACK );
+		$callable = $this->config->get( 'page.' . self::CALLBACK );
 		$this->view_file =  $this->config->get( 'page.' . self::VIEW );
 
 		\add_menu_page(
@@ -97,7 +156,7 @@ class Page {
 				continue;
 			}
 
-			$callable = $submenu[ self::VIEW_CALLBACK ] ?? false;
+			$callable = $submenu[ self::CALLBACK ] ?? false;
 			$this->view_file =  $submenu[ self::VIEW ];
 
 			\add_submenu_page(
@@ -116,5 +175,19 @@ class Page {
 	 */
 	public function getView() {
 		$this->view->render( $this->view_file );
+	}
+
+	/**
+	 * @param $config
+	 * @return mixed
+	 */
+	private function assertHasMinimumValueSet( $config ) {
+		if ( !isset( $config[ self::MENU_TITLE ] ) ) {
+			throw new \RuntimeException( \sprintf( '%s must be not empty', self::MENU_TITLE ) );
+		}
+
+		if ( !isset( $config[ self::SLUG ] ) ) {
+			throw new \RuntimeException( \sprintf( '%s must be not empty', self::SLUG ) );
+		}
 	}
 }

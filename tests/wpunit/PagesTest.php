@@ -1,5 +1,7 @@
 <?php
 
+use ItalyStrap\Settings\Page as P;
+
 class PagesTest extends \Codeception\TestCase\WPTestCase
 {
     /**
@@ -8,14 +10,16 @@ class PagesTest extends \Codeception\TestCase\WPTestCase
     protected $tester;
 	private $sections = [];
 	private $plugin = [];
+	private $pages;
 
-    public function setUp(): void
+	public function setUp(): void
     {
         // Before...
         parent::setUp();
 
 		$this->sections = require codecept_data_dir( 'fixtures/config/' ) . 'sections.php';
 		$this->plugin = require codecept_data_dir( 'fixtures/config/' ) . 'plugin.php';
+		$this->pages = (array) require codecept_data_dir( 'fixtures/config/' ) . 'pages.php';
 
         // Your set up methods here.
     }
@@ -28,12 +32,18 @@ class PagesTest extends \Codeception\TestCase\WPTestCase
         parent::tearDown();
     }
 
-	private function getInstance() {
-		$config = $this->make( \ItalyStrap\Config\Config::class );
+	private function getInstance( array $config = [] ) {
+
+		if ( empty( $config ) ) {
+			$config = $this->pages;
+		}
+
+		$config = \ItalyStrap\Config\ConfigFactory::make( $config );
 		$view = $this->make( \ItalyStrap\Settings\ViewPage::class );
 		$sections = $this->make( \ItalyStrap\Settings\Sections::class, [
 			'options'	=> $this->make( \ItalyStrap\Settings\Options::class ),
 		] );
+
 		$sut = new \ItalyStrap\Settings\Page( $config, $sections, $view );
 		$this->assertInstanceOf( \ItalyStrap\Settings\Page::class, $sut, '' );
 		return $sut;
@@ -51,9 +61,41 @@ class PagesTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @test
 	 */
-//	public function ItShouldLoad()
-//	{
-//		$sut = $this->getInstance();
-//		$sut->load();
-//	}
+	public function ItShouldRegister()
+	{
+		$sut = $this->getInstance();
+		$sut->register();
+	}
+
+	/**
+	 * @test
+	 */
+	public function ItShouldThrownErrorIfMenuTitleIsNotProvided()
+	{
+		$this->expectException( RuntimeException::class );
+
+		$pages = [
+//			P::MENU_TITLE	=> \__( 'ItalyStrap', 'italystrap' ),
+			P::SLUG			=> 'italystrap-dashboard',
+		];
+
+		$sut = $this->getInstance( $pages );
+		$sut->register();
+	}
+
+	/**
+	 * @test
+	 */
+	public function ItShouldThrownErrorIfSlugIsNotProvided()
+	{
+		$this->expectException( RuntimeException::class );
+
+		$pages = [
+			P::MENU_TITLE	=> \__( 'ItalyStrap', 'italystrap' ),
+//			P::SLUG			=> 'italystrap-dashboard',
+		];
+
+		$sut = $this->getInstance( $pages );
+		$sut->register();
+	}
 }

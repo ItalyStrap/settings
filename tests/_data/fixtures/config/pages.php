@@ -4,11 +4,29 @@ declare(strict_types=1);
 use ItalyStrap\Settings\Page as P;
 
 return [
-	'page'	=> [
-		P::PAGE_TITLE	=> \__( 'ItalyStrap Dashboard', 'italystrap' ),
+	[
+//		P::PAGE_TITLE	=> \__( 'ItalyStrap Dashboard', 'italystrap' ),
 		P::MENU_TITLE	=> \__( 'ItalyStrap', 'italystrap' ),
-		P::CAPABILITY	=> 'manage_options', // Optional
+//		P::CAPABILITY	=> 'manage_options', // Optional
 		P::SLUG			=> 'italystrap-dashboard',
+//		P::VIEW_CALLBACK	=> function () { echo 'Settings Page'; },
+//		P::ICON			=> 'dashicons-performance',
+//		P::POSITION		=> null,
+//		P::VIEW			=> '',
+//		'pages'	=> [
+//			[
+//				P::PAGE_TITLE	=> \__( 'Settings', 'italystrap' ),
+//				P::MENU_TITLE	=> \__( 'Settings', 'italystrap' ),
+//				P::SLUG		=> 'italystrap-settings',
+//				// P::VIEW_CALLBACK	=> function () { echo 'Settings Page'; },
+//			],
+//		],
+	],
+	[
+		P::PAGE_TITLE	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
+		P::MENU_TITLE	=> \__( 'ItalyStrap 2', 'italystrap' ),
+		P::CAPABILITY	=> 'manage_options', // Optional
+		P::SLUG			=> 'italystrap-dashboard-2',
 //		P::VIEW_CALLBACK	=> function () { echo 'Settings Page'; },
 		P::ICON			=> 'dashicons-performance',
 		P::POSITION		=> null,
@@ -21,5 +39,10 @@ return [
 //				// P::VIEW_CALLBACK	=> function () { echo 'Settings Page'; },
 //			],
 //		],
+	],
+	[
+		P::PARENT	=> 'italystrap-dashboard',
+		P::PAGE_TITLE	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
+		P::MENU_TITLE	=> \__( 'ItalyStrap 2', 'italystrap' ),
 	],
 ];

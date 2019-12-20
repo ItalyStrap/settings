@@ -60,7 +60,7 @@ $pages_obj = new \ItalyStrap\Settings\Page(
 	$sections_obj,
 	new \ItalyStrap\Settings\ViewPage()
 );
-add_action( 'admin_menu', [ $pages_obj, 'load'] );
+add_action( 'admin_menu', [ $pages_obj, 'register'] );
 
 /**
  * Load script for Tabbed admin page
