@@ -56,14 +56,6 @@ class OptionsTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnGroup() {
-		$sut = $this->getIntance( 'test', 'group' );
-		$this->assertStringContainsString( 'group', $sut->getGroup(), '' );
-	}
-
-	/**
-	 * @test
-	 */
 	public function ItShouldReturnCorrectArrayValue() {
 
 		$option_name = 'test';
