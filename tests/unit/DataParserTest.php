@@ -47,7 +47,7 @@ class DataParserTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnFilteredDataWithDefaultStripTagsAndTrimIfNoFiltersAreProvided() {
+	private function ItShouldReturnFilteredDataWithDefaultStripTagsAndTrimIfNoFiltersAreProvided() {
 		$sut = $this->getInstance();
 		$sut->withSchema(
 			[

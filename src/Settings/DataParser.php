@@ -54,9 +54,12 @@ class DataParser implements DataParserInterface
 			$key = $schema['id'];
 			$data = $this->assertDataValueIsSet( $data, $key );
 
-			if ( empty( $this->filters ) ) {
-				$data[ $key ] = \trim( \strip_tags( $data[ $key ] ) );
-			}
+			/**
+			 * @todo Maybe add some fallback sanitize here?
+			 */
+//			if ( empty( $this->filters ) ) {
+//				$data[ $key ] = \trim( \strip_tags( $data[ $key ] ) );
+//			}
 
 			$data = $this->applyFilters( $data, $key, $schema );
 		}
