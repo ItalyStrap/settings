@@ -74,7 +74,6 @@ class Page {
 			$this->capability = $config[ self::CAPABILITY ];
 
 			$callable = $config[ self::CALLBACK ];
-			$this->view_file =  $config[ self::VIEW ];
 
 			if ( $config[ self::PARENT ] ) {
 
@@ -87,8 +86,10 @@ class Page {
 					$config[ self::PAGE_TITLE ],
 					$config[ self::MENU_TITLE ],
 					$this->capability,
-					$config['menu_slug'],
-					\is_callable( $callable ) ? $callable : [ $this, 'getView']
+					$config[ self::SLUG ],
+					\is_callable( $callable ) ? $callable : function () use ( $config ) {
+						$this->getView( $config );
+					}
 				);
 				continue;
 			}
@@ -98,11 +99,20 @@ class Page {
 				$config[ self::MENU_TITLE ],
 				$this->capability,
 				$config[ self::SLUG ],
-				\is_callable( $callable ) ? $callable : [ $this, 'getView' ],
+				\is_callable( $callable ) ? $callable : function () use ( $config ) {
+					$this->getView( $config );
+				},
 				$config[ self::ICON ],
 				$config[ self::POSITION ]
 			);
 		}
+	}
+
+	/**
+	 * The add_submenu_page callback
+	 */
+	public function getView( array $config = [] ) {
+		$this->view->render( $config[ self::VIEW ] );
 	}
 
 	private function parseWithDefault( array &$config ) {
@@ -171,15 +181,7 @@ class Page {
 	}
 
 	/**
-	 * The add_submenu_page callback
-	 */
-	public function getView() {
-		$this->view->render( $this->view_file );
-	}
-
-	/**
 	 * @param $config
-	 * @return mixed
 	 */
 	private function assertHasMinimumValueSet( $config ) {
 		if ( !isset( $config[ self::MENU_TITLE ] ) ) {
