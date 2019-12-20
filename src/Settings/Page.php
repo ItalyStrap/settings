@@ -24,7 +24,6 @@ class Page {
 	 * @var Config
 	 */
 	private $config;
-	private $capability;
 	private $pagenow;
 	private $sections;
 
@@ -71,8 +70,6 @@ class Page {
 			$this->assertHasMinimumValueSet( $config );
 			$this->parseWithDefault( $config );
 
-			$this->capability = $config[ self::CAPABILITY ];
-
 			$callable = $config[ self::CALLBACK ];
 
 			if ( $config[ self::PARENT ] ) {
@@ -85,7 +82,7 @@ class Page {
 					$config[ self::PARENT ],
 					$config[ self::PAGE_TITLE ],
 					$config[ self::MENU_TITLE ],
-					$this->capability,
+					$config[ self::CAPABILITY ],
 					$config[ self::SLUG ],
 					$this->getCallable( $callable, $config )
 				);
@@ -96,7 +93,7 @@ class Page {
 			\add_menu_page(
 				$config[ self::PAGE_TITLE ],
 				$config[ self::MENU_TITLE ],
-				$this->capability,
+				$config[ self::CAPABILITY ],
 				$config[ self::SLUG ],
 				$this->getCallable( $callable, $config ),
 				$config[ self::ICON ],
@@ -105,6 +102,9 @@ class Page {
 		}
 	}
 
+	/**
+	 * @param array $config
+	 */
 	private function parseWithDefault( array &$config ) {
 
 		$default = [
@@ -146,11 +146,11 @@ class Page {
 	}
 
 	/**
-	 * @param $callable
-	 * @param $config
+	 * @param mixed $callable
+	 * @param array $config
 	 * @return callable|\Closure
 	 */
-	private function getCallable( $callable, $config ) {
+	private function getCallable( $callable, array $config ) {
 		return \is_callable( $callable ) ? $callable : function () use ( $config ) {
 			$this->getView( $config );
 		};
