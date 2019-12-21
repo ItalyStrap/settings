@@ -74,7 +74,7 @@ class Pages {
 
 			if ( $config[ self::PARENT ] ) {
 
-				if ( isset( $config['show_on'] ) && ! $this->showOn( $config[ 'show_on' ] ) ) {
+				if ( ! $this->showOn( $config[ 'show_on' ] ) ) {
 					continue;
 				}
 
@@ -108,6 +108,7 @@ class Pages {
 	private function parseWithDefault( array &$config ) {
 
 		$default = [
+			'show_on'			=> true,
 			self::PAGE_TITLE	=> '',
 			self::MENU_TITLE	=> '',
 			self::CAPABILITY	=> 'manage_options',
