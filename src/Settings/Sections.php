@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ItalyStrap\Settings;
 
 use ItalyStrap\Config\ConfigInterface as Config;
+use ItalyStrap\DataParser\DataParserInterface;
 use ItalyStrap\Fields\FieldsInterface;
 
 class Sections implements \Countable, SectionsInterface {
