@@ -17,10 +17,10 @@ class DataParserTest extends \Codeception\Test\Unit
     {
     }
 
-	public function getInstance(): \ItalyStrap\DataParser\DataParser{
-		$sut = new \ItalyStrap\DataParser\DataParser();
-		$this->assertInstanceOf( \ItalyStrap\DataParser\DataParserInterface::class, $sut, '' );
-		$this->assertInstanceOf( \ItalyStrap\DataParser\DataParser::class, $sut, '' );
+	public function getInstance(): \ItalyStrap\DataParser\Parser{
+		$sut = new \ItalyStrap\DataParser\Parser();
+		$this->assertInstanceOf( \ItalyStrap\DataParser\ParserInterface::class, $sut, '' );
+		$this->assertInstanceOf( \ItalyStrap\DataParser\Parser::class, $sut, '' );
 		return $sut;
     }
 
@@ -30,9 +30,9 @@ class DataParserTest extends \Codeception\Test\Unit
 	public function ItShouldBeInstantiable() {
 		$this->getInstance();
 
-		$sut = \ItalyStrap\DataParser\DataParserFactory::make();
-		$this->assertInstanceOf( \ItalyStrap\DataParser\DataParserInterface::class, $sut, '' );
-		$this->assertInstanceOf( \ItalyStrap\DataParser\DataParser::class, $sut, '' );
+		$sut = \ItalyStrap\DataParser\ParserFactory::make();
+		$this->assertInstanceOf( \ItalyStrap\DataParser\ParserInterface::class, $sut, '' );
+		$this->assertInstanceOf( \ItalyStrap\DataParser\Parser::class, $sut, '' );
     }
 
 	/**

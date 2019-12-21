@@ -7,17 +7,17 @@ namespace ItalyStrap\DataParser;
  * Interface DataParserInterface
  * @package ItalyStrap\Settings
  */
-interface DataParserInterface
+interface ParserInterface
 {
 	/**
 	 * @param array $schema
-	 * @return DataParser
+	 * @return Parser
 	 */
 	public function withSchema( array $schema );
 
 	/**
 	 * @param FilterableInterface ...$filters
-	 * @return DataParser
+	 * @return Parser
 	 */
 	public function withFilters( FilterableInterface ...$filters );
 

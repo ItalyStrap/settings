@@ -7,7 +7,7 @@ namespace ItalyStrap\DataParser;
  * Class DataParser
  * @package ItalyStrap\Settings
  */
-class DataParser implements DataParserInterface
+class Parser implements ParserInterface
 {
 
 	/**
@@ -31,7 +31,7 @@ class DataParser implements DataParserInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function withSchema( array $schema ): DataParser {
+	public function withSchema( array $schema ): Parser {
 		$this->schema = \array_replace_recursive( $this->schema, $schema );
 		return $this;
 	}
@@ -39,7 +39,7 @@ class DataParser implements DataParserInterface
 	/**
 	 * @inheritDoc
 	 */
-	public function withFilters( FilterableInterface ...$filters ): DataParser {
+	public function withFilters( FilterableInterface ...$filters ): Parser {
 		$this->filters = \array_merge( $this->filters, $filters );
 		return $this;
 	}

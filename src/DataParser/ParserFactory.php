@@ -12,13 +12,13 @@ use ItalyStrap\DataParser\{Filters\SanitizeFilter, Filters\TranslateFilter, Filt
  * Class DataParserFactory
  * @package ItalyStrap\Settings
  */
-class DataParserFactory
+class ParserFactory
 {
 	/**
 	 * @param string $plugin_name
-	 * @return DataParser
+	 * @return Parser
 	 */
-	public static function make( string $plugin_name = '' ): DataParser {
+	public static function make( string $plugin_name = '' ): Parser {
 
 		$filters = [
 			new SanitizeFilter( new Sanitization() ),
@@ -29,6 +29,6 @@ class DataParserFactory
 			$filters[] = new TranslateFilter( new Translator( $plugin_name ) );
 		}
 
-		return ( new \ItalyStrap\DataParser\DataParser() )->withFilters( ...$filters	);
+		return ( new \ItalyStrap\DataParser\Parser() )->withFilters( ...$filters	);
 	}
 }

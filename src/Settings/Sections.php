@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace ItalyStrap\Settings;
 
 use ItalyStrap\Config\ConfigInterface as Config;
-use ItalyStrap\DataParser\DataParserInterface;
+use ItalyStrap\DataParser\ParserInterface;
 use ItalyStrap\Fields\FieldsInterface;
 
 class Sections implements \Countable, SectionsInterface {
@@ -40,7 +40,7 @@ class Sections implements \Countable, SectionsInterface {
 	protected $fields;
 
 	/**
-	 * @var DataParserInterface
+	 * @var ParserInterface
 	 */
 	private $parser;
 
@@ -59,14 +59,14 @@ class Sections implements \Countable, SectionsInterface {
 	 * Initialize Class
 	 *
 	 * @param FieldsInterface $fields The Fields object.
-	 * @param DataParserInterface $parser
+	 * @param ParserInterface $parser
 	 * @param Options $options Get the plugin options.
 	 * @param Config $config The configuration array plugin fields.
 	 */
 	public function __construct(
 		Config $config,
 		FieldsInterface $fields,
-		DataParserInterface $parser,
+		ParserInterface $parser,
 		Options $options
 	) {
 		$this->config = $config;
