@@ -17,10 +17,10 @@ class DataParserTest extends \Codeception\Test\Unit
     {
     }
 
-	public function getInstance(): \ItalyStrap\Settings\DataParser{
-		$sut = new \ItalyStrap\Settings\DataParser();
-		$this->assertInstanceOf( \ItalyStrap\Settings\DataParserInterface::class, $sut, '' );
-		$this->assertInstanceOf( \ItalyStrap\Settings\DataParser::class, $sut, '' );
+	public function getInstance(): \ItalyStrap\DataParser\DataParser{
+		$sut = new \ItalyStrap\DataParser\DataParser();
+		$this->assertInstanceOf( \ItalyStrap\DataParser\DataParserInterface::class, $sut, '' );
+		$this->assertInstanceOf( \ItalyStrap\DataParser\DataParser::class, $sut, '' );
 		return $sut;
     }
 
@@ -30,9 +30,9 @@ class DataParserTest extends \Codeception\Test\Unit
 	public function ItShouldBeInstantiable() {
 		$this->getInstance();
 
-		$sut = \ItalyStrap\Settings\DataParserFactory::make();
-		$this->assertInstanceOf( \ItalyStrap\Settings\DataParserInterface::class, $sut, '' );
-		$this->assertInstanceOf( \ItalyStrap\Settings\DataParser::class, $sut, '' );
+		$sut = \ItalyStrap\DataParser\DataParserFactory::make();
+		$this->assertInstanceOf( \ItalyStrap\DataParser\DataParserInterface::class, $sut, '' );
+		$this->assertInstanceOf( \ItalyStrap\DataParser\DataParser::class, $sut, '' );
     }
 
 	/**
@@ -66,7 +66,7 @@ class DataParserTest extends \Codeception\Test\Unit
 	public function ItShouldReturnFilteredDataWithProvidedCustomFilters() {
 		$sut = $this->getInstance();
 
-		$filter = new class implements \ItalyStrap\Settings\FilterableInterface {
+		$filter = new class implements \ItalyStrap\DataParser\FilterableInterface {
 
 			private function getSanitize() {
 				return new \ItalyStrap\Cleaner\Sanitization();
@@ -99,7 +99,7 @@ class DataParserTest extends \Codeception\Test\Unit
 		$sut = $this->getInstance();
 
 		$san = new \ItalyStrap\Cleaner\Sanitization();
-		$filter = new \ItalyStrap\Settings\Filters\SanitizeFilter( $san );
+		$filter = new \ItalyStrap\DataParser\Filters\SanitizeFilter( $san );
 		$sut->withFilters( $filter );
 
 		$sut->withSchema(
@@ -122,7 +122,7 @@ class DataParserTest extends \Codeception\Test\Unit
 		$sut = $this->getInstance();
 
 		$val = new \ItalyStrap\Cleaner\Validation();
-		$filter = new \ItalyStrap\Settings\Filters\ValidateFilter( $val );
+		$filter = new \ItalyStrap\DataParser\Filters\ValidateFilter( $val );
 		$sut->withFilters( $filter );
 
 		$sut->withSchema(
@@ -162,7 +162,7 @@ class DataParserTest extends \Codeception\Test\Unit
 		$sut = $this->getInstance();
 
 		$val = new \ItalyStrap\Cleaner\Validation();
-		$filter = new \ItalyStrap\Settings\Filters\ValidateFilter( $val );
+		$filter = new \ItalyStrap\DataParser\Filters\ValidateFilter( $val );
 		$sut->withFilters( $filter );
 
 		$sut->withSchema(
@@ -186,10 +186,10 @@ class DataParserTest extends \Codeception\Test\Unit
 		$sut = $this->getInstance();
 
 		$san = new \ItalyStrap\Cleaner\Sanitization();
-		$filter_san = new \ItalyStrap\Settings\Filters\SanitizeFilter( $san );
+		$filter_san = new \ItalyStrap\DataParser\Filters\SanitizeFilter( $san );
 
 		$val = new \ItalyStrap\Cleaner\Validation();
-		$filter_val = new \ItalyStrap\Settings\Filters\ValidateFilter( $val );
+		$filter_val = new \ItalyStrap\DataParser\Filters\ValidateFilter( $val );
 
 		$sut->withFilters( $filter_san, $filter_val );
 
@@ -219,13 +219,13 @@ class DataParserTest extends \Codeception\Test\Unit
 		$sut = $this->getInstance();
 
 		$san = new \ItalyStrap\Cleaner\Sanitization();
-		$filter_san = new \ItalyStrap\Settings\Filters\SanitizeFilter( $san );
+		$filter_san = new \ItalyStrap\DataParser\Filters\SanitizeFilter( $san );
 
 		$val = new \ItalyStrap\Cleaner\Validation();
-		$filter_val = new \ItalyStrap\Settings\Filters\ValidateFilter( $val );
+		$filter_val = new \ItalyStrap\DataParser\Filters\ValidateFilter( $val );
 
 		$tras = new \ItalyStrap\I18N\Translator( 'name' );
-		$filter_tras = new \ItalyStrap\Settings\Filters\TranslateFilter( $tras );
+		$filter_tras = new \ItalyStrap\DataParser\Filters\TranslateFilter( $tras );
 
 		$sut->withFilters( $filter_san, $filter_val, $filter_tras );
 
@@ -256,13 +256,13 @@ class DataParserTest extends \Codeception\Test\Unit
 		$sut = $this->getInstance();
 
 		$san = new \ItalyStrap\Cleaner\Sanitization();
-		$filter_san = new \ItalyStrap\Settings\Filters\SanitizeFilter( $san );
+		$filter_san = new \ItalyStrap\DataParser\Filters\SanitizeFilter( $san );
 
 		$val = new \ItalyStrap\Cleaner\Validation();
-		$filter_val = new \ItalyStrap\Settings\Filters\ValidateFilter( $val );
+		$filter_val = new \ItalyStrap\DataParser\Filters\ValidateFilter( $val );
 
 		$tras = new \ItalyStrap\I18N\Translator( 'name' );
-		$filter_tras = new \ItalyStrap\Settings\Filters\TranslateFilter( $tras );
+		$filter_tras = new \ItalyStrap\DataParser\Filters\TranslateFilter( $tras );
 
 		$sut->withFilters(
 			$filter_san,
