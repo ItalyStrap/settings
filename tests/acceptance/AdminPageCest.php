@@ -1,6 +1,6 @@
 <?php
 
-use ItalyStrap\Settings\Page as P;
+use ItalyStrap\Settings\Pages as P;
 
 class AdminPageCest
 {

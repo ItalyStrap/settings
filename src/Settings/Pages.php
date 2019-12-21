@@ -5,7 +5,7 @@ namespace ItalyStrap\Settings;
 
 use ItalyStrap\Config\ConfigInterface as Config;
 
-class Page {
+class Pages {
 
 	use ShowableTrait;
 

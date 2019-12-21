@@ -1,6 +1,6 @@
 <?php
 
-use ItalyStrap\Settings\Page as P;
+use ItalyStrap\Settings\Pages as P;
 
 class PagesTest extends \Codeception\TestCase\WPTestCase
 {
@@ -44,8 +44,8 @@ class PagesTest extends \Codeception\TestCase\WPTestCase
 			'options'	=> $this->make( \ItalyStrap\Settings\Options::class ),
 		] );
 
-		$sut = new \ItalyStrap\Settings\Page( $config, $sections, $view );
-		$this->assertInstanceOf( \ItalyStrap\Settings\Page::class, $sut, '' );
+		$sut = new \ItalyStrap\Settings\Pages( $config, $sections, $view );
+		$this->assertInstanceOf( \ItalyStrap\Settings\Pages::class, $sut, '' );
 		return $sut;
 	}
 

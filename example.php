@@ -55,7 +55,7 @@ add_action( 'admin_init', [ $sections_obj, 'register'] );
  */
 $pages_config = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
 
-$pages_obj = new \ItalyStrap\Settings\Page(
+$pages_obj = new \ItalyStrap\Settings\Pages(
 	\ItalyStrap\Config\ConfigFactory::make( $pages_config ),
 	$sections_obj,
 	new \ItalyStrap\Settings\ViewPage()
