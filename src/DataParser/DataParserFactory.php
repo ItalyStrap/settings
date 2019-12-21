@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace ItalyStrap\Settings;
+namespace ItalyStrap\DataParser;
 
 use ItalyStrap\Cleaner\Sanitization;
 use ItalyStrap\Cleaner\Validation;
 use ItalyStrap\I18N\Translator;
-use ItalyStrap\Settings\{Filters\SanitizeFilter, Filters\TranslateFilter, Filters\ValidateFilter};
+use ItalyStrap\DataParser\{Filters\SanitizeFilter, Filters\TranslateFilter, Filters\ValidateFilter};
 
 /**
  * Class DataParserFactory
@@ -29,6 +29,6 @@ class DataParserFactory
 			$filters[] = new TranslateFilter( new Translator( $plugin_name ) );
 		}
 
-		return ( new \ItalyStrap\Settings\DataParser() )->withFilters( ...$filters	);
+		return ( new \ItalyStrap\DataParser\DataParser() )->withFilters( ...$filters	);
 	}
 }

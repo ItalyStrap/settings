@@ -43,7 +43,7 @@ $sections = require __DIR__ . '/tests/_data/fixtures/config/sections.php';
 $sections_obj = new \ItalyStrap\Settings\Sections(
 	\ItalyStrap\Config\ConfigFactory::make( $sections ),
 	new \ItalyStrap\Fields\Fields(),
-	\ItalyStrap\Settings\DataParserFactory::make( $plugin_name ),
+	\ItalyStrap\DataParser\DataParserFactory::make( $plugin_name ),
 	$options_obj
 );
 add_action( 'admin_init', [ $sections_obj, 'register'] );

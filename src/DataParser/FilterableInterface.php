@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace ItalyStrap\Settings;
+namespace ItalyStrap\DataParser;
 
 /**
  * Interface FilterableInterface

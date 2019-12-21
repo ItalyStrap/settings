@@ -1,7 +1,7 @@
 {
     "name": "italystrap/settings",
     "description": "Settings API for WordPress",
-    "type": "wordpress-plugin",
+    "type": "library",
     "license": "MIT",
     "authors": [
         {
@@ -36,6 +36,7 @@
     "autoload": {
         "psr-4": {
             "ItalyStrap\\I18N\\": "src/I18N/",
+            "ItalyStrap\\DataParser\\": "src/DataParser/",
             "ItalyStrap\\Settings\\": "src/Settings/"
         }
     },

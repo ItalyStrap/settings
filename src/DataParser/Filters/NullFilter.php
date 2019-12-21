@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace ItalyStrap\Settings\Filters;
+namespace ItalyStrap\DataParser\Filters;
 
-use ItalyStrap\Settings\FilterableInterface;
+use ItalyStrap\DataParser\FilterableInterface;
 
 /**
  * Class NullFilter

@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace ItalyStrap\Settings\Filters;
+namespace ItalyStrap\DataParser\Filters;
 
 
 use ItalyStrap\I18N\Translatable;
-use ItalyStrap\Settings\FilterableInterface;
+use ItalyStrap\DataParser\FilterableInterface;
 
 class TranslateFilter implements FilterableInterface
 {
