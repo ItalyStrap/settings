@@ -58,7 +58,6 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 	public function ItShouldBeInstantiable()
 	{
 		$this->getInstance();
-
 	}
 
 	/**

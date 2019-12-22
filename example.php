@@ -53,7 +53,7 @@ add_action( 'admin_init', [ $sections_obj, 'register'] );
  *
  * ===================================
  */
-$pages_config = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
+//$pages_config = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
 //$pages_obj = new \ItalyStrap\Settings\Pages(
 //	\ItalyStrap\Config\ConfigFactory::make( $pages_config ),
 //	$sections_obj,
@@ -65,8 +65,8 @@ $pages_config = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
 $page_config = require __DIR__ . '/tests/_data/fixtures/config/page.php';
 $pages_obj = new \ItalyStrap\Settings\Page(
 	\ItalyStrap\Config\ConfigFactory::make( $page_config ),
-	$sections_obj,
-	new \ItalyStrap\Settings\ViewPage()
+	new \ItalyStrap\Settings\ViewPage(),
+	$sections_obj
 );
 add_action( 'admin_menu', [ $pages_obj, 'register'] );
 
@@ -79,7 +79,6 @@ $pages_obj2 = new \ItalyStrap\Settings\Page(
 //		P::VIEW			=> 'child',
 		'view'			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
 	] ),
-	$sections_obj,
 	new \ItalyStrap\Settings\ViewPage()
 );
 add_action( 'admin_menu', [ $pages_obj2, 'register'] );

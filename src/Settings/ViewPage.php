@@ -51,7 +51,7 @@ class ViewPage implements ViewPageInterface {
 	 */
 	public function render( $view = '' ): void {
 		$this->assertCurrentUserCanSeeThePage();
-		$this->assertHasSections();
+//		$this->assertHasSections();
 		require $this->findView( $view );
 	}
 

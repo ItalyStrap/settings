@@ -23,15 +23,11 @@ class Page
 	const POSITION		= 'position';
 	const VIEW			= 'view';
 	const PARENT		= 'parent';
-	const PARENT_SLUGS	= [
-
-	];
 
 	/**
 	 * @var Config
 	 */
 	private $config;
-	private $pagenow;
 	private $sections;
 
 	/**
@@ -55,17 +51,13 @@ class Page
 	 * @param SectionsInterface $sections
 	 * @param ViewPageInterface $view
 	 */
-	public function __construct( Config $config, SectionsInterface $sections, ViewPageInterface $view ) {
-
-		if ( isset( $_GET['page'] ) ) { // Input var okay.
-			$this->pagenow = \stripslashes( $_GET['page'] ); // Input var okay.
-		}
-
+	public function __construct( Config $config, ViewPageInterface $view, SectionsInterface $sections = null ) {
 		$this->config = $config;
 		$this->sections = $sections;
-		$this->options_group = $sections->getGroup();
 		$this->view = $view;
-		$this->view->withSections( $this->sections );
+		if ( $sections ) {
+			$this->view->withSections( $sections );
+		}
 	}
 
 	/**
@@ -88,7 +80,7 @@ class Page
 				$this->config->get( self::PAGE_TITLE ),
 				$this->config->get( self::MENU_TITLE ),
 				$this->config->get( self::CAPABILITY, 'manage_options' ),
-				$this->config->{self::SLUG},
+				\sanitize_key( $this->config->{self::SLUG} ),
 				$this->getCallable( $callable, $this->config )
 			);
 		}
@@ -97,7 +89,7 @@ class Page
 			$this->config->get( self::PAGE_TITLE ),
 			$this->config->get( self::MENU_TITLE ),
 			$this->config->get( self::CAPABILITY, 'manage_options' ),
-			$this->config->get( self::SLUG ),
+			\sanitize_key( $this->config->{self::SLUG} ),
 			$this->getCallable( $callable, $this->config ),
 			$this->config->get( self::ICON ),
 			$this->config->get( self::POSITION )
