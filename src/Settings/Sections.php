@@ -56,6 +56,11 @@ class Sections implements \Countable, SectionsInterface {
 	private $section_key;
 
 	/**
+	 * @var Page
+	 */
+	private $page;
+
+	/**
 	 * Initialize Class
 	 *
 	 * @param FieldsInterface $fields The Fields object.
@@ -102,7 +107,7 @@ class Sections implements \Countable, SectionsInterface {
 				$section[ self::ID ],
 				$section[ self::TITLE ],
 				[ $this, 'renderSection' ], //array( $this, $field['callback'] ),
-				$this->getGroup() //$section['page']
+				$this->getPageName() //$section['page']
 			);
 
 			$this->addSettingsFields( $section );
@@ -146,7 +151,7 @@ class Sections implements \Countable, SectionsInterface {
 				$field[ self::ID ],
 				$field['label'],
 				[ $this, 'renderField' ], //array( $this, $field['callback'] ),
-				$this->getGroup(), //$field['page'],
+				$this->getPageName(), //$field['page'],
 				$section[ self::ID ],
 				$field // $args
 			);
@@ -186,7 +191,7 @@ class Sections implements \Countable, SectionsInterface {
 	 */
 	private function registerSetting(): void {
 		\register_setting(
-			$this->getGroup(),
+			$this->getPageName(),
 			$this->options->getName(),
 			[
 				'sanitize_callback'	=> [ $this->parser->withSchema( $this->fieldsToArray() ), 'parse' ],
@@ -208,8 +213,17 @@ class Sections implements \Countable, SectionsInterface {
 		return $fields;
 	}
 
-	public function getGroup(): string {
-		return $this->options->getName() . '_options_group';
+	/**
+	 * @param Page $page
+	 * @return ViewPage
+	 */
+	public function forPage( Page $page ): Sections {
+		$this->page = $page;
+		return $this;
+	}
+
+	public function getPageName(): string {
+		return $this->page->getPageName();
 	}
 
 	public function getSections(): array {

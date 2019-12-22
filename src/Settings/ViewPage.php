@@ -24,6 +24,11 @@ class ViewPage implements ViewPageInterface {
 	 */
 	private $sections;
 
+	/**
+	 * @var Page
+	 */
+	private $page;
+
 	public function __construct() {
 
 		if ( isset( $_GET['page'] ) ) { // Input var okay.
@@ -67,10 +72,19 @@ class ViewPage implements ViewPageInterface {
 	}
 
 	/**
+	 * @param Page $page
+	 * @return ViewPage
+	 */
+	public function forPage( Page $page ): ViewPage {
+		$this->page = $page;
+		return $this;
+	}
+
+	/**
 	 * @return string
 	 */
-	private function getGroup() {
-		return $this->sections->getGroup();
+	private function getPageName() {
+		return $this->page->getPageName();
 	}
 
 	/**

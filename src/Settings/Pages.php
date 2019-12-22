@@ -56,7 +56,7 @@ class Pages {
 
 		$this->config = $config;
 		$this->sections = $sections;
-		$this->options_group = $sections->getGroup();
+		$this->options_group = $sections->getPageName();
 		$this->view = $view;
 		$this->view->withSections( $this->sections );
 	}

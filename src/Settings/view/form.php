@@ -12,7 +12,7 @@ use function ItalyStrap\HTML\void_tag;
 
 $this->assertHasSections();
 
-$spinner = void_tag( $this->getGroup() . '_spinner', 'img', [
+$spinner = void_tag( $this->getPageName() . '_spinner', 'img', [
 	'class'	=> 'loading-gif',
 	'src'	=> \includes_url() . 'images/spinner.gif',
 	'alt'	=> 'spinner',
@@ -26,22 +26,22 @@ $spinner = void_tag( $this->getGroup() . '_spinner', 'img', [
 	<div id="post-body">
 		<div class="postbox-container">
 			<?php do_action( 'italystrap_before_settings_form', $this ); ?>
-			<?php open_tag_e( $this->getGroup() . 'form', 'form', [
+			<?php open_tag_e( $this->getPageName() . 'form', 'form', [
 				'method'	=> 'post',
 				'action'	=> 'options.php',
-				'id'		=> $this->getGroup(),
+				'id'		=> $this->getPageName(),
 			] ); ?>
 				<?php
 				$this->createNavTab();
 				/**
 				 * Output nonce, action, and option_page fields for a settings page.
 				 */
-				\settings_fields( $this->getGroup() );
+				\settings_fields( $this->getPageName() );
 
 				/**
 				 * Output settings sections and fields
 				 */
-				$this->doSettingsSections( $this->getGroup() );
+				$this->doSettingsSections( $this->getPageName() );
 
 				/**
 				 * Output a submit button
@@ -50,7 +50,7 @@ $spinner = void_tag( $this->getGroup() . '_spinner', 'img', [
 				echo $spinner;
 				?>
 				<div id="saveResult"></div>
-			<?php close_tag_e( $this->getGroup() . 'form' ); ?>
+			<?php close_tag_e( $this->getPageName() . 'form' ); ?>
 			<?php \do_action( 'italystrap_after_settings_form', $this ); ?>
 		</div>
 	</div>
@@ -70,7 +70,7 @@ $updated = \sprintf(
 <script type="text/javascript">
 	jQuery( document ).ready( function($) {
 		var spinner = $( '.loading-gif' );
-		$('#<?php echo \esc_attr( $this->getGroup() ) ?>').submit(function() {
+		$('#<?php echo \esc_attr( $this->getPageName() ) ?>').submit(function() {
 			$( '.saveResult' ).empty();
 			spinner.fadeIn();
 			$(this).ajaxSubmit({

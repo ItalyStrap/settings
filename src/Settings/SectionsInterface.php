@@ -35,7 +35,7 @@ interface SectionsInterface {
 	/**
 	 * @return string
 	 */
-	public function getGroup(): string;
+	public function getPageName(): string;
 
 	/**
 	 * @inheritDoc

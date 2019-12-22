@@ -71,8 +71,14 @@ class Page
 		$this->sections = $sections;
 		$this->view = $view;
 		if ( $sections ) {
+			$this->sections->forPage( $this );
+			$this->view->forPage( $this );
 			$this->view->withSections( $sections );
 		}
+	}
+
+	public function getPageName() {
+		return \sanitize_key( $this->config->{self::SLUG} );
 	}
 
 	/**
