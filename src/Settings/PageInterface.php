@@ -2,7 +2,6 @@
 
 namespace ItalyStrap\Settings;
 
-
 /**
  * Class Page
  * @package ItalyStrap\Settings
@@ -22,8 +21,8 @@ namespace ItalyStrap\Settings;
  * Custom Post Type – edit.php?post_type=wporg_post_type
  * Network Admin – settings.php
  */
-interface PageInterface
-{
+interface PageInterface {
+
 	/**
 	 * @return string
 	 */

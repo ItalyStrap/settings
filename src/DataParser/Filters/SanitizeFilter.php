@@ -10,8 +10,8 @@ use ItalyStrap\DataParser\FilterableInterface;
  * Class SanitizeFilter
  * @package ItalyStrap\Settings\Filters
  */
-class SanitizeFilter implements FilterableInterface
-{
+class SanitizeFilter implements FilterableInterface {
+
 	/**
 	 * @var Sanitization
 	 */

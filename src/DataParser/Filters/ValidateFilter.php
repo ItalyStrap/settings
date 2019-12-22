@@ -10,8 +10,8 @@ use ItalyStrap\DataParser\FilterableInterface;
  * Class ValidateFilter
  * @package ItalyStrap\Settings\Filters
  */
-class ValidateFilter implements FilterableInterface
-{
+class ValidateFilter implements FilterableInterface {
+
 	/**
 	 * @var Validation
 	 */

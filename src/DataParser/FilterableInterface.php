@@ -7,8 +7,8 @@ namespace ItalyStrap\DataParser;
  * Interface FilterableInterface
  * @package ItalyStrap\Settings
  */
-interface FilterableInterface
-{
+interface FilterableInterface {
+
 	/**
 	 * The filter accept a data value {int|string} and apply a filter method
 	 *

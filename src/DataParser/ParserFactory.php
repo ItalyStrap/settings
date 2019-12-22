@@ -6,14 +6,16 @@ namespace ItalyStrap\DataParser;
 use ItalyStrap\Cleaner\Sanitization;
 use ItalyStrap\Cleaner\Validation;
 use ItalyStrap\I18N\Translator;
-use ItalyStrap\DataParser\{Filters\SanitizeFilter, Filters\TranslateFilter, Filters\ValidateFilter};
+use ItalyStrap\DataParser\Filters\SanitizeFilter;
+use ItalyStrap\DataParser\Filters\TranslateFilter;
+use ItalyStrap\DataParser\Filters\ValidateFilter;
 
 /**
  * Class DataParserFactory
  * @package ItalyStrap\Settings
  */
-class ParserFactory
-{
+class ParserFactory {
+
 	/**
 	 * @param string $plugin_name
 	 * @return Parser

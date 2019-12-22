@@ -10,8 +10,8 @@ use ItalyStrap\DataParser\FilterableInterface;
  * FILTER_UNSAFE_RAW
  * @package ItalyStrap\Settings\Filters
  */
-class NullFilter implements FilterableInterface
-{
+class NullFilter implements FilterableInterface {
+
 	/**
 	 * @inheritDoc
 	 */

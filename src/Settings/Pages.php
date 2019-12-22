@@ -73,7 +73,6 @@ class Pages {
 			$callable = $config[ self::CALLBACK ];
 
 			if ( $config[ self::PARENT ] ) {
-
 				if ( ! $this->showOn( $config[ 'show_on' ] ) ) {
 					continue;
 				}

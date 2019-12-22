@@ -3,12 +3,11 @@ declare(strict_types=1);
 
 namespace ItalyStrap\DataParser\Filters;
 
-
 use ItalyStrap\I18N\Translatable;
 use ItalyStrap\DataParser\FilterableInterface;
 
-class TranslateFilter implements FilterableInterface
-{
+class TranslateFilter implements FilterableInterface {
+
 	/**
 	 * @var Translatable
 	 */

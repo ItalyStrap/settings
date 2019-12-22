@@ -7,8 +7,8 @@ namespace ItalyStrap\DataParser;
  * Interface DataParserInterface
  * @package ItalyStrap\Settings
  */
-interface ParserInterface
-{
+interface ParserInterface {
+
 	/**
 	 * @param array $schema
 	 * @return Parser

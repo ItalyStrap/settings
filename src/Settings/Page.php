@@ -5,8 +5,8 @@ namespace ItalyStrap\Settings;
 
 use ItalyStrap\Config\ConfigInterface as Config;
 
-class Page implements PageInterface
-{
+class Page implements PageInterface {
+
 	use ShowableTrait;
 
 	const DS 			= DIRECTORY_SEPARATOR;

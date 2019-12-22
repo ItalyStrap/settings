@@ -7,8 +7,8 @@ namespace ItalyStrap\DataParser;
  * Class DataParser
  * @package ItalyStrap\Settings
  */
-class Parser implements ParserInterface
-{
+class Parser implements ParserInterface {
+
 
 	/**
 	 * @var array
@@ -101,7 +101,6 @@ class Parser implements ParserInterface
 	 */
 	private function applyFilters( array $data, string $key, array $schema ): array {
 		foreach ( $this->filters as $filter ) {
-
 			if ( ! \is_array( $data[ $key ] ) ) {
 				$data[ $key ] = $filter->filter( $data[ $key ], $schema );
 				continue;
