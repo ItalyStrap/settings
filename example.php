@@ -54,13 +54,35 @@ add_action( 'admin_init', [ $sections_obj, 'register'] );
  * ===================================
  */
 $pages_config = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
+//$pages_obj = new \ItalyStrap\Settings\Pages(
+//	\ItalyStrap\Config\ConfigFactory::make( $pages_config ),
+//	$sections_obj,
+//	new \ItalyStrap\Settings\ViewPage()
+//);
+//add_action( 'admin_menu', [ $pages_obj, 'register'] );
 
-$pages_obj = new \ItalyStrap\Settings\Pages(
-	\ItalyStrap\Config\ConfigFactory::make( $pages_config ),
+
+$page_config = require __DIR__ . '/tests/_data/fixtures/config/page.php';
+$pages_obj = new \ItalyStrap\Settings\Page(
+	\ItalyStrap\Config\ConfigFactory::make( $page_config ),
 	$sections_obj,
 	new \ItalyStrap\Settings\ViewPage()
 );
 add_action( 'admin_menu', [ $pages_obj, 'register'] );
+
+$pages_obj2 = new \ItalyStrap\Settings\Page(
+	\ItalyStrap\Config\ConfigFactory::make( 	[
+		'parent'		=> 'italystrap-dashboard',
+//		'page_title'	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
+		'menu_title'	=> \__( 'Child', 'italystrap' ),
+		'menu_slug'			=> 'ciao',
+//		P::VIEW			=> 'child',
+		'view'			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
+	] ),
+	$sections_obj,
+	new \ItalyStrap\Settings\ViewPage()
+);
+add_action( 'admin_menu', [ $pages_obj2, 'register'] );
 
 /**
  * Load script for Tabbed admin page

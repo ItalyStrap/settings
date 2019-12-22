@@ -23,6 +23,9 @@ class Page
 	const POSITION		= 'position';
 	const VIEW			= 'view';
 	const PARENT		= 'parent';
+	const PARENT_SLUGS	= [
+
+	];
 
 	/**
 	 * @var Config
@@ -67,97 +70,61 @@ class Page
 
 	/**
 	 * Add plugin primary page in admin panel
+	 * @return bool|false|string
 	 */
 	public function register() {
 
-		$config = $this->config;
-
-		$this->assertHasMinimumValueSet( $config );
-		$this->parseWithDefault( $config );
-
-		$callable = $config[ self::CALLBACK ];
-
-		if ( $config[ self::PARENT ] ) {
-
-			if ( ! $this->showOn( $config[ 'show_on' ] ) ) {
-				continue;
-			}
-
-			\add_submenu_page(
-				$config[ self::PARENT ],
-				$config[ self::PAGE_TITLE ],
-				$config[ self::MENU_TITLE ],
-				$config[ self::CAPABILITY ],
-				$config[ self::SLUG ],
-				$this->getCallable( $callable, $config )
-			);
-
-			continue;
+		if ( ! $this->showOn( $this->config->get( 'show_on', true ) ) ) {
+			return false;
 		}
 
-		\add_menu_page(
-			$config[ self::PAGE_TITLE ],
-			$config[ self::MENU_TITLE ],
-			$config[ self::CAPABILITY ],
-			$config[ self::SLUG ],
-			$this->getCallable( $callable, $config ),
-			$config[ self::ICON ],
-			$config[ self::POSITION ]
+		$this->assertHasMinimumValueSet( $this->config );
+
+		$callable = $this->config->get( self::CALLBACK );
+
+		if ( $this->config->get( self::PARENT ) ) {
+			return \add_submenu_page(
+				$this->config->{self::PARENT},
+				$this->config->get( self::PAGE_TITLE ),
+				$this->config->get( self::MENU_TITLE ),
+				$this->config->get( self::CAPABILITY, 'manage_options' ),
+				$this->config->{self::SLUG},
+				$this->getCallable( $callable, $this->config )
+			);
+		}
+
+		return \add_menu_page(
+			$this->config->get( self::PAGE_TITLE ),
+			$this->config->get( self::MENU_TITLE ),
+			$this->config->get( self::CAPABILITY, 'manage_options' ),
+			$this->config->get( self::SLUG ),
+			$this->getCallable( $callable, $this->config ),
+			$this->config->get( self::ICON ),
+			$this->config->get( self::POSITION )
 		);
-	}
-
-	/**
-	 * @param array $config
-	 */
-	private function parseWithDefault( array &$config ) {
-
-		$default = [
-			'show_on'			=> true,
-			self::PAGE_TITLE	=> '',
-			self::MENU_TITLE	=> '',
-			self::CAPABILITY	=> 'manage_options',
-			self::SLUG			=> '',
-			self::CALLBACK		=> null,
-			self::ICON			=> '',
-			self::POSITION		=> null,
-			self::VIEW			=> '',
-
-			// For child pages
-			self::PARENT		=> false,
-		];
-
-		$config = \array_replace_recursive( $default, $config );
 	}
 
 	/**
 	 * @param $config
 	 */
 	private function assertHasMinimumValueSet( Config $config ) {
-		if ( ! $config->has( self::MENU_TITLE ) ) {
+		if ( ! $config->{self::MENU_TITLE} ) {
 			throw new \RuntimeException( \sprintf( '%s must be not empty', self::MENU_TITLE ) );
 		}
 
-		if ( ! $config->has( self::SLUG ) ) {
+		if ( ! $config->{self::SLUG} ) {
 			throw new \RuntimeException( \sprintf( '%s must be not empty', self::SLUG ) );
 		}
 	}
 
 	/**
-	 * The add_submenu_page callback
-	 * @param array $config
-	 */
-	private function getView( $config = [] ) {
-		$this->view->render( $config[ self::VIEW ] );
-	}
-
-	/**
 	 * @param mixed $callable
-	 * @param array $config
+	 * @param Config $config
 	 * @return callable|\Closure
 	 */
-	private function getCallable( $callable, $config ) {
+	private function getCallable( $callable, Config $config ) {
 		return \is_callable( $callable ) ? $callable : function () use ( $config ) {
-			$this->getView( $config );
+			$this->view->render( $config->get( self::VIEW, '' ) );
 		};
 	}
 }
