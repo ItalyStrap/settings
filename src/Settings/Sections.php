@@ -217,7 +217,7 @@ class Sections implements \Countable, SectionsInterface {
 	 * @param Page $page
 	 * @return ViewPage
 	 */
-	public function forPage( Page $page ): Sections {
+	public function forPage( PageInterface $page ): Sections {
 		$this->page = $page;
 		return $this;
 	}

@@ -52,6 +52,22 @@ class ViewPage implements ViewPageInterface {
 	}
 
 	/**
+	 * @param Page $page
+	 * @return ViewPage
+	 */
+	public function forPage( PageInterface $page ): ViewPage {
+		$this->page = $page;
+		return $this;
+	}
+
+	/**
+	 * @return string
+	 */
+	private function getPageName() {
+		return $this->page->getPageName();
+	}
+
+	/**
 	 * @inheritDoc
 	 */
 	public function render( $view = '' ): void {
@@ -69,22 +85,6 @@ class ViewPage implements ViewPageInterface {
 		}
 
 		return $file_name;
-	}
-
-	/**
-	 * @param Page $page
-	 * @return ViewPage
-	 */
-	public function forPage( Page $page ): ViewPage {
-		$this->page = $page;
-		return $this;
-	}
-
-	/**
-	 * @return string
-	 */
-	private function getPageName() {
-		return $this->page->getPageName();
 	}
 
 	/**
