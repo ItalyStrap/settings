@@ -63,6 +63,16 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @test
 	 */
+	public function ItShouldReturnPageName()
+	{
+		$sut = $this->getInstance();
+		$page_name = $sut->getPageName();
+		$this->assertStringContainsString( $this->page[ P::SLUG ], $page_name, '' );
+	}
+
+	/**
+	 * @test
+	 */
 	public function ItShouldRegister()
 	{
 		$sut = $this->getInstance();

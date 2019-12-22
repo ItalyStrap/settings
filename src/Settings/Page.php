@@ -77,6 +77,9 @@ class Page
 		}
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getPageName() {
 		return \sanitize_key( $this->config->{self::SLUG} );
 	}

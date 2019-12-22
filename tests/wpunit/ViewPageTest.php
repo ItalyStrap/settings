@@ -10,7 +10,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @var string
 	 */
-	private $group_name;
+	private $page_name;
 	/**
 	 * @var array|WP_UnitTest_Factory|null
 	 */
@@ -23,7 +23,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 		\wp_set_current_user( '1', 'admin' );
         // Your set up methods here.
 
-		$this->group_name = 'group_name';
+		$this->page_name = 'group_name';
 
 		$this->sections = [
 			[
@@ -43,7 +43,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
         parent::tearDown();
     }
 
-	private function getInstance(): \ItalyStrap\Settings\ViewPageInterface {
+	private function getInstance(): \ItalyStrap\Settings\ViewPage {
 		$sut = new \ItalyStrap\Settings\ViewPage();
 		$this->assertInstanceOf( \ItalyStrap\Settings\ViewPageInterface::class, $sut, '' );
 		$this->assertInstanceOf( \ItalyStrap\Settings\ViewPage::class, $sut, '' );
@@ -54,8 +54,8 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 
 		$sections_obj = $this->make( \ItalyStrap\Settings\Sections::class, [
 			'count'		=> \count( $this->sections ),
-			'getGroup'	=> function () {
-				return $this->group_name;
+			'getPageName'	=> function () {
+				return $this->page_name;
 			},
 			'getSections'	=> function () {
 				return $this->sections;
@@ -63,6 +63,17 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 		] );
 
 		return $sections_obj;
+	}
+
+	private function getPage() {
+
+		$page_obj = $this->make( \ItalyStrap\Settings\Page::class, [
+			'getPageName'	=> function () {
+				return $this->page_name;
+			},
+		] );
+
+		return $page_obj;
 	}
 
 	/**
@@ -78,6 +89,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 	public function ItShouldBeRenderDefaultPageIfNoViewFileIsProvided() {
 		$sut = $this->getInstance();
 		$sut->withSections( $this->getSections() );
+		$sut->forPage( $this->getPage() );
 		$sut->render();
 		$output = $this->getActualOutputForAssertion();
 		$this->assertStringContainsString( '<form method="post" action="options.php"', $output, '' );
@@ -100,6 +112,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 	public function ItShouldBeRenderTab() {
 		$sut = $this->getInstance();
 		$sut->withSections( $this->getSections() );
+		$sut->forPage( $this->getPage() );
 		$sut->render();
 		$output = $this->getActualOutputForAssertion();
 
