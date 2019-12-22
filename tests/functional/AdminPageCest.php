@@ -5,7 +5,7 @@ use ItalyStrap\Settings\Pages as P;
 
 class AdminPageCest
 {
-	private $pages = [];
+	private $page = [];
 	private $options_from_fields = [];
 	private $options_from_advanced_fields = [];
 	private $all_options  = [];
@@ -27,7 +27,7 @@ class AdminPageCest
 			}
 		}
 
-		$this->pages = require codecept_data_dir( 'fixtures/config/' ) . 'pages.php';
+		$this->page = require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
 		$this->options_from_fields = require codecept_data_dir( 'fixtures/config/' ) . 'fields.php';
 		$this->options_from_advanced_fields = require codecept_data_dir( 'fixtures/config/' ) . 'fields-advanced.php';
 		$this->plugin = require codecept_data_dir( 'fixtures/config/' ) . 'plugin.php';
@@ -37,7 +37,7 @@ class AdminPageCest
 		$this->count_options = \count( $this->all_options );
 
 		$I->loginAsAdmin();
-		$page = $this->pages[0][ P::SLUG ];
+		$page = $this->page[ P::SLUG ];
 		$I->amOnAdminPage( 'admin.php?page=' . $page );
     }
 
@@ -50,7 +50,7 @@ class AdminPageCest
 		$option = $I->grabOptionFromDatabase( $this->plugin['options_name'] );
 		\PHPUnit\Framework\Assert::assertNotEmpty( $option );
 
-		$page = $this->pages[0][ P::SLUG ];
+		$page = $this->page[ P::SLUG ];
 		$I->amOnAdminPage( 'admin.php?page=' . $page );
 
 		$types = \ItalyStrap\Fields\ViewFactory::getTypes();

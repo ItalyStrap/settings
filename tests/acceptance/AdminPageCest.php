@@ -4,7 +4,7 @@ use ItalyStrap\Settings\Pages as P;
 
 class AdminPageCest
 {
-	private $pages = [];
+	private $page = [];
 	private $options_from_fields = [];
 	private $plugin = [];
 
@@ -24,7 +24,7 @@ class AdminPageCest
 			}
 		}
 
-		$this->pages = require codecept_data_dir( 'fixtures/config/' ) . 'pages.php';
+		$this->page = require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
 		$this->options_from_fields = require codecept_data_dir( 'fixtures/config/' ) . 'fields.php';
 		$this->plugin = require codecept_data_dir( 'fixtures/config/' ) . 'plugin.php';
 
@@ -42,7 +42,7 @@ class AdminPageCest
 	 */
     public function CanSeeSettingsPageWithFieldsAndSubmit(AcceptanceTester $I)
     {
-		$page = $this->pages[0][ P::SLUG ];
+		$page = $this->page[ P::SLUG ];
     	$I->amOnAdminPage( '?page=' . $page );
 
 		// Submit the form as a user would submit it.
