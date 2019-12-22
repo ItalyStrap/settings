@@ -14,7 +14,7 @@ interface FilterableInterface {
 	 *
 	 * The return value could be the type of int or string
 	 *
-	 * @param array $data
+	 * @param int|string $data
 	 * @param array $schema
 	 * @return mixed
 	 */

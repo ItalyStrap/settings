@@ -32,7 +32,7 @@ class ValidateFilter implements FilterableInterface {
 
 		$this->validation->addRules( $schema['validate'] );
 
-		if ( false === $this->validation->validate( $data ) ) {
+		if ( false === $this->validation->validate( \strval( $data ) ) ) {
 
 			/**
 			 * Validate fields if $field['validate'] is set

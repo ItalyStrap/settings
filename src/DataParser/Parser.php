@@ -32,7 +32,7 @@ class Parser implements ParserInterface {
 	 * @inheritDoc
 	 */
 	public function withSchema( array $schema ): Parser {
-		$this->schema = \array_replace_recursive( $this->schema, $schema );
+		$this->schema = (array) \array_replace_recursive( $this->schema, $schema );
 		return $this;
 	}
 
@@ -83,7 +83,7 @@ class Parser implements ParserInterface {
 
 	/**
 	 * @param array $data
-	 * @param $key
+	 * @param string $key
 	 * @return array
 	 */
 	private function assertDataValueIsSet( array $data, $key ): array {

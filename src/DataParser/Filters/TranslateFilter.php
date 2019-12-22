@@ -26,7 +26,7 @@ class TranslateFilter implements FilterableInterface {
 			/**
 			 * @todo Maybe add some kind of error if no strings are registered
 			 */
-			$this->translator->registerString( $schema['id'], strip_tags( $data ) );
+			$this->translator->registerString( $schema['id'], \strip_tags( \strval( $data ) ) );
 		}
 
 		return $data;

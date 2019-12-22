@@ -95,7 +95,7 @@ class Page implements PageInterface {
 	}
 
 	/**
-	 * @param $config
+	 * @param Config $config
 	 */
 	private function assertHasMinimumValueSet( Config $config ) {
 		if ( ! $config->{self::MENU_TITLE} ) {
