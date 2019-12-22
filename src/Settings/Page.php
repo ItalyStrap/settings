@@ -43,22 +43,16 @@ class Page
 	 * @var Config
 	 */
 	private $config;
+
+	/**
+	 * @var SectionsInterface
+	 */
 	private $sections;
 
 	/**
 	 * @var ViewPageInterface
 	 */
 	private $view;
-
-	/**
-	 * @var string
-	 */
-	private $options_group;
-
-	/**
-	 * @var string
-	 */
-	private $view_file = '';
 
 	/**
 	 * Pages constructor.

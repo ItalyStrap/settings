@@ -80,7 +80,7 @@ class AdminPageCest
 		];
 
 		// Submit the form as a user would submit it.
-		$I->submitForm( '#' . $this->plugin['options_group'], $formFields );
+		$I->submitForm( '#' . $this->page[ P::SLUG ], $formFields );
 
 		$option = $I->grabOptionFromDatabase( $this->plugin['options_name'] );
 

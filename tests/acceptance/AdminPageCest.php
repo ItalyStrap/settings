@@ -46,7 +46,7 @@ class AdminPageCest
     	$I->amOnAdminPage( '?page=' . $page );
 
 		// Submit the form as a user would submit it.
-		$I->submitForm( '#' . $this->plugin['options_group'], [] );
+		$I->submitForm( '#' . $this->page[ P::SLUG ], [] );
 
 		$I->seeOptionInDatabase( [ 'option_name' => $this->plugin['options_name'] ] );
     }
