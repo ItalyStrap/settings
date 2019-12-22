@@ -20,6 +20,7 @@ $spinner = void_tag( $this->getGroup() . '_spinner', 'img', [
 ?>
 <?php \do_action( 'italystrap_before_settings_page', $this ); ?>
 <div id="tabs" class="wrap">
+<!--	<h1>--><?php //echo esc_html( get_admin_page_title() ); ?><!--</h1>-->
 	<div id="post-body">
 		<div class="postbox-container">
 			<?php do_action( 'italystrap_before_settings_form', $this ); ?>

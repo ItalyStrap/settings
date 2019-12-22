@@ -47,7 +47,7 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 			'options'	=> $this->make( \ItalyStrap\Settings\Options::class ),
 		] );
 
-		$sut = new \ItalyStrap\Settings\Page( $config, $sections, $view );
+		$sut = new \ItalyStrap\Settings\Page( $config, $view, $sections );
 		$this->assertInstanceOf( \ItalyStrap\Settings\Page::class, $sut, '' );
 		return $sut;
 	}
@@ -99,5 +99,42 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 
 		$sut = $this->getInstance( $pages );
 		$sut->register();
+	}
+
+	/**
+	 * @test
+	 */
+	public function ItShouldRegisterMenuAndSubmenu()
+	{
+
+		global $menu, $admin_page_hooks, $_registered_pages, $_parent_pages,
+			   $submenu, $_wp_real_parent_file, $_wp_submenu_nopriv;
+
+		$slug = 'test-dashboard';
+
+		$pages = [
+			P::MENU_TITLE	=> \__( 'Menu title', 'italystrap' ),
+			P::SLUG			=> $slug,
+		];
+
+		$sut = $this->getInstance( $pages );
+		$sut->register();
+
+		$this->assertArrayHasKey( $slug, $admin_page_hooks, '' );
+
+
+		$sub_slug = 'sub-slug';
+
+		$pages = [
+			P::PARENT		=> $slug,
+			P::MENU_TITLE	=> \__( 'Submenu title', 'italystrap' ),
+			P::SLUG			=> $sub_slug,
+		];
+
+		$sut = $this->getInstance( $pages );
+		$sut->register();
+
+		$this->assertArrayHasKey( $slug, $_wp_submenu_nopriv, '' );
+		$this->assertArrayHasKey( $sub_slug, $_wp_submenu_nopriv[ $slug ], '' );
 	}
 }
