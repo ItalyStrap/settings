@@ -114,7 +114,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @test
 	 */
-	private function ItShouldThrownRuntimeExceptionIfHasNoSections() {
+	public function ItShouldThrownRuntimeExceptionIfHasNoSections() {
 		$this->expectException( \RuntimeException::class );
 		$sut = $this->getInstance();
 		$sut->render( '' );

@@ -10,6 +10,8 @@ use function ItalyStrap\HTML\close_tag_e;
 use function ItalyStrap\HTML\open_tag_e;
 use function ItalyStrap\HTML\void_tag;
 
+$this->assertHasSections();
+
 $spinner = void_tag( $this->getGroup() . '_spinner', 'img', [
 	'class'	=> 'loading-gif',
 	'src'	=> \includes_url() . 'images/spinner.gif',

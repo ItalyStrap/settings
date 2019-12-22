@@ -51,7 +51,6 @@ class ViewPage implements ViewPageInterface {
 	 */
 	public function render( $view = '' ): void {
 		$this->assertCurrentUserCanSeeThePage();
-//		$this->assertHasSections();
 		require $this->findView( $view );
 	}
 
@@ -159,7 +158,7 @@ class ViewPage implements ViewPageInterface {
 	private function assertHasSections() {
 		if ( ! $this->sections instanceof SectionsInterface ) {
 			$message = \sprintf(
-				'You must assign %s before calling %s::render()',
+				'You must assign an object that implements %1$s to %2$s::withSections() before calling %2$s::render()',
 				SectionsInterface::class,
 				__CLASS__
 			);
