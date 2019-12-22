@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
@@ -29,6 +30,7 @@ interface SectionsInterface {
 	 * Get the field type
 	 *
 	 * @param array $args Array with arguments.
+	 * @return mixed|string
 	 */
 	public function renderField( array $args );
 
@@ -41,4 +43,10 @@ interface SectionsInterface {
 	 * @inheritDoc
 	 */
 	public function count(): int;
+
+	/**
+	 * @param Page $page
+	 * @return Sections
+	 */
+	public function forPage( PageInterface $page );
 }

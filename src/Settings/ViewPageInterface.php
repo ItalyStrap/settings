@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
@@ -23,4 +24,10 @@ interface ViewPageInterface {
 	 * @param string $view
 	 */
 	public function render( $view = '' ): void;
+
+	/**
+	 * @param Page $page
+	 * @return ViewPage
+	 */
+	public function forPage( PageInterface $page );
 }

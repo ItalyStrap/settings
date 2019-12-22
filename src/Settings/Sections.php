@@ -168,6 +168,9 @@ class Sections implements \Countable, SectionsInterface {
 		], $field );
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function renderField( array $args ) {
 
 		if ( \is_callable( $args['callback'] ) ) {
@@ -194,14 +197,14 @@ class Sections implements \Countable, SectionsInterface {
 			$this->getPageName(),
 			$this->options->getName(),
 			[
-				'sanitize_callback'	=> [ $this->parser->withSchema( $this->fieldsToArray() ), 'parse' ],
+				'sanitize_callback'	=> [ $this->parser->withSchema( $this->schemaForParsingData() ), 'parse' ],
 				'show_in_rest'      => false,
 				'description'       => '',
 			]
 		);
 	}
 
-	private function fieldsToArray() {
+	private function schemaForParsingData() {
 
 		$fields = [];
 		foreach ( (array) $this->config as $section ) {
@@ -214,8 +217,7 @@ class Sections implements \Countable, SectionsInterface {
 	}
 
 	/**
-	 * @param Page $page
-	 * @return ViewPage
+	 * @inheritDoc
 	 */
 	public function forPage( PageInterface $page ): Sections {
 		$this->page = $page;

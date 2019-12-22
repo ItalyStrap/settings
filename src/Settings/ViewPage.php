@@ -52,8 +52,7 @@ class ViewPage implements ViewPageInterface {
 	}
 
 	/**
-	 * @param Page $page
-	 * @return ViewPage
+	 * @inheritDoc
 	 */
 	public function forPage( PageInterface $page ): ViewPage {
 		$this->page = $page;
