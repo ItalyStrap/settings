@@ -30,6 +30,34 @@ Domain Path: Domain Path
 */
 
 /**
+ * Example = F:\xampp\htdocs\italystrap\wp-content\plugins\italystrap-extended\italystrap.php
+ */
+if ( ! defined( 'ITALYSTRAP_FILE' ) ) {
+	define( 'ITALYSTRAP_FILE', __FILE__ );
+}
+
+/**
+ * Example = F:\xampp\htdocs\italystrap\wp-content\plugins\italystrap-extended/
+ */
+if ( ! defined( 'ITALYSTRAP_PLUGIN_PATH' ) ) {
+	define( 'ITALYSTRAP_PLUGIN_PATH', plugin_dir_path( ITALYSTRAP_FILE ) );
+}
+
+/**
+ * Example: 'http://192.168.1.10/italystrap/wp-content/plugins/italystrap-extended/'
+ */
+if ( ! defined( 'ITALYSTRAP_PLUGIN_URL' ) ) {
+	define( 'ITALYSTRAP_PLUGIN_URL', plugin_dir_url( ITALYSTRAP_FILE ) );
+}
+
+/**
+ * Example = italystrap-extended/italystrap.php
+ */
+if ( ! defined( 'ITALYSTRAP_BASENAME' ) ) {
+	define( 'ITALYSTRAP_BASENAME', plugin_basename( ITALYSTRAP_FILE ) );
+}
+
+/**
  * This could be loaded on MU plugins
  */
 function italystrap_load () {
