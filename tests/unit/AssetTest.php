@@ -16,8 +16,8 @@ class AssetTest extends \Codeception\Test\Unit
 
 	private function getInstance() {
     	$config = $this->make( \ItalyStrap\Config\Config::class );
-		$sut = new \ItalyStrap\Settings\Asset( $config );
-		$this->assertInstanceOf( \ItalyStrap\Settings\Asset::class, $sut, '' );
+		$sut = new \ItalyStrap\Settings\AssetLoader( $config );
+		$this->assertInstanceOf( \ItalyStrap\Settings\AssetLoader::class, $sut, '' );
 
 		return $sut;
     }

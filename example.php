@@ -30,7 +30,6 @@ if ( ! defined( 'ITALYSTRAP_BASENAME' ) ) {
 
 $plugin_name = 'ItalyStrap';
 $option_name = 'italystrap';
-$option_group = 'italystrap_options_group';
 
 $options_obj = new \ItalyStrap\Settings\Options( $option_name );
 
@@ -53,15 +52,6 @@ add_action( 'admin_init', [ $sections_obj, 'register'] );
  *
  * ===================================
  */
-//$pages_config = require __DIR__ . '/tests/_data/fixtures/config/pages.php';
-//$pages_obj = new \ItalyStrap\Settings\Pages(
-//	\ItalyStrap\Config\ConfigFactory::make( $pages_config ),
-//	$sections_obj,
-//	new \ItalyStrap\Settings\ViewPage()
-//);
-//add_action( 'admin_menu', [ $pages_obj, 'register'] );
-
-
 $page_config = require __DIR__ . '/tests/_data/fixtures/config/page.php';
 $pages_obj = new \ItalyStrap\Settings\Page(
 	\ItalyStrap\Config\ConfigFactory::make( $page_config ),
@@ -86,8 +76,8 @@ add_action( 'admin_menu', [ $pages_obj2, 'register'] );
 /**
  * Load script for Tabbed admin page
  */
-$asset = new \ItalyStrap\Settings\Asset();
-add_action( 'admin_enqueue_scripts', [ $asset, 'enqueue'] );
+$asset = new \ItalyStrap\Settings\AssetLoader();
+add_action( 'admin_enqueue_scripts', [ $asset, 'load'] );
 
 $options_parser = new \ItalyStrap\Settings\OptionsParser( $options_obj );
 add_action( 'update_option', [ $options_parser, 'save' ], 10, 3 );

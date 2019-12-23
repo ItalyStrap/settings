@@ -2,6 +2,10 @@
 
 use ItalyStrap\Settings\Pages as P;
 
+/**
+ * Class PageTest
+ * @covers \ItalyStrap\Settings\Page
+ */
 class PageTest extends \Codeception\TestCase\WPTestCase
 {
     /**
@@ -21,7 +25,6 @@ class PageTest extends \Codeception\TestCase\WPTestCase
         parent::setUp();
 
 		$this->sections = require codecept_data_dir( 'fixtures/config/' ) . 'sections.php';
-		$this->plugin = require codecept_data_dir( 'fixtures/config/' ) . 'plugin.php';
 		$this->page = (array) require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
 
         // Your set up methods here.
