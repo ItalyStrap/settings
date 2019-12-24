@@ -1,13 +1,15 @@
 <?php
+function d_footer ( ...$args ) {
+	\add_action( 'shutdown', function () use ( $args ) {
+		d( ...$args );
+	} );
+}
+
 
 $plugin_name = 'ItalyStrap';
 $option_name = 'italystrap';
 
 $options_obj = new \ItalyStrap\Settings\Options( $option_name );
-
-\add_action( 'admin_footer', function () use ( $options_obj ) {
-//	d( $options_obj->get() );
-} );
 
 $sections = require __DIR__ . '/tests/_data/fixtures/config/sections.php';
 

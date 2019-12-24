@@ -29,13 +29,6 @@ class ViewPage implements ViewPageInterface {
 	 */
 	private $page;
 
-	public function __construct() {
-
-		if ( isset( $_GET['page'] ) ) { // Input var okay.
-			$this->pagenow = \stripslashes( $_GET['page'] ); // Input var okay.
-		}
-	}
-
 	/**
 	 * @inheritDoc
 	 */
