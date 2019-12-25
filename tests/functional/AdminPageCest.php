@@ -27,7 +27,7 @@ class AdminPageCest
 			}
 		}
 
-		$this->option_name = 'test';
+		$this->option_name = 'italystrap';
 
 		$this->page = require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
 		$this->options_from_fields = require codecept_data_dir( 'fixtures/config/' ) . 'fields.php';
