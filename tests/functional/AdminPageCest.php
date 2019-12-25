@@ -40,6 +40,10 @@ class AdminPageCest
 
 		$this->count_options = \count( $this->all_options );
 
+		$I->amOnPage( '/wp-admin' );
+		$I->tryToClick( 'Update WordPress Database', '.button-primary' );
+		$I->tryToClick( 'Continue', '.button-large' );
+
 		$I->loginAsAdmin();
 		$page = $this->page[ P::SLUG ];
 		$I->amOnAdminPage( 'admin.php?page=' . $page );

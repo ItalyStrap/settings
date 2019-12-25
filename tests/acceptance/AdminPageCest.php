@@ -32,6 +32,10 @@ class AdminPageCest
 		$this->page = require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
 		$this->options_from_fields = require codecept_data_dir( 'fixtures/config/' ) . 'fields.php';
 
+		$I->amOnPage( '/wp-admin' );
+		$I->tryToClick( 'Update WordPress Database', '.button-primary' );
+		$I->tryToClick( 'Continue', '.button-large' );
+
 		$I->loginAsAdmin();
 		$I->amOnPluginsPage();
 		$I->seePluginInstalled( 'settings' );
