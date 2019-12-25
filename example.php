@@ -32,7 +32,9 @@ $pages_obj = new \ItalyStrap\Settings\Page(
 	new \ItalyStrap\Settings\ViewPage(),
 	$sections_obj
 );
-add_action( 'admin_menu', [ $pages_obj, 'register'] );
+
+$pages_obj->boot();
+//add_action( 'admin_menu', [ $pages_obj, 'register'] );
 
 $pages_obj2 = new \ItalyStrap\Settings\Page(
 	\ItalyStrap\Config\ConfigFactory::make( 	[
@@ -45,7 +47,9 @@ $pages_obj2 = new \ItalyStrap\Settings\Page(
 	] ),
 	new \ItalyStrap\Settings\ViewPage()
 );
-add_action( 'admin_menu', [ $pages_obj2, 'register'] );
+
+$pages_obj2->boot();
+//add_action( 'admin_menu', [ $pages_obj2, 'register'] );
 
 /**
  * Load script for Tabbed admin page

@@ -117,4 +117,18 @@ class Page implements PageInterface {
 			$this->view->render( $config->get( self::VIEW, '' ) );
 		};
 	}
+
+	/**
+	 * @return true|void
+	 */
+	public function boot() {
+		return add_action( 'admin_menu', [ $this, 'register'] );
+	}
+
+	/**
+	 * @return true|void
+	 */
+	public function unBoot() {
+		return remove_action( 'admin_menu', [ $this, 'register'] );
+	}
 }
