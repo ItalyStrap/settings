@@ -27,6 +27,9 @@ class AdminPageCest
 			}
 		}
 
+		/**
+		 * Set to `italystrap` because is set in the dump of DB
+		 */
 		$this->option_name = 'italystrap';
 
 		$this->page = require codecept_data_dir( 'fixtures/config/' ) . 'page.php';

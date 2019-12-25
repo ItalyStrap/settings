@@ -24,16 +24,20 @@ class AdminPageCest
 			}
 		}
 
+		/**
+		 * Set to `italystrap` because is set in the dump of DB
+		 */
+		$this->option_name = 'italystrap';
+
 		$this->page = require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
 		$this->options_from_fields = require codecept_data_dir( 'fixtures/config/' ) . 'fields.php';
-		$this->plugin = require codecept_data_dir( 'fixtures/config/' ) . 'plugin.php';
 
 		$I->loginAsAdmin();
 		$I->amOnPluginsPage();
 		$I->seePluginInstalled( 'settings' );
 		$I->activatePlugin( 'settings' );
 		$I->seePluginActivated( 'settings' );
-		$I->seeOptionInDatabase( [ 'option_name' => $this->plugin['options_name'] ] );
+		$I->seeOptionInDatabase( [ 'option_name' => $this->option_name ] );
     }
 
 	/**
@@ -48,6 +52,6 @@ class AdminPageCest
 		// Submit the form as a user would submit it.
 		$I->submitForm( '#' . $this->page[ P::SLUG ], [] );
 
-		$I->seeOptionInDatabase( [ 'option_name' => $this->plugin['options_name'] ] );
+		$I->seeOptionInDatabase( [ 'option_name' => $this->option_name ] );
     }
 }
