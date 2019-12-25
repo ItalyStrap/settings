@@ -1,6 +1,6 @@
 <?php
 
-use ItalyStrap\Settings\Pages as P;
+use ItalyStrap\Settings\Page as P;
 
 /**
  * Class PageTest
