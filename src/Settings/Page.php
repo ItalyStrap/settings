@@ -122,13 +122,13 @@ class Page implements PageInterface {
 	 * @return true|void
 	 */
 	public function boot() {
-		return add_action( 'admin_menu', [ $this, 'register'] );
+		return \add_action( 'admin_menu', [ $this, 'register'] );
 	}
 
 	/**
 	 * @return true|void
 	 */
 	public function unBoot() {
-		return remove_action( 'admin_menu', [ $this, 'register'] );
+		return \remove_action( 'admin_menu', [ $this, 'register'] );
 	}
 }

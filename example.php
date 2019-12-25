@@ -11,10 +11,8 @@ $option_name = 'italystrap';
 
 $options_obj = new \ItalyStrap\Settings\Options( $option_name );
 
-$sections = require __DIR__ . '/tests/_data/fixtures/config/sections.php';
-
 $sections_obj = new \ItalyStrap\Settings\Sections(
-	\ItalyStrap\Config\ConfigFactory::make( $sections ),
+	\ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/sections.php' ),
 	new \ItalyStrap\Fields\Fields(),
 	\ItalyStrap\DataParser\ParserFactory::make( $plugin_name ),
 	$options_obj
@@ -26,15 +24,12 @@ add_action( 'admin_init', [ $sections_obj, 'register'] );
  *
  * ===================================
  */
-$page_config = require __DIR__ . '/tests/_data/fixtures/config/page.php';
 $pages_obj = new \ItalyStrap\Settings\Page(
-	\ItalyStrap\Config\ConfigFactory::make( $page_config ),
+	\ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/page.php' ),
 	new \ItalyStrap\Settings\ViewPage(),
 	$sections_obj
 );
-
 $pages_obj->boot();
-//add_action( 'admin_menu', [ $pages_obj, 'register'] );
 
 $pages_obj2 = new \ItalyStrap\Settings\Page(
 	\ItalyStrap\Config\ConfigFactory::make( 	[
@@ -47,9 +42,7 @@ $pages_obj2 = new \ItalyStrap\Settings\Page(
 	] ),
 	new \ItalyStrap\Settings\ViewPage()
 );
-
 $pages_obj2->boot();
-//add_action( 'admin_menu', [ $pages_obj2, 'register'] );
 
 /**
  * Load script for Tabbed admin page
