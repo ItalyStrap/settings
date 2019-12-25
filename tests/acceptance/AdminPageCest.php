@@ -34,7 +34,7 @@ class AdminPageCest
 
 		$I->amOnPage( '/wp-admin' );
 		$I->tryToClick( 'Aggiornamento database WordPress', '.button-primary' );
-		$I->tryToClick( 'Continue', '.button-large' );
+		$I->tryToClick( 'Continua', '.button-large' );
 
 		$I->loginAsAdmin();
 		$I->amOnPluginsPage();
