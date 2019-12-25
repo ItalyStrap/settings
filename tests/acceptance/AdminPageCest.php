@@ -6,7 +6,7 @@ class AdminPageCest
 {
 	private $page = [];
 	private $options_from_fields = [];
-	private $plugin = [];
+	private $option_name = [];
 
     public function _before(AcceptanceTester $I)
     {
