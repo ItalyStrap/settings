@@ -9,7 +9,7 @@ class AdminPageCest
 	private $options_from_fields = [];
 	private $options_from_advanced_fields = [];
 	private $all_options  = [];
-	private $plugin = [];
+	private $option_name = [];
 	private $count_options;
 
     public function _before(FunctionalTester $I)
@@ -27,10 +27,11 @@ class AdminPageCest
 			}
 		}
 
+		$this->option_name = 'test';
+
 		$this->page = require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
 		$this->options_from_fields = require codecept_data_dir( 'fixtures/config/' ) . 'fields.php';
 		$this->options_from_advanced_fields = require codecept_data_dir( 'fixtures/config/' ) . 'fields-advanced.php';
-		$this->plugin = require codecept_data_dir( 'fixtures/config/' ) . 'plugin.php';
 
 		$this->all_options = \array_merge( $this->options_from_fields, $this->options_from_advanced_fields );
 
@@ -47,7 +48,7 @@ class AdminPageCest
 	 */
 	public function CanSeeSettingsPageWithFieldsAndSubmit(FunctionalTester $I)
 	{
-		$option = $I->grabOptionFromDatabase( $this->plugin['options_name'] );
+		$option = $I->grabOptionFromDatabase( $this->option_name );
 		\PHPUnit\Framework\Assert::assertNotEmpty( $option );
 
 		$page = $this->page[ P::SLUG ];
@@ -62,7 +63,7 @@ class AdminPageCest
 				$I->seeElement( 'input', [ 'type' => $option['type'] ] );
 				$I->checkOption( \sprintf(
 					'%s[%s]',
-					$this->plugin['options_name'],
+					$this->option_name,
 					$option['id']
 				) );
 			} elseif ( \strpos( $types[ $option['type'] ], 'Radio' ) ) {
@@ -82,9 +83,9 @@ class AdminPageCest
 		// Submit the form as a user would submit it.
 		$I->submitForm( '#' . $this->page[ P::SLUG ], $formFields );
 
-		$option = $I->grabOptionFromDatabase( $this->plugin['options_name'] );
+		$option = $I->grabOptionFromDatabase( $this->option_name );
 
-		$I->seeOptionInDatabase( [ 'option_name' => $this->plugin['options_name'] ] );
+		$I->seeOptionInDatabase( [ 'option_name' => $this->option_name ] );
 		\PHPUnit\Framework\Assert::assertCount( $this->count_options, $option, '' );
 	}
 }
