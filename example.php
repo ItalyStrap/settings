@@ -19,11 +19,6 @@ $sections_obj = new \ItalyStrap\Settings\Sections(
 );
 add_action( 'admin_init', [ $sections_obj, 'register'] );
 
-/**
- * ===================================
- *
- * ===================================
- */
 $pages_obj = new \ItalyStrap\Settings\Page(
 	\ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/page.php' ),
 	new \ItalyStrap\Settings\ViewPage(),

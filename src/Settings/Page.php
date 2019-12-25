@@ -19,6 +19,7 @@ class Page implements PageInterface {
 	const POSITION		= 'position';
 	const VIEW			= 'view';
 	const PARENT		= 'parent';
+	const EVENT			= 'admin_menu';
 
 	/**
 	 * @var Config
@@ -122,13 +123,13 @@ class Page implements PageInterface {
 	 * @return true|void
 	 */
 	public function boot() {
-		return \add_action( 'admin_menu', [ $this, 'register'] );
+		return \add_action( self::EVENT, [ $this, 'register'] );
 	}
 
 	/**
 	 * @return true|void
 	 */
 	public function unBoot() {
-		return \remove_action( 'admin_menu', [ $this, 'register'] );
+		return \remove_action( self::EVENT, [ $this, 'register'] );
 	}
 }
