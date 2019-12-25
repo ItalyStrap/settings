@@ -10,6 +10,7 @@ class Page implements PageInterface {
 	use ShowableTrait;
 
 	const DS 			= DIRECTORY_SEPARATOR;
+
 	const PAGE_TITLE	= 'page_title';
 	const MENU_TITLE	= 'menu_title';
 	const CAPABILITY	= 'capability';
@@ -19,6 +20,7 @@ class Page implements PageInterface {
 	const POSITION		= 'position';
 	const VIEW			= 'view';
 	const PARENT		= 'parent';
+
 	const EVENT			= 'admin_menu';
 
 	/**

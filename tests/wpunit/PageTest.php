@@ -8,10 +8,10 @@ use ItalyStrap\Settings\Page as P;
  */
 class PageTest extends \Codeception\TestCase\WPTestCase
 {
-    /**
-     * @var \WpunitTester
-     */
-    protected $tester;
+	/**
+	 * @var \WpunitTester
+	 */
+	protected $tester;
 	private $sections;
 	private $plugin;
 	/**
@@ -19,24 +19,22 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 	 */
 	private $page;
 
-	public function setUp(): void
-    {
-        // Before...
-        parent::setUp();
+	public function setUp(): void {
+		// Before...
+		parent::setUp();
 
 		$this->sections = require codecept_data_dir( 'fixtures/config/' ) . 'sections.php';
-		$this->page = (array) require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
+		$this->page = (array)require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
 
-        // Your set up methods here.
-    }
+		// Your set up methods here.
+	}
 
-    public function tearDown(): void
-    {
-        // Your tear down methods here.
+	public function tearDown(): void {
+		// Your tear down methods here.
 
-        // Then...
-        parent::tearDown();
-    }
+		// Then...
+		parent::tearDown();
+	}
 
 	private function getInstance( array $config = [] ) {
 
@@ -47,7 +45,7 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 		$config = \ItalyStrap\Config\ConfigFactory::make( $config );
 		$view = $this->make( \ItalyStrap\Settings\ViewPage::class );
 		$sections = $this->make( \ItalyStrap\Settings\Sections::class, [
-			'options'	=> $this->make( \ItalyStrap\Settings\Options::class ),
+			'options' => $this->make( \ItalyStrap\Settings\Options::class ),
 		] );
 
 		$sut = new \ItalyStrap\Settings\Page( $config, $view, $sections );
@@ -58,67 +56,64 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @test
 	 */
-	public function ItShouldBeInstantiable()
-	{
+	public function ItShouldBeInstantiable() {
 		$this->getInstance();
 	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnPageName()
-	{
-		$sut = $this->getInstance();
+	public function ItShouldReturnPageName() {
+
+		$config = \array_merge(
+			$this->page,
+			[
+				P::SLUG	=> 'test',
+			]
+		);
+
+		$sut = $this->getInstance( $config );
 		$page_name = $sut->getPageName();
-		$this->assertStringContainsString( $this->page[ P::SLUG ], $page_name, '' );
+		$this->assertStringContainsString( 'test', $page_name, '' );
 	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldRegister()
-	{
+	public function ItShouldRegister() {
 		$sut = $this->getInstance();
 		$sut->register();
 	}
 
+	public function invalidConfigProvider() {
+		return [
+			'if no menu title is provided'	=> [
+				[
+					P::SLUG => 'italystrap-dashboard'
+				],
+			],
+			'if no slug is provided'	=> [
+				[
+					P::MENU_TITLE => \__( 'ItalyStrap', 'italystrap' )
+				],
+			]
+		];
+	}
+
 	/**
 	 * @test
+	 * @dataProvider invalidConfigProvider
 	 */
-	public function ItShouldThrownErrorIfMenuTitleIsNotProvided()
-	{
+	public function ItShouldThrownError( array $config ) {
 		$this->expectException( RuntimeException::class );
-
-		$pages = [
-//			P::MENU_TITLE	=> \__( 'ItalyStrap', 'italystrap' ),
-			P::SLUG			=> 'italystrap-dashboard',
-		];
-
-		$sut = $this->getInstance( $pages );
+		$sut = $this->getInstance( $config );
 		$sut->register();
 	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldThrownErrorIfSlugIsNotProvided()
-	{
-		$this->expectException( RuntimeException::class );
-
-		$pages = [
-			P::MENU_TITLE	=> \__( 'ItalyStrap', 'italystrap' ),
-//			P::SLUG			=> 'italystrap-dashboard',
-		];
-
-		$sut = $this->getInstance( $pages );
-		$sut->register();
-	}
-
-	/**
-	 * @test
-	 */
-	public function ItShouldRegisterMenuAndSubmenu()
-	{
+	public function ItShouldRegisterMenuAndSubmenu() {
 
 		global $menu, $admin_page_hooks, $_registered_pages, $_parent_pages,
 			   $submenu, $_wp_real_parent_file, $_wp_submenu_nopriv;
@@ -126,8 +121,8 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 		$slug = 'test-dashboard';
 
 		$pages = [
-			P::MENU_TITLE	=> \__( 'Menu title', 'italystrap' ),
-			P::SLUG			=> $slug,
+			P::MENU_TITLE => \__( 'Menu title', 'italystrap' ),
+			P::SLUG => $slug,
 		];
 
 		$sut = $this->getInstance( $pages );
@@ -139,9 +134,9 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 		$sub_slug = 'sub-slug';
 
 		$pages = [
-			P::PARENT		=> $slug,
-			P::MENU_TITLE	=> \__( 'Submenu title', 'italystrap' ),
-			P::SLUG			=> $sub_slug,
+			P::PARENT => $slug,
+			P::MENU_TITLE => \__( 'Submenu title', 'italystrap' ),
+			P::SLUG => $sub_slug,
 		];
 
 		$sut = $this->getInstance( $pages );
