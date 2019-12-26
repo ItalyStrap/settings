@@ -1,4 +1,4 @@
-# ItalyStrap Cleaner API
+# ItalyStrap Settings API
 
 [![Build Status](https://travis-ci.org/ItalyStrap/settings.svg?branch=master)](https://travis-ci.org/ItalyStrap/settings)
 [![Latest Stable Version](https://img.shields.io/packagist/v/italystrap/settings.svg)](https://packagist.org/packages/italystrap/settings)
