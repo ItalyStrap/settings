@@ -18,6 +18,8 @@ class Sections implements \Countable, SectionsInterface {
 	const FIELDS = 'fields';
 	const LABEL_CLASS = 'class_for_label';
 
+	const EVENT			= 'admin_init';
+
 	/**
 	 * Settings for plugin admin page
 	 *
@@ -242,5 +244,19 @@ class Sections implements \Countable, SectionsInterface {
 	 */
 	private function getStringForLabel( array $args ): string {
 		return $this->options->getName() . '[' . $args[ 'id' ] . ']';
+	}
+
+	/**
+	 * @return true|void
+	 */
+	public function boot() {
+		return \add_action( self::EVENT, [ $this, 'register'] );
+	}
+
+	/**
+	 * @return true|void
+	 */
+	public function unBoot() {
+		return \remove_action( self::EVENT, [ $this, 'register'] );
 	}
 }

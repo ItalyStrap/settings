@@ -5,26 +5,31 @@ function d_footer ( ...$args ) {
 	} );
 }
 
-
 $plugin_name = 'ItalyStrap';
 $option_name = 'italystrap';
 
-$options_obj = new \ItalyStrap\Settings\Options( $option_name );
-
-$sections_obj = new \ItalyStrap\Settings\Sections(
-	\ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/sections.php' ),
-	new \ItalyStrap\Fields\Fields(),
-	\ItalyStrap\DataParser\ParserFactory::make( $plugin_name ),
-	$options_obj
+\ItalyStrap\Settings\SettingsFactory::make(
+	\ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/settings.php' ),
+	$option_name,
+	$plugin_name
 );
-add_action( 'admin_init', [ $sections_obj, 'register'] );
 
-$pages_obj = new \ItalyStrap\Settings\Page(
-	\ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/page.php' ),
-	new \ItalyStrap\Settings\ViewPage(),
-	$sections_obj
-);
-$pages_obj->boot();
+//$options_obj = new \ItalyStrap\Settings\Options( $option_name );
+//
+//$sections_obj = new \ItalyStrap\Settings\Sections(
+//	\ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/sections.php' ),
+//	new \ItalyStrap\Fields\Fields(),
+//	\ItalyStrap\DataParser\ParserFactory::make( $plugin_name ),
+//	$options_obj
+//);
+//$sections_obj->boot();
+//
+//$pages_obj = new \ItalyStrap\Settings\Page(
+//	\ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/page.php' ),
+//	new \ItalyStrap\Settings\ViewPage(),
+//	$sections_obj
+//);
+//$pages_obj->boot();
 
 $pages_obj2 = new \ItalyStrap\Settings\Page(
 	\ItalyStrap\Config\ConfigFactory::make( 	[
@@ -45,8 +50,8 @@ $pages_obj2->boot();
 $asset = new \ItalyStrap\Settings\AssetLoader();
 add_action( 'admin_enqueue_scripts', [ $asset, 'load'] );
 
-$options_parser = new \ItalyStrap\Settings\OptionsParser( $options_obj );
-add_action( 'update_option', [ $options_parser, 'save' ], 10, 3 );
+//$options_parser = new \ItalyStrap\Settings\OptionsParser( $options_obj );
+//add_action( 'update_option', [ $options_parser, 'save' ], 10, 3 );
 
 /**
  * Add link in plugin activation panel
