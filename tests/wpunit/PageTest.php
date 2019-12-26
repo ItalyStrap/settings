@@ -26,6 +26,8 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 		$this->sections = require codecept_data_dir( 'fixtures/config/' ) . 'sections.php';
 		$this->page = (array)require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
 
+		wp_set_current_user( 1 );
+
 		// Your set up methods here.
 	}
 
@@ -126,8 +128,8 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 		];
 
 		$sut = $this->getInstance( $pages );
-		$sut->register();
-
+		$hook = $sut->register();
+		$this->assertStringContainsString( $hook, 'toplevel_page_' . $slug, '' );
 		$this->assertArrayHasKey( $slug, $admin_page_hooks, '' );
 
 
@@ -140,9 +142,9 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 		];
 
 		$sut = $this->getInstance( $pages );
-		$sut->register();
-
-		$this->assertArrayHasKey( $slug, $_wp_submenu_nopriv, '' );
-		$this->assertArrayHasKey( $sub_slug, $_wp_submenu_nopriv[ $slug ], '' );
+		$hook = $sut->register();
+		$this->assertStringContainsString( $hook, 'menu-title_page_' . $sub_slug, '' );
+		$this->assertArrayHasKey( $slug, $_parent_pages, '' );
+		$this->assertArrayHasKey( $sub_slug, $_parent_pages, '' );
 	}
 }

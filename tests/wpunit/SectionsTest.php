@@ -21,9 +21,14 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase
 		parent::tearDown();
 	}
 
+	private function getFields() {
+		return $this->prophesize( \ItalyStrap\Fields\Fields::class );
+	}
+
 	private function getInstance(): \ItalyStrap\Settings\Sections {
 		$config = \ItalyStrap\Config\ConfigFactory::make();
-		$fields = new \ItalyStrap\Fields\Fields();
+//		$fields = new \ItalyStrap\Fields\Fields();
+		$fields = $this->getFields()->reveal();
 		$parser = new \ItalyStrap\DataParser\Parser();
 		$options = new \ItalyStrap\Settings\Options( 'italystrap' );
 		$sut = new \ItalyStrap\Settings\Sections( $config, $fields, $parser, $options );
