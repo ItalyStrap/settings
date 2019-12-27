@@ -8,7 +8,7 @@ function d_footer ( ...$args ) {
 $plugin_name = 'ItalyStrap';
 $option_name = 'italystrap';
 
-\ItalyStrap\Settings\SettingsFactory::make(
+( new \ItalyStrap\Settings\SettingsBuilder )->build(
 	\ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/settings.php' ),
 	$option_name,
 	$plugin_name
