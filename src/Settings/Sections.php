@@ -160,6 +160,10 @@ class Sections implements \Countable, SectionsInterface {
 		}
 	}
 
+	/**
+	 * @todo Creare test per il `value` da usare in caso non sia ancora salvato nelle options, cazzarola
+	 * @param array $field
+	 */
 	private function parseFieldWithDefault( array &$field ) {
 		$field = \array_merge( [
 			'show_on'			=> true,
@@ -167,6 +171,7 @@ class Sections implements \Countable, SectionsInterface {
 			'class'				=> '',
 			self::LABEL_CLASS	=> '',
 			'callback'			=> null,
+			'value'				=> '',
 		], $field );
 	}
 
@@ -184,7 +189,7 @@ class Sections implements \Countable, SectionsInterface {
 
 		$args['class'] = $this->field_class[ $args['id'] ];
 
-		$args['value'] = $this->options_values[ $args['id'] ] ?? '';
+		$args['value'] = $this->options_values[ $args['id'] ] ?? $args['value'];
 		$args['id'] = $args['name'] = $this->getStringForLabel( $args );
 		echo $this->fields->render( $args ); // XSS ok.
 		return '';
