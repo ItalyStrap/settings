@@ -214,7 +214,7 @@ class Sections implements \Countable, SectionsInterface {
 	private function schemaForParsingData() {
 
 		$fields = [];
-		foreach ( (array) $this->config as $section ) {
+		foreach ( $this->config->toArray() as $section ) {
 			foreach ( $section['fields'] as $field ) {
 				$fields[] = $field;
 			}

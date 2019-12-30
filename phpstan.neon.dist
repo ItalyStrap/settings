@@ -22,4 +22,3 @@ parameters:
         #- '#Access to an undefined property ItalyStrap\\Config\\Config::\$[a-zA-Z0-9_]+#'
         #- '#Access to an undefined property ItalyStrap\\Config\\ConfigInterface::\$[a-zA-Z0-9_]+#'
         #- "#Cannot access offset '[a-zA-Z_]+' on [a-zCIS]+#"
-        #- "#Argument of an invalid type ItalyStrap\\Config\\ConfigInterface::\$[a-zA-Z0-9_]+ supplied for foreach, only iterables are supported.#"
