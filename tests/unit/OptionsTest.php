@@ -1,7 +1,10 @@
 <?php
+declare(strict_types=1);
 
-class OptionsTest extends \Codeception\Test\Unit
-{
+namespace ItalyStrap\Tests;
+
+class OptionsTest extends \Codeception\Test\Unit {
+
 	/**
 	 * @var \UnitTester
 	 */
@@ -12,13 +15,16 @@ class OptionsTest extends \Codeception\Test\Unit
 	 */
 	private $option_storage;
 
+	// phpcs:ignore -- Method from Codeception
 	protected function _before() {
 		$this->option_storage = [];
+		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'add_option', function ( $key, $value ) {
 			$this->option_storage[ $key ] = $value;
 		} );
 		$this->option_storage = [];
 
+		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'get_option', function ( $key, $default = [] ) {
 
 			if ( !\array_key_exists( $key, $this->option_storage ) ) {
@@ -29,6 +35,7 @@ class OptionsTest extends \Codeception\Test\Unit
 		} );
 	}
 
+	// phpcs:ignore -- Method from Codeception
 	protected function _after() {
 	}
 
@@ -41,14 +48,14 @@ class OptionsTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	public function ItShouldBeinstantiable() {
+	public function itShouldBeinstantiable() {
 		$this->getIntance( 'test' );
 	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnName() {
+	public function itShouldReturnName() {
 		$sut = $this->getIntance( 'test' );
 		$this->assertStringContainsString( 'test', $sut->getName(), '' );
 	}
@@ -56,7 +63,7 @@ class OptionsTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnCorrectArrayValue() {
+	public function itShouldReturnCorrectArrayValue() {
 
 		$option_name = 'test';
 		\add_option( $option_name, ['key' => 'value'] );
@@ -68,7 +75,7 @@ class OptionsTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnDefaultValueIfArrayKeyDoesNotExists() {
+	public function itShouldReturnDefaultValueIfArrayKeyDoesNotExists() {
 
 		$option_name = 'test';
 		$sut = $this->getIntance( $option_name, '', ['key' => 'value'] );

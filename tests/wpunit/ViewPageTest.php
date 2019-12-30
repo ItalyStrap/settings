@@ -1,27 +1,30 @@
 <?php
+declare(strict_types=1);
 
-class ViewPageTest extends \Codeception\TestCase\WPTestCase
-{
-    /**
-     * @var \WpunitTester
-     */
-    protected $tester;
+namespace ItalyStrap\Tests;
+
+class ViewPageTest extends \Codeception\TestCase\WPTestCase {
+
+	/**
+	 * @var \WpunitTester
+	 */
+	protected $tester;
 
 	/**
 	 * @var string
 	 */
 	private $page_name;
+
 	/**
-	 * @var array|WP_UnitTest_Factory|null
+	 * @var array|\WP_UnitTest_Factory|null
 	 */
 	private $sections;
 
-	public function setUp(): void
-    {
-        // Before...
-        parent::setUp();
+	public function setUp(): void {
+		// Before...
+		parent::setUp();
 		\wp_set_current_user( '1', 'admin' );
-        // Your set up methods here.
+		// Your set up methods here.
 
 		$this->page_name = 'group_name';
 
@@ -33,15 +36,14 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 				'tab_title'	=> 'Advanced'
 			],
 		];
-    }
+	}
 
-    public function tearDown(): void
-    {
-        // Your tear down methods here.
+	public function tearDown(): void {
+		// Your tear down methods here.
 
-        // Then...
-        parent::tearDown();
-    }
+		// Then...
+		parent::tearDown();
+	}
 
 	private function getInstance(): \ItalyStrap\Settings\ViewPage {
 		$sut = new \ItalyStrap\Settings\ViewPage();
@@ -79,14 +81,14 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @test
 	 */
-	public function ItShouldBeInstantiable() {
+	public function itShouldBeInstantiable() {
 		$this->getInstance();
 	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldBeRenderDefaultPageIfNoViewFileIsProvided() {
+	public function itShouldBeRenderDefaultPageIfNoViewFileIsProvided() {
 		$sut = $this->getInstance();
 		$sut->withSections( $this->getSections() );
 		$sut->forPage( $this->getPage() );
@@ -98,7 +100,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @test
 	 */
-	public function ItShouldBeRenderCustomPageProvided() {
+	public function itShouldBeRenderCustomPageProvided() {
 		$sut = $this->getInstance();
 		$sut->withSections( $this->getSections() );
 		$sut->render( codecept_data_dir( 'fixtures/view/' ) . 'settings_form.php' );
@@ -109,7 +111,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @test
 	 */
-	public function ItShouldBeRenderTab() {
+	public function itShouldBeRenderTab() {
 		$sut = $this->getInstance();
 		$sut->withSections( $this->getSections() );
 		$sut->forPage( $this->getPage() );
@@ -127,7 +129,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @test
 	 */
-	public function ItShouldThrownRuntimeExceptionIfHasNoSections() {
+	public function itShouldThrownRuntimeExceptionIfHasNoSections() {
 		$this->expectException( \RuntimeException::class );
 		$sut = $this->getInstance();
 		$sut->render( '' );

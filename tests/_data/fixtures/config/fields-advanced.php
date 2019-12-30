@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
 
+$desc = __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' );
+
 return [
 	[
 		'label'			=> __( 'Custom Title', 'italystrap' ),
-		'desc'			=> __( 'If test mode is active the front-end form on submit will return an array with som edefault values.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'custom',
 		'type'			=> 'color',
 		'value'			=> true,

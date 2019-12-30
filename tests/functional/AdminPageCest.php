@@ -1,10 +1,12 @@
 <?php
 declare(strict_types=1);
 
+namespace ItalyStrap\Tests;
+
 use ItalyStrap\Settings\Page as P;
 
-class AdminPageCest
-{
+class AdminPageCest {
+
 	private $page = [];
 	private $options_from_fields = [];
 	private $options_from_advanced_fields = [];
@@ -12,9 +14,11 @@ class AdminPageCest
 	private $option_name = [];
 	private $count_options;
 
-    public function _before(FunctionalTester $I)
-    {
-		tad\FunctionMockerLe\define( '__', function ( $text, $domain = 'default' ) { return $text; });
+	// phpcs:ignore -- Method from Codeception
+	public function _before(\FunctionalTester $I) {
+		\tad\FunctionMockerLe\define( '__', function ( $text, $domain = 'default' ) {
+			return $text;
+		});
 
 		$constant = [
 			'ITALYSTRAP_BASENAME'	=> '',
@@ -32,9 +36,9 @@ class AdminPageCest
 		 */
 		$this->option_name = 'italystrap';
 
-		$this->page = require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
-		$this->options_from_fields = require codecept_data_dir( 'fixtures/config/' ) . 'fields.php';
-		$this->options_from_advanced_fields = require codecept_data_dir( 'fixtures/config/' ) . 'fields-advanced.php';
+		$this->page = require \codecept_data_dir( 'fixtures/config/' ) . 'page.php';
+		$this->options_from_fields = require \codecept_data_dir( 'fixtures/config/' ) . 'fields.php';
+		$this->options_from_advanced_fields = require \codecept_data_dir( 'fixtures/config/' ) . 'fields-advanced.php';
 
 		$this->all_options = \array_merge( $this->options_from_fields, $this->options_from_advanced_fields );
 
@@ -47,14 +51,13 @@ class AdminPageCest
 		$I->loginAsAdmin();
 		$page = $this->page[ P::SLUG ];
 		$I->amOnAdminPage( 'admin.php?page=' . $page );
-    }
+	}
 
 	/**
 	 * @test
-	 * @param FunctionalTester $I
+	 * @param \FunctionalTester $I
 	 */
-	public function CanSeeSettingsPageWithFieldsAndSubmit(FunctionalTester $I)
-	{
+	public function canSeeSettingsPageWithFieldsAndSubmit(\FunctionalTester $I) {
 		$option = $I->grabOptionFromDatabase( $this->option_name );
 		\PHPUnit\Framework\Assert::assertNotEmpty( $option );
 

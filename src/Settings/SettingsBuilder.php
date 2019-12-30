@@ -12,8 +12,7 @@ use ItalyStrap\Fields\Fields;
  * Class SettingsFactory
  * @package ItalyStrap\Settings
  */
-class SettingsBuilder
-{
+class SettingsBuilder {
 	public function build( ConfigInterface $config, $option_name, $plugin_name = '' ) {
 
 		$options_obj = new Options( $option_name );

@@ -1,7 +1,10 @@
 <?php
+declare(strict_types=1);
 
-class SectionsTest extends \Codeception\TestCase\WPTestCase
-{
+namespace ItalyStrap\Tests;
+
+class SectionsTest extends \Codeception\TestCase\WPTestCase {
+
 	/**
 	 * @var \WpunitTester
 	 */
@@ -40,7 +43,7 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @test
 	 */
-	public function ItShouldBeInstantiable() {
+	public function itShouldBeInstantiable() {
 		$sut = $this->getInstance();
 	}
 }

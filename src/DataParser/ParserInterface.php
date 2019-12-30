@@ -10,7 +10,7 @@ namespace ItalyStrap\DataParser;
 interface ParserInterface {
 
 	/**
-	 * @param array $schema
+	 * @param array<mixed> $schema
 	 * @return Parser
 	 */
 	public function withSchema( array $schema );
@@ -24,8 +24,8 @@ interface ParserInterface {
 	/**
 	 * Sanitize the input data
 	 *
-	 * @param array $data The input array.
-	 * @return array      Return the array sanitized
+	 * @param array<int|string> $data The input array.
+	 * @return array<int|string>      Return the array sanitized
 	 */
 	public function parse( array $data ): array;
 }

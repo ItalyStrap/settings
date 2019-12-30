@@ -122,14 +122,14 @@ class Page implements PageInterface {
 	}
 
 	/**
-	 * @return true|void
+	 * @return bool
 	 */
 	public function boot() {
 		return \add_action( self::EVENT, [ $this, 'register'] );
 	}
 
 	/**
-	 * @return true|void
+	 * @return bool
 	 */
 	public function unBoot() {
 		return \remove_action( self::EVENT, [ $this, 'register'] );

@@ -1,4 +1,7 @@
 <?php
+declare(strict_types=1);
+
+namespace ItalyStrap\Tests;
 
 use ItalyStrap\Settings\Page as P;
 
@@ -6,8 +9,8 @@ use ItalyStrap\Settings\Page as P;
  * Class PageTest
  * @covers \ItalyStrap\Settings\Page
  */
-class PageTest extends \Codeception\TestCase\WPTestCase
-{
+class PageTest extends \Codeception\TestCase\WPTestCase {
+
 	/**
 	 * @var \WpunitTester
 	 */
@@ -15,7 +18,7 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 	private $sections;
 	private $plugin;
 	/**
-	 * @var array|WP_UnitTest_Factory|null
+	 * @var array|\WP_UnitTest_Factory|null
 	 */
 	private $page;
 
@@ -28,11 +31,24 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 
 		wp_set_current_user( 1 );
 
+		global $menu, $admin_page_hooks, $_registered_pages, $_parent_pages,
+			   $submenu, $_wp_real_parent_file, $_wp_submenu_nopriv;
 		// Your set up methods here.
 	}
 
 	public function tearDown(): void {
 		// Your tear down methods here.
+
+		global $menu, $admin_page_hooks, $_registered_pages, $_parent_pages,
+			   $submenu, $_wp_real_parent_file, $_wp_submenu_nopriv;
+
+		$menu = [];
+		$admin_page_hooks = [];
+		$_registered_pages = [];
+		$_parent_pages = [];
+		$submenu = [];
+		$_wp_real_parent_file = [];
+		$_wp_submenu_nopriv = [];
 
 		// Then...
 		parent::tearDown();
@@ -58,14 +74,14 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @test
 	 */
-	public function ItShouldBeInstantiable() {
+	public function itShouldBeInstantiable() {
 		$this->getInstance();
 	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnPageName() {
+	public function itShouldReturnPageName() {
 
 		$config = \array_merge(
 			$this->page,
@@ -82,7 +98,7 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @test
 	 */
-	public function ItShouldRegister() {
+	public function itShouldRegister() {
 		$sut = $this->getInstance();
 		$sut->register();
 	}
@@ -106,8 +122,8 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 	 * @test
 	 * @dataProvider invalidConfigProvider
 	 */
-	public function ItShouldThrownError( array $config ) {
-		$this->expectException( RuntimeException::class );
+	public function itShouldThrownError( array $config ) {
+		$this->expectException( \RuntimeException::class );
 		$sut = $this->getInstance( $config );
 		$sut->register();
 	}
@@ -115,7 +131,7 @@ class PageTest extends \Codeception\TestCase\WPTestCase
 	/**
 	 * @test
 	 */
-	public function ItShouldRegisterMenuAndSubmenu() {
+	public function itShouldRegisterMenuAndSubmenu() {
 
 		global $menu, $admin_page_hooks, $_registered_pages, $_parent_pages,
 			   $submenu, $_wp_real_parent_file, $_wp_submenu_nopriv;

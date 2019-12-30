@@ -1,44 +1,50 @@
 <?php
-class DataParserTest extends \Codeception\Test\Unit
-{
-    /**
-     * @var \UnitTester
-     */
-    protected $tester;
+declare(strict_types=1);
 
-    protected function _before()
-    {
+namespace ItalyStrap\Tests;
+
+class DataParserTest extends \Codeception\Test\Unit {
+
+	/**
+	 * @var \UnitTester
+	 */
+	protected $tester;
+
+	// phpcs:ignore -- Method from Codeception
+	protected function _before() {
+
+		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'is_email', function ( $string ) {
 			return \filter_var( $string, FILTER_VALIDATE_EMAIL );
 		} );
-    }
+	}
 
-    protected function _after()
-    {
-    }
+	// phpcs:ignore -- Method from Codeception
+	protected function _after() {
+	}
 
-	public function getInstance(): \ItalyStrap\DataParser\Parser{
+	public function getInstance(): \ItalyStrap\DataParser\Parser {
 		$sut = new \ItalyStrap\DataParser\Parser();
 		$this->assertInstanceOf( \ItalyStrap\DataParser\ParserInterface::class, $sut, '' );
 		$this->assertInstanceOf( \ItalyStrap\DataParser\Parser::class, $sut, '' );
 		return $sut;
-    }
+	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldBeInstantiable() {
+	public function itShouldBeInstantiable() {
 		$this->getInstance();
 
 		$sut = \ItalyStrap\DataParser\ParserFactory::make();
 		$this->assertInstanceOf( \ItalyStrap\DataParser\ParserInterface::class, $sut, '' );
 		$this->assertInstanceOf( \ItalyStrap\DataParser\Parser::class, $sut, '' );
-    }
+	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnNotFilteredData() {
+	public function itShouldReturnNotFilteredData() {
 		$sut = $this->getInstance();
 		$data = $sut->parse( [ 'test' => '<h1>value</h1>' ] );
 		$this->assertEquals( [ 'test' => '<h1>value</h1>' ], $data, '' );
@@ -47,7 +53,7 @@ class DataParserTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	private function ItShouldReturnFilteredDataWithDefaultStripTagsAndTrimIfNoFiltersAreProvided() {
+	private function itShouldReturnFilteredDataWithDefaultStripTagsAndTrimIfNoFiltersAreProvided() {
 		$sut = $this->getInstance();
 		$sut->withSchema(
 			[
@@ -63,7 +69,7 @@ class DataParserTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnFilteredDataWithProvidedCustomFilters() {
+	public function itShouldReturnFilteredDataWithProvidedCustomFilters() {
 		$sut = $this->getInstance();
 
 		$filter = new class implements \ItalyStrap\DataParser\FilterableInterface {
@@ -72,7 +78,7 @@ class DataParserTest extends \Codeception\Test\Unit
 				return new \ItalyStrap\Cleaner\Sanitization();
 			}
 
-			public function filter( $data , array $schema ) {
+			public function filter( $data, array $schema ) {
 				$san = $this->getSanitize();
 				$san->addRules( $schema['sanitize'] );
 				return $san->sanitize( $data );
@@ -90,12 +96,12 @@ class DataParserTest extends \Codeception\Test\Unit
 		);
 		$data = $sut->parse( [ 'test' => '<h1> value1 </h1>', 'test2' => '<h1> value2 </h1>' ] );
 		$this->assertEquals( [ 'test' => 'value1', 'test2' => '<h1> value2 </h1>' ], $data, '' );
-    }
+	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnFilteredDataWithProvidedFilters() {
+	public function itShouldReturnFilteredDataWithProvidedFilters() {
 		$sut = $this->getInstance();
 
 		$san = new \ItalyStrap\Cleaner\Sanitization();
@@ -112,12 +118,12 @@ class DataParserTest extends \Codeception\Test\Unit
 		);
 		$data = $sut->parse( [ 'test' => '<h1> value1 </h1>', 'test2' => '<h1> value2 </h1>' ] );
 		$this->assertEquals( [ 'test' => 'value1', 'test2' => '<h1> value2 </h1>' ], $data, '' );
-    }
+	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnValidatedDataWithProvidedFilters() {
+	public function itShouldReturnValidatedDataWithProvidedFilters() {
 
 		$sut = $this->getInstance();
 
@@ -152,12 +158,12 @@ class DataParserTest extends \Codeception\Test\Unit
 
 		$data = $sut->parse( [ 'email2' => 'test@localhost.com' ] );
 		$this->assertEquals( [ 'email2' => 'test@localhost.com' ], $data, '' );
-    }
+	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnEmptyStringIfValidationFail() {
+	public function itShouldReturnEmptyStringIfValidationFail() {
 
 		$sut = $this->getInstance();
 
@@ -176,12 +182,12 @@ class DataParserTest extends \Codeception\Test\Unit
 
 		$data = $sut->parse( [ 'email' => 'invalid_email' ] );
 		$this->assertEquals( [ 'email' => '' ], $data, '' );
-    }
+	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnSanitizedAndValidatedEmail() {
+	public function itShouldReturnSanitizedAndValidatedEmail() {
 
 		$sut = $this->getInstance();
 
@@ -209,12 +215,12 @@ class DataParserTest extends \Codeception\Test\Unit
 
 		$data = $sut->parse( [ 'email' => '<p>test@localhost.com</p>' ] );
 		$this->assertEquals( [ 'email' => 'test@localhost.com' ], $data, '' );
-    }
+	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldReturnSanitizedValidatedAnsTranslatedEmail() {
+	public function itShouldReturnSanitizedValidatedAnsTranslatedEmail() {
 
 		$sut = $this->getInstance();
 
@@ -246,12 +252,12 @@ class DataParserTest extends \Codeception\Test\Unit
 
 		$data = $sut->parse( [ 'email' => '<p>test@localhost.com</p>' ] );
 		$this->assertEquals( [ 'email' => 'test@localhost.com' ], $data, '' );
-    }
+	}
 
 	/**
 	 * @test
 	 */
-	public function ItShouldParseArrayInDataValue() {
+	public function itShouldParseArrayInDataValue() {
 
 		$sut = $this->getInstance();
 
@@ -279,8 +285,8 @@ class DataParserTest extends \Codeception\Test\Unit
 							return \filter_var( $string, FILTER_SANITIZE_STRING );
 						},
 					],
-//					'validate'		=> 'is_email',
-//					'translate'		=> true,
+			//					'validate'		=> 'is_email',
+			//					'translate'		=> true,
 				],
 			]
 		);
@@ -306,5 +312,5 @@ class DataParserTest extends \Codeception\Test\Unit
 //		codecept_debug( $data );
 
 		$this->assertEquals( $expected, $data, '' );
-    }
+	}
 }

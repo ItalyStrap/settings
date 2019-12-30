@@ -3,10 +3,12 @@ declare(strict_types=1);
 
 use ItalyStrap\Settings\Sections as S;
 
+$desc = __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' );
+
 return [
 	[
 		'label'			=> __( 'Text', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'text',
 		'type'			=> 'text',
 		'value'			=> 'some default value',
@@ -14,7 +16,7 @@ return [
 	],
 	[
 		'label'			=> __( 'Button', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'button',
 		'type'			=> 'button',
 		'value'			=> 'Click',
@@ -24,7 +26,7 @@ return [
 	],
 	[
 		'label'			=> __( 'Color', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'color',
 		'type'			=> 'color',
 		'value'			=> '',
@@ -32,7 +34,7 @@ return [
 	],
 	[
 		'label'			=> __( 'Date', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'date',
 		'type'			=> 'date',
 		'value'			=> '',
@@ -40,7 +42,7 @@ return [
 	],
 	[
 		'label'			=> __( 'Datetime', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'datetime',
 		'type'			=> 'datetime',
 		'value'			=> '',
@@ -48,7 +50,7 @@ return [
 	],
 	[
 		'label'			=> __( 'datetime-local', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'datetime-local',
 		'type'			=> 'datetime-local',
 		'value'			=> '',
@@ -56,7 +58,7 @@ return [
 	],
 	[
 		'label'			=> __( 'Email', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'email',
 		'type'			=> 'email',
 		'validate'		=> 'is_email',
@@ -65,91 +67,91 @@ return [
 	],
 	[
 		'label'			=> __( 'File', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'file',
 		'type'			=> 'file',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 //	[
 //		'label'			=> __( 'Image', 'italystrap' ),
-//	'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+//	'desc'			=> $desc,
 //		'id'			=> 'image',
 //		'type'			=> 'image',
 //		'sanitize'		=> 'sanitize_text_field',
 //	],
 	[
 		'label'			=> __( 'Month', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'month',
 		'type'			=> 'month',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Number', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'number',
 		'type'			=> 'number',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Password', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'password',
 		'type'			=> 'password',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Range', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'range',
 		'type'			=> 'range',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Search', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'search',
 		'type'			=> 'search',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Submit', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'submit-is',
 		'type'			=> 'submit',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Tel', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'tel',
 		'type'			=> 'tel',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Time', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'time',
 		'type'			=> 'time',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Url', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'url',
 		'type'			=> 'url',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Week', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'week',
 		'type'			=> 'week',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Checkbox', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'checkbox',
 		'type'			=> 'checkbox',
 		'value'			=> 1,
@@ -157,7 +159,7 @@ return [
 	],
 	[
 		'label'			=> __( 'Radio', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'radio',
 		'type'			=> 'radio',
 		'value'			=> 'key2',
@@ -170,14 +172,14 @@ return [
 	],
 //	[
 //		'label'			=> __( 'Editor', 'italystrap' ),
-//	'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+//	'desc'			=> $desc,
 //		'id'			=> 'editor',
 //		'type'			=> 'editor',
 //		'sanitize'		=> 'sanitize_text_field',
 //	],
 	[
 		'label'			=> __( 'Textarea', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'textarea',
 		'type'			=> 'textarea',
 		'value'			=> \str_repeat( 'Lorem Ipsum ', 25 ),
@@ -185,7 +187,7 @@ return [
 	],
 	[
 		'label'			=> __( 'Select', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'select',
 		'type'			=> 'select',
 		'options'		=> [
@@ -197,7 +199,7 @@ return [
 	],
 	[
 		'label'			=> __( 'Multiple_select', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'multiple_select',
 		'type'			=> 'multiple_select',
 		'options'		=> [
@@ -209,28 +211,28 @@ return [
 	],
 	[
 		'label'			=> __( 'Taxonomy_select', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'taxonomy_select',
 		'type'			=> 'taxonomy_select',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Taxonomy_multiple_select', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'taxonomy_multiple_select',
 		'type'			=> 'taxonomy_multiple_select',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Media', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'media',
 		'type'			=> 'media',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
 		'label'			=> __( 'Media_list', 'italystrap' ),
-		'desc'			=> __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' ),
+		'desc'			=> $desc,
 		'id'			=> 'media_list',
 		'type'			=> 'media_list',
 		'sanitize'		=> 'sanitize_text_field',
