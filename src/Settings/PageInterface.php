@@ -24,6 +24,21 @@ namespace ItalyStrap\Settings;
 interface PageInterface {
 
 	/**
+	 * @return bool
+	 */
+	public function isSubmenu();
+
+	/**
+	 * @return string
+	 */
+	public function getParentPageSlug();
+
+	/**
+	 * @return string
+	 */
+	public function getMenuTitle();
+
+	/**
 	 * @return string
 	 */
 	public function getPageName();

@@ -204,14 +204,14 @@ class Sections implements \Countable, SectionsInterface {
 			$this->getPageName(),
 			$this->options->getName(),
 			[
-				'sanitize_callback'	=> [ $this->parser->withSchema( $this->schemaForParsingData() ), 'parse' ],
+				'sanitize_callback'	=> [ $this->parser->withSchema( $this->schemaForDataParser() ), 'parse' ],
 				'show_in_rest'      => false,
 				'description'       => '',
 			]
 		);
 	}
 
-	private function schemaForParsingData() {
+	private function schemaForDataParser() {
 
 		$fields = [];
 		foreach ( $this->config->toArray() as $section ) {

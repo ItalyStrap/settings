@@ -58,7 +58,14 @@ class Page implements PageInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function getPageName() {
+	public function getMenuTitle(): string {
+		return $this->config->get( self::MENU_TITLE );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getPageName(): string {
 		return \sanitize_key( $this->config->{self::SLUG} );
 	}
 
@@ -75,13 +82,13 @@ class Page implements PageInterface {
 
 		$callable = $this->config->get( self::CALLBACK );
 
-		if ( $this->config->get( self::PARENT ) ) {
+		if ( $this->isSubmenu() ) {
 			return \add_submenu_page(
-				$this->config->{self::PARENT},
+				$this->getParentPageSlug(),
 				$this->config->get( self::PAGE_TITLE ),
 				$this->config->get( self::MENU_TITLE ),
 				$this->config->get( self::CAPABILITY, 'manage_options' ),
-				\sanitize_key( $this->config->{self::SLUG} ),
+				$this->getPageName(),
 				$this->getCallable( $callable, $this->config )
 			);
 		}
@@ -90,7 +97,7 @@ class Page implements PageInterface {
 			$this->config->get( self::PAGE_TITLE ),
 			$this->config->get( self::MENU_TITLE ),
 			$this->config->get( self::CAPABILITY, 'manage_options' ),
-			\sanitize_key( $this->config->{self::SLUG} ),
+			$this->getPageName(),
 			$this->getCallable( $callable, $this->config ),
 			$this->config->get( self::ICON ),
 			$this->config->get( self::POSITION )
@@ -133,5 +140,19 @@ class Page implements PageInterface {
 	 */
 	public function unBoot() {
 		return \remove_action( self::EVENT, [ $this, 'register'] );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function isSubmenu(): bool {
+		return $this->config->has( self::PARENT );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getParentPageSlug(): string {
+		return $this->config->{self::PARENT};
 	}
 }
