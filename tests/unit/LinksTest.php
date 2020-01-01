@@ -64,6 +64,10 @@ class LinksTest extends \Codeception\Test\Unit
 		$content = 'Title';
 		$this->page->getMenuTitle()->willReturn( $content );
 
+		$this->page->isSubmenu()->willReturn( false );
+
+//		$this->page->getParentPageSlug()->willReturn( '' );
+
 		$sut->forPages( $this->getPage() );
 
 		$links = $sut->getLinks();
