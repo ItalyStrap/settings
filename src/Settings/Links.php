@@ -36,8 +36,8 @@ use ItalyStrap\HTML\Tag;
 /**
  * Class for Plugin_Links
  */
-class Links implements LinksInterface
-{
+class Links implements LinksInterface {
+
 	/**
 	 * @var array<string>
 	 */
@@ -85,7 +85,6 @@ class Links implements LinksInterface
 
 	public function forPages( Page ...$pages ) {
 		foreach ( $pages as $page ) {
-
 			if ( ! $page->isSubmenu() ) {
 				$prefix = 'admin.php?page=';
 			} elseif ( \in_array( $page->getParentPageSlug(), $this->base_parents ) ) {
@@ -104,9 +103,9 @@ class Links implements LinksInterface
 	 *
 	 * @link https://codex.wordpress.org/Plugin_API/Filter_Reference/plugin_action_links_(plugin_file_name)
 	 * @param array $links Array of link in wordpress dashboard.
-	 * @param $plugin_file
-	 * @param $plugin_data
-	 * @param $context
+	 * @param string $plugin_file
+	 * @param string $plugin_data
+	 * @param string $context
 	 * @return array        Array with my links
 	 */
 	public function update( array $links, $plugin_file, $plugin_data, $context ) {
@@ -116,68 +115,5 @@ class Links implements LinksInterface
 	public function boot( $base_name = '' ) {
 		$prefix = is_network_admin() ? 'network_admin_' : '';
 		\add_filter( $prefix . 'plugin_action_links_' . $base_name, [ $this, 'update' ], 10, 4 );
-	}
-
-	/**
-	 * Add link in plugin activation panel
-	 *
-	 * @link https://codex.wordpress.org/Plugin_API/Filter_Reference/plugin_action_links_(plugin_file_name)
-	 * @param array $links Array of link in wordpress dashboard.
-	 * @param $plugin_file
-	 * @param $plugin_data
-	 * @param $context
-	 * @return array        Array with my links
-	 */
-	private function pluginActionLinks( array $links, $plugin_file, $plugin_data, $context ) {
-
-		if ( ! isset( $this->plugin['plugin_action_links'] ) ) {
-			return $links;
-		}
-
-		if ( ! is_array( $this->plugin['plugin_action_links'] ) ) {
-			return $links;
-		}
-
-		foreach ( $this->plugin['plugin_action_links'] as $link ) {
-			array_unshift( $links, $link );
-		}
-
-		return $links;
-	}
-
-	/**
-	 * Add information to the plugin description in plugin.php page
-	 *
-	 * @param array  $plugin_meta An array of the plugin's metadata,
-	 *                            including the version, author,
-	 *                            author URI, and plugin URI.
-	 * @param string $plugin_file Path to the plugin file, relative to the plugins directory.
-	 * @param array  $plugin_data An array of plugin data.
-	 * @param string $status      Status of the plugin. Defaults are 'All', 'Active',
-	 *                            'Inactive', 'Recently Activated', 'Upgrade',
-	 *                            'Must-Use', 'Drop-ins', 'Search'.
-	 * @return array              Return the new array
-	 */
-	private function pluginRowMeta( array $plugin_meta, $plugin_file, array $plugin_data, $status ) {
-
-		if ( ! isset( $this->plugin['basename'] ) ) {
-			return $plugin_meta;
-		}
-
-		if ( $this->plugin['basename'] !== $plugin_file ) {
-			return $plugin_meta;
-		}
-
-		if ( ! isset( $this->plugin['plugin_row_meta'] ) ) {
-			return $plugin_meta;
-		}
-
-		if ( ! is_array( $this->plugin['plugin_row_meta'] ) ) {
-			return $plugin_meta;
-		}
-
-		$plugin_meta = array_merge( (array) $plugin_meta, (array) $this->plugin['plugin_row_meta'] );
-
-		return $plugin_meta;
 	}
 }

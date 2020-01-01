@@ -2,12 +2,11 @@
 
 namespace ItalyStrap\Settings;
 
-
 /**
  * Class for Plugin_Links
  */
-interface LinksInterface
-{
+interface LinksInterface {
+
 	/**
 	 * @return array
 	 */
