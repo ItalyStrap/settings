@@ -57,18 +57,26 @@ if ( ! defined( 'ITALYSTRAP_BASENAME' ) ) {
 	define( 'ITALYSTRAP_BASENAME', plugin_basename( ITALYSTRAP_FILE ) );
 }
 
+if ( ! \function_exists( 'd_footer' ) ) {
+	function d_footer( ...$args ) {
+		\add_action( 'shutdown', function () use ( $args ) {
+			d( ...$args );
+		} );
+	}
+}
+
 /**
  * This could be loaded on MU plugins
  */
-function italystrap_load () {
+function italystrap_settings_load () {
 	$files = [
 		'vendor/autoload.php',
 		'example.php',
 	];
 
 	foreach ( $files as $file ) {
-		require_once $file;
+		require $file;
 	}
 }
 
-\add_action( 'plugins_loaded', 'italystrap_load' );
+\add_action( 'plugins_loaded', 'italystrap_settings_load' );

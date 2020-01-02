@@ -5,12 +5,6 @@ use ItalyStrap\Settings\Page;
 use ItalyStrap\Settings\SettingsBuilder;
 use ItalyStrap\Settings\ViewPage;
 
-function d_footer( ...$args ) {
-	\add_action( 'shutdown', function () use ( $args ) {
-		d( ...$args );
-	} );
-}
-
 $plugin_name = 'ItalyStrap';
 $option_name = 'italystrap';
 
@@ -25,21 +19,31 @@ $settings->build(
 $pages_obj2 = new Page(
 	ConfigFactory::make( 	[
 		'parent'		=> 'italystrap-dashboard',
-//		'parent'		=> 'options-general.php',
 //		'page_title'	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
-		'menu_title'	=> \__( 'Child', 'italystrap' ),
-		'menu_slug'			=> 'ciao',
+		'menu_title'	=> \__( 'Child1', 'italystrap' ),
+		'menu_slug'			=> 'ciao1',
 //		P::VIEW			=> 'child',
 		'view'			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
 	] ),
 	new ViewPage()
 );
 $pages_obj2->boot();
-
 $settings->getLinks()->forPages( $pages_obj2 );
 
-//$options_parser = new \ItalyStrap\Settings\OptionsParser( $options_obj );
-//add_action( 'update_option', [ $options_parser, 'save' ], 10, 3 );
+$pages_obj3 = new Page(
+	ConfigFactory::make( 	[
+		'parent'		=> 'options-general.php',
+//		'page_title'	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
+		'menu_title'	=> \__( 'Child', 'italystrap' ),
+		'menu_slug'			=> 'ciao',
+		'view'			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
+	] ),
+	new ViewPage()
+);
+$pages_obj3->boot();
+$settings->getLinks()->forPages( $pages_obj3 );
+
+$settings->getLinks()->addLink( 'key-for-css', 'http://localhost.com', 'Link Title' );
 
 /**
  * Adjust priority to make sure this runs

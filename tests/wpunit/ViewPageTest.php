@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Tests;
 
+use ItalyStrap\Settings\Page;
+use ItalyStrap\Settings\Sections;
+use ItalyStrap\Settings\ViewPage;
+
 class ViewPageTest extends \Codeception\TestCase\WPTestCase {
 
 	/**
@@ -45,16 +49,16 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase {
 		parent::tearDown();
 	}
 
-	private function getInstance(): \ItalyStrap\Settings\ViewPage {
-		$sut = new \ItalyStrap\Settings\ViewPage();
+	private function getInstance(): ViewPage {
+		$sut = new ViewPage();
 		$this->assertInstanceOf( \ItalyStrap\Settings\ViewPageInterface::class, $sut, '' );
-		$this->assertInstanceOf( \ItalyStrap\Settings\ViewPage::class, $sut, '' );
+		$this->assertInstanceOf( ViewPage::class, $sut, '' );
 		return $sut;
 	}
 
 	private function getSections() {
 
-		$sections_obj = $this->make( \ItalyStrap\Settings\Sections::class, [
+		$sections_obj = $this->make( Sections::class, [
 			'count'		=> \count( $this->sections ),
 			'getPageSlug'	=> function () {
 				return $this->page_name;
@@ -69,7 +73,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase {
 
 	private function getPage() {
 
-		$page_obj = $this->make( \ItalyStrap\Settings\Page::class, [
+		$page_obj = $this->make( Page::class, [
 			'getSlug'	=> function () {
 				return $this->page_name;
 			},

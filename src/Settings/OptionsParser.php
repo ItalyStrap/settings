@@ -6,6 +6,9 @@ namespace ItalyStrap\Settings;
 /**
  * Class OptionsParser
  * @package ItalyStrap\Settings
+ *
+ * $options_parser = new \ItalyStrap\Settings\OptionsParser( $options_obj );
+ * add_action( 'update_option', [ $options_parser, 'save' ], 10, 3 );
  */
 class OptionsParser implements OptionsParserInterface {
 
