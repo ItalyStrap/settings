@@ -12,6 +12,11 @@ class LinksTest extends \Codeception\Test\Unit
 	 */
 	private $page;
 
+	/**
+	 * @var string
+	 */
+	private $admin_url;
+
 	protected function _before() {
 		\tad\FunctionMockerLe\define( 'apply_filters', function ( $filter_name, $value ) {
 			return $value;
@@ -25,9 +30,13 @@ class LinksTest extends \Codeception\Test\Unit
 		\tad\FunctionMockerLe\define( 'esc_url', function ( $value ) {
 			return $value;
 		} );
-		\tad\FunctionMockerLe\define( 'admin_url', function ( $value ) {
-			return $value;
+
+		$this->admin_url = $_ENV['TEST_SITE_WP_URL'] . '/wp-admin/';
+
+		\tad\FunctionMockerLe\define( 'admin_url', function ( $value = '' ) {
+			return $this->admin_url . $value;
 		} );
+
 		$this->page = $this->prophesize( \ItalyStrap\Settings\Page::class );
 	}
 
@@ -55,18 +64,14 @@ class LinksTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	public function itShouldAddsLinksForPages() {
+	public function itShouldAddsLinksForPage() {
 		$sut = $this->getInstance();
 
 		$slug = 'some-test-slug';
-		$this->page->getPageName()->willReturn( $slug );
-
 		$content = 'Title';
+		$this->page->getPageName()->willReturn( $slug );
 		$this->page->getMenuTitle()->willReturn( $content );
-
 		$this->page->isSubmenu()->willReturn( false );
-
-//		$this->page->getParentPageSlug()->willReturn( '' );
 
 		$sut->forPages( $this->getPage() );
 
@@ -74,13 +79,69 @@ class LinksTest extends \Codeception\Test\Unit
 		$this->assertIsArray( $links, '' );
 
 		foreach ($links as $link) {
-			codecept_debug( $link );
-			$this->assertStringContainsString( $slug, $link, '' );
-//			$this->assertStringContainsString( \sprintf(
-//				'<a href="%1$s" aria-label="%2$s">%2$s</a>',
-//				$slug,
-//				$content
-//			), $link, '' );
+			$this->assertStringContainsString( \sprintf(
+				'<a href="%1$s" aria-label="%2$s">%2$s</a>',
+				$this->admin_url . 'admin.php?page=' . $slug,
+				$content
+			), $link, '' );
+		}
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldAddsLinksForSubPage() {
+		$sut = $this->getInstance();
+
+		$slug = 'some-test-slug';
+		$content = 'Title';
+		$this->page->getPageName()->willReturn( $slug );
+		$this->page->getMenuTitle()->willReturn( $content );
+		$this->page->isSubmenu()->willReturn( true );
+		$this->page->getParentPageSlug()->willReturn( 'parent' );
+
+		$sut->forPages( $this->getPage() );
+
+		$links = $sut->getLinks();
+		$this->assertIsArray( $links, '' );
+
+		foreach ($links as $link) {
+			$this->assertStringContainsString( \sprintf(
+				'<a href="%1$s" aria-label="%2$s">%2$s</a>',
+				$this->admin_url . 'admin.php?page=' . $slug,
+				$content
+			), $link, '' );
+		}
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldAddsLinksForSubPageOfWP_Pages() {
+		$sut = $this->getInstance();
+
+		$parents = $sut->getBaseParents();
+
+		foreach ( $parents as $key => $parent ) {
+			$slug = 'some-test-slug';
+			$content = 'Title';
+			$this->page->getPageName()->willReturn( $slug );
+			$this->page->getMenuTitle()->willReturn( $content );
+			$this->page->isSubmenu()->willReturn( true );
+			$this->page->getParentPageSlug()->willReturn( $parent );
+
+			$sut->forPages( $this->getPage() );
+
+			$links = $sut->getLinks();
+			$this->assertIsArray( $links, '' );
+
+			foreach ($links as $link) {
+				$this->assertStringContainsString( \sprintf(
+					'<a href="%1$s" aria-label="%2$s">%2$s</a>',
+					$this->admin_url . $parent . '?page=' . $slug,
+					$content
+				), $link, '' );
+			}
 		}
 	}
 }

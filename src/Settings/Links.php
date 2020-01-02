@@ -53,6 +53,13 @@ class Links implements LinksInterface {
 	];
 
 	/**
+	 * @return array
+	 */
+	public function getBaseParents(): array {
+		return $this->base_parents;
+	}
+
+	/**
 	 * @var array<string>
 	 */
 	private $links = [];
@@ -83,14 +90,13 @@ class Links implements LinksInterface {
 			. $this->tag->close( $slug );
 	}
 
-	public function forPages( Page ...$pages ) {
+	public function forPages( PageInterface ...$pages ) {
 		foreach ( $pages as $page ) {
-			if ( ! $page->isSubmenu() ) {
-				$prefix = 'admin.php?page=';
-			} elseif ( \in_array( $page->getParentPageSlug(), $this->base_parents ) ) {
+
+			$prefix = 'admin.php?page=';
+
+			if ( $page->isSubmenu() && \in_array( $page->getParentPageSlug(), $this->base_parents ) ) {
 				$prefix = $page->getParentPageSlug() . '?page=';
-			} else {
-				$prefix = $page->getParentPageSlug() . '&page=';
 			}
 
 			$slug = \admin_url( $prefix . $page->getPageName() );

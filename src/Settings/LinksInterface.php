@@ -12,5 +12,5 @@ interface LinksInterface {
 	 */
 	public function getLinks(): array;
 
-	public function forPages( Page ...$pages );
+	public function forPages( PageInterface ...$pages );
 }

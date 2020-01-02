@@ -1,4 +1,10 @@
 <?php
+
+use ItalyStrap\Config\ConfigFactory;
+use ItalyStrap\Settings\Page;
+use ItalyStrap\Settings\SettingsBuilder;
+use ItalyStrap\Settings\ViewPage;
+
 function d_footer( ...$args ) {
 	\add_action( 'shutdown', function () use ( $args ) {
 		d( ...$args );
@@ -8,16 +14,16 @@ function d_footer( ...$args ) {
 $plugin_name = 'ItalyStrap';
 $option_name = 'italystrap';
 
-$settings = new \ItalyStrap\Settings\SettingsBuilder();
+$settings = new SettingsBuilder();
 $settings->build(
-	\ItalyStrap\Config\ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/settings.php' ),
+	ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/settings.php' ),
 	$option_name,
 	$plugin_name,
 	ITALYSTRAP_BASENAME
 );
 
-$pages_obj2 = new \ItalyStrap\Settings\Page(
-	\ItalyStrap\Config\ConfigFactory::make( 	[
+$pages_obj2 = new Page(
+	ConfigFactory::make( 	[
 		'parent'		=> 'italystrap-dashboard',
 //		'page_title'	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
 		'menu_title'	=> \__( 'Child', 'italystrap' ),
@@ -25,15 +31,9 @@ $pages_obj2 = new \ItalyStrap\Settings\Page(
 //		P::VIEW			=> 'child',
 		'view'			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
 	] ),
-	new \ItalyStrap\Settings\ViewPage()
+	new ViewPage()
 );
 $pages_obj2->boot();
-
-/**
- * Load script for Tabbed admin page
- */
-$asset = new \ItalyStrap\Settings\AssetLoader();
-add_action( 'admin_enqueue_scripts', [ $asset, 'load'] );
 
 //$options_parser = new \ItalyStrap\Settings\OptionsParser( $options_obj );
 //add_action( 'update_option', [ $options_parser, 'save' ], 10, 3 );

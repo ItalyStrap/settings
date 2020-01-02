@@ -65,5 +65,11 @@ class SettingsBuilder {
 				$this->links->boot( $base_name );
 			}
 		}
+
+		/**
+		 * Load script for Tabbed admin page
+		 */
+		$asset = new AssetLoader();
+		add_action( 'admin_enqueue_scripts', [ $asset, 'load'] );
 	}
 }
