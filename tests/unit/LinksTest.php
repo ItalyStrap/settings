@@ -80,7 +80,7 @@ class LinksTest extends \Codeception\Test\Unit {
 		$slug = 'some-test-slug';
 		$content = 'Title';
 		$this->page->getSlug()->willReturn( $slug );
-		$this->page->getMenuTitle()->willReturn( $content );
+		$this->page->getPageTitle()->willReturn( $content );
 		$this->page->isSubmenu()->willReturn( false );
 
 		$sut->forPages( $this->getPage() );
@@ -106,7 +106,7 @@ class LinksTest extends \Codeception\Test\Unit {
 		$slug = 'some-test-slug';
 		$content = 'Title';
 		$this->page->getSlug()->willReturn( $slug );
-		$this->page->getMenuTitle()->willReturn( $content );
+		$this->page->getPageTitle()->willReturn( $content );
 		$this->page->isSubmenu()->willReturn( true );
 		$this->page->getParentPageSlug()->willReturn( 'parent' );
 
@@ -136,7 +136,7 @@ class LinksTest extends \Codeception\Test\Unit {
 			$slug = 'some-test-slug';
 			$content = 'Title';
 			$this->page->getSlug()->willReturn( $slug );
-			$this->page->getMenuTitle()->willReturn( $content );
+			$this->page->getPageTitle()->willReturn( $content );
 			$this->page->isSubmenu()->willReturn( true );
 			$this->page->getParentPageSlug()->willReturn( $parent );
 
