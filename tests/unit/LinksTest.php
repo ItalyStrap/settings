@@ -154,4 +154,27 @@ class LinksTest extends \Codeception\Test\Unit {
 			}
 		}
 	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldAddCustomLink() {
+		$sut = $this->getInstance();
+
+		$key = 'some-key';
+		$url = 'http://localhost.com';
+		$content = 'Title';
+
+		$sut->addLink($key, $url, $content);
+
+		$links = $sut->getLinks();
+
+		$this->assertArrayHasKey( $key, $links, '' );
+
+		$this->assertStringContainsString( \sprintf(
+			'<a href="%1$s" aria-label="%2$s">%2$s</a>',
+			$url,
+			$content
+		), $links[ $key ], '' );
+	}
 }

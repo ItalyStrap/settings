@@ -89,26 +89,23 @@ class Links implements LinksInterface {
 		$this->tag = $tag;
 	}
 
-	private function createLink( string $url, string $content ) {
-		return $this->tag->open( $url, 'a', [ 'href' => $url, 'aria-label' => $content ] )
-			. $content
-			. $this->tag->close( $url );
+	/**
+	 * @inheritDoc
+	 */
+	public function forPages( PageInterface ...$pages ): Links {
+		foreach ( $pages as $page ) {
+			$url = $this->generateAdminUrl( $page );
+			$this->addLink( $page->getPageName(), $url, $page->getMenuTitle() );
+		}
+		return $this;
 	}
 
 	/**
 	 * @inheritDoc
 	 */
-	public function forPages( PageInterface ...$pages ) {
-		foreach ( $pages as $page ) {
-			$prefix = $this->default_page . '?page=';
-
-			if ( $page->isSubmenu() && \in_array( $page->getParentPageSlug(), $this->default_pages ) ) {
-				$prefix = $page->getParentPageSlug() . '?page=';
-			}
-
-			$url = \admin_url( $prefix . $page->getPageName() );
-			$this->links[ $page->getPageName() ] = $this->createLink( $url, $page->getMenuTitle() );
-		}
+	public function addLink( string $key, string $url, string $content ): Links {
+		$this->links[ $key ] = $this->createLink( $url, $content );
+		return $this;
 	}
 
 	/**
@@ -121,12 +118,40 @@ class Links implements LinksInterface {
 	 * @param string $context
 	 * @return array        Array with my links
 	 */
-	public function update( array $links, $plugin_file, $plugin_data, $context ) {
+	public function update( array $links, $plugin_file, $plugin_data, $context ): array {
 		return \array_merge( $this->links, $links );
 	}
 
-	public function boot( $base_name = '' ) {
+	/**
+	 * @param string $base_name
+	 */
+	public function boot( $base_name = '' ): void {
 		$prefix = is_network_admin() ? 'network_admin_' : '';
 		\add_filter( $prefix . 'plugin_action_links_' . $base_name, [ $this, 'update' ], 10, 4 );
+	}
+
+	/**
+	 * @param PageInterface $page
+	 * @return string
+	 */
+	private function generateAdminUrl( PageInterface $page ): string {
+		$prefix = $this->default_page;
+
+		if ( $page->isSubmenu() && \in_array( $page->getParentPageSlug(), $this->default_pages ) ) {
+			$prefix = $page->getParentPageSlug();
+		}
+
+		return \admin_url( $prefix . '?page=' . $page->getPageName() );
+	}
+
+	/**
+	 * @param string $url
+	 * @param string $content
+	 * @return string
+	 */
+	private function createLink( string $url, string $content ): string {
+		return $this->tag->open( $url, 'a', [ 'href' => $url, 'aria-label' => $content ] )
+			. $content
+			. $this->tag->close( $url );
 	}
 }

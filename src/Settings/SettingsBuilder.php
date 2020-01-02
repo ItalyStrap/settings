@@ -41,12 +41,14 @@ class SettingsBuilder {
 	}
 
 	/**
-	 * @param ConfigInterface $config
+	 * @param ConfigInterface<array> $config
 	 * @param string $option_name
 	 * @param string $plugin_name
 	 * @param string $base_name
+	 *
+	 * @return void
 	 */
-	public function build( ConfigInterface $config, $option_name, $plugin_name = '', $base_name = '' ) {
+	public function build( ConfigInterface $config, $option_name, $plugin_name = '', $base_name = '' ): void {
 
 		$this->options = new Options( $option_name );
 		$this->links = new Links( new Tag( new Attributes() ) );
