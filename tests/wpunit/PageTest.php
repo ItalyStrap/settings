@@ -91,7 +91,7 @@ class PageTest extends \Codeception\TestCase\WPTestCase {
 		);
 
 		$sut = $this->getInstance( $config );
-		$page_name = $sut->getPageName();
+		$page_name = $sut->getSlug();
 		$this->assertStringContainsString( 'test', $page_name, '' );
 	}
 

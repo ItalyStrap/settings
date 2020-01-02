@@ -12,7 +12,7 @@ use function ItalyStrap\HTML\void_tag;
 
 $this->assertHasSections();
 
-$spinner = void_tag( $this->getPageName() . '_spinner', 'img', [
+$spinner = void_tag( $this->getPageSlug() . '_spinner', 'img', [
 	'class'	=> 'loading-gif',
 	'src'	=> \includes_url() . 'images/spinner.gif',
 	'alt'	=> 'spinner',
@@ -22,26 +22,26 @@ $spinner = void_tag( $this->getPageName() . '_spinner', 'img', [
 ?>
 <?php \do_action( 'italystrap_before_settings_page', $this ); ?>
 <div id="tabs" class="wrap">
-<!--	<h1>--><?php //echo esc_html( get_admin_page_title() ); ?><!--</h1>-->
+	<h1><?php echo \esc_html( \get_admin_page_title() ); ?></h1>
 	<div id="post-body">
 		<div class="postbox-container">
 			<?php do_action( 'italystrap_before_settings_form', $this ); ?>
-			<?php open_tag_e( $this->getPageName() . 'form', 'form', [
+			<?php open_tag_e( $this->getPageSlug() . 'form', 'form', [
 				'method'	=> 'post',
 				'action'	=> 'options.php',
-				'id'		=> $this->getPageName(),
+				'id'		=> $this->getPageSlug(),
 			] ); ?>
 				<?php
 				$this->createNavTab();
 				/**
 				 * Output nonce, action, and option_page fields for a settings page.
 				 */
-				\settings_fields( $this->getPageName() );
+				\settings_fields( $this->getPageSlug() );
 
 				/**
 				 * Output settings sections and fields
 				 */
-				$this->doSettingsSections( $this->getPageName() );
+				$this->doSettingsSections( $this->getPageSlug() );
 
 				/**
 				 * Output a submit button
@@ -50,7 +50,7 @@ $spinner = void_tag( $this->getPageName() . '_spinner', 'img', [
 				echo $spinner;
 				?>
 				<div id="saveResult"></div>
-			<?php close_tag_e( $this->getPageName() . 'form' ); ?>
+			<?php close_tag_e( $this->getPageSlug() . 'form' ); ?>
 			<?php \do_action( 'italystrap_after_settings_form', $this ); ?>
 		</div>
 	</div>
@@ -70,7 +70,7 @@ $updated = \sprintf(
 <script type="text/javascript">
 	jQuery( document ).ready( function($) {
 		var spinner = $( '.loading-gif' );
-		$('#<?php echo \esc_attr( $this->getPageName() ) ?>').submit(function() {
+		$('#<?php echo \esc_attr( $this->getPageSlug() ) ?>').submit(function() {
 			$( '.saveResult' ).empty();
 			spinner.fadeIn();
 			$(this).ajaxSubmit({

@@ -24,8 +24,8 @@ $settings->build(
 
 $pages_obj2 = new Page(
 	ConfigFactory::make( 	[
-//		'parent'		=> 'italystrap-dashboard',
-		'parent'		=> 'options-general.php',
+		'parent'		=> 'italystrap-dashboard',
+//		'parent'		=> 'options-general.php',
 //		'page_title'	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
 		'menu_title'	=> \__( 'Child', 'italystrap' ),
 		'menu_slug'			=> 'ciao',

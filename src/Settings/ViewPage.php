@@ -55,8 +55,8 @@ class ViewPage implements ViewPageInterface {
 	/**
 	 * @return string
 	 */
-	private function getPageName() {
-		return $this->page->getPageName();
+	private function getPageSlug() {
+		return $this->page->getSlug();
 	}
 
 	/**

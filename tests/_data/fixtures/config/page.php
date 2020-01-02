@@ -4,7 +4,7 @@ declare(strict_types=1);
 use ItalyStrap\Settings\Page as P;
 
 return [
-	P::PAGE_TITLE	=> \__( 'ItalyStrap Dashboard', 'italystrap' ),
+	P::PAGE_TITLE	=> \__( 'Settings', 'italystrap' ),
 	P::MENU_TITLE	=> \__( 'ItalyStrap', 'italystrap' ), // Mandatory
 //	P::CAPABILITY	=> 'manage_options', // Optional
 	P::SLUG			=> 'italystrap-dashboard', // Mandatory

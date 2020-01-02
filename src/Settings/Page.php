@@ -65,8 +65,29 @@ class Page implements PageInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function getPageName(): string {
+	public function getSlug(): string {
 		return \sanitize_key( $this->config->{self::SLUG} );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function isSubmenu(): bool {
+		return $this->config->has( self::PARENT );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getParentPageSlug(): string {
+		return $this->config->{self::PARENT};
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getPageTitle(): string {
+		return $this->config->get( self::PAGE_TITLE, '' );
 	}
 
 	/**
@@ -85,19 +106,19 @@ class Page implements PageInterface {
 		if ( $this->isSubmenu() ) {
 			return \add_submenu_page(
 				$this->getParentPageSlug(),
-				$this->config->get( self::PAGE_TITLE ),
-				$this->config->get( self::MENU_TITLE ),
+				$this->getPageTitle(),
+				$this->getMenuTitle(),
 				$this->config->get( self::CAPABILITY, 'manage_options' ),
-				$this->getPageName(),
+				$this->getSlug(),
 				$this->getCallable( $callable, $this->config )
 			);
 		}
 
 		return \add_menu_page(
-			$this->config->get( self::PAGE_TITLE ),
-			$this->config->get( self::MENU_TITLE ),
+			$this->getPageTitle(),
+			$this->getMenuTitle(),
 			$this->config->get( self::CAPABILITY, 'manage_options' ),
-			$this->getPageName(),
+			$this->getSlug(),
 			$this->getCallable( $callable, $this->config ),
 			$this->config->get( self::ICON ),
 			$this->config->get( self::POSITION )
@@ -140,19 +161,5 @@ class Page implements PageInterface {
 	 */
 	public function unBoot() {
 		return \remove_action( self::EVENT, [ $this, 'register'] );
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function isSubmenu(): bool {
-		return $this->config->has( self::PARENT );
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getParentPageSlug(): string {
-		return $this->config->{self::PARENT};
 	}
 }

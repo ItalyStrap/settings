@@ -34,6 +34,11 @@ interface PageInterface {
 	public function getParentPageSlug();
 
 	/**
+	 * @return mixed
+	 */
+	public function getPageTitle();
+
+	/**
 	 * @return string
 	 */
 	public function getMenuTitle();
@@ -41,7 +46,7 @@ interface PageInterface {
 	/**
 	 * @return string
 	 */
-	public function getPageName();
+	public function getSlug();
 
 	/**
 	 * Must be loaded at 'admin_menu' hook

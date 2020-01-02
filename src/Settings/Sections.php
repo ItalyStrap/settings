@@ -232,7 +232,7 @@ class Sections implements \Countable, SectionsInterface {
 	}
 
 	public function getPageName(): string {
-		return $this->page->getPageName();
+		return $this->page->getSlug();
 	}
 
 	public function getSections(): array {
