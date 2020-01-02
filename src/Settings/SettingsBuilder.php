@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
+use Auryn\Injector;
 use ItalyStrap\Config\ConfigFactory;
 use ItalyStrap\Config\ConfigInterface;
 use ItalyStrap\DataParser\ParserFactory;
@@ -49,6 +50,8 @@ class SettingsBuilder {
 	 * @return void
 	 */
 	public function build( ConfigInterface $config, $option_name, $plugin_name = '', $base_name = '' ): void {
+
+		$injector = new Injector();
 
 		$this->options = new Options( $option_name );
 		$this->links = new Links( new Tag( new Attributes() ) );

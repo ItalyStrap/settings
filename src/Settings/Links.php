@@ -103,8 +103,8 @@ class Links implements LinksInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function addLink( string $key, string $url, string $content ): Links {
-		$this->links[ $key ] = $this->createLink( $url, $content );
+	public function addLink( string $key, string $url, string $content, array $attr = [] ): Links {
+		$this->links[ $key ] = $this->createLink( $url, $content, $attr );
 		return $this;
 	}
 
@@ -147,10 +147,14 @@ class Links implements LinksInterface {
 	/**
 	 * @param string $url
 	 * @param string $content
+	 * @param array $attr
 	 * @return string
 	 */
-	private function createLink( string $url, string $content ): string {
-		return $this->tag->open( $url, 'a', [ 'href' => $url, 'aria-label' => $content ] )
+	private function createLink( string $url, string $content, array $attr ): string {
+
+		$attr = \array_merge( [ 'href' => $url, 'aria-label' => $content ], $attr );
+
+		return $this->tag->open( $url, 'a', $attr )
 			. $content
 			. $this->tag->close( $url );
 	}

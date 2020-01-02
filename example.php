@@ -43,7 +43,7 @@ $pages_obj3 = new Page(
 $pages_obj3->boot();
 $settings->getLinks()->forPages( $pages_obj3 );
 
-$settings->getLinks()->addLink( 'key-for-css', 'http://localhost.com', 'Custom' );
+$settings->getLinks()->addLink( 'key-for-css', 'http://localhost.com', 'Custom', [ 'target' => '_blank' ] );
 
 /**
  * Adjust priority to make sure this runs
