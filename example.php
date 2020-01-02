@@ -19,7 +19,7 @@ $settings->build(
 $pages_obj2 = new Page(
 	ConfigFactory::make( 	[
 		'parent'		=> 'italystrap-dashboard',
-//		'page_title'	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
+		'page_title'	=> \__( 'Dashboard 2', 'italystrap' ),
 		'menu_title'	=> \__( 'Child1', 'italystrap' ),
 		'menu_slug'			=> 'ciao1',
 //		P::VIEW			=> 'child',
@@ -43,7 +43,7 @@ $pages_obj3 = new Page(
 $pages_obj3->boot();
 $settings->getLinks()->forPages( $pages_obj3 );
 
-$settings->getLinks()->addLink( 'key-for-css', 'http://localhost.com', 'Link Title' );
+$settings->getLinks()->addLink( 'key-for-css', 'http://localhost.com', 'Custom' );
 
 /**
  * Adjust priority to make sure this runs

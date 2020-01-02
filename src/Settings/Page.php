@@ -87,7 +87,7 @@ class Page implements PageInterface {
 	 * @inheritDoc
 	 */
 	public function getPageTitle(): string {
-		return $this->config->get( self::PAGE_TITLE, '' );
+		return $this->config->get( self::PAGE_TITLE, __( 'Settings' ) );
 	}
 
 	/**

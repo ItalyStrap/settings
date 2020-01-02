@@ -95,7 +95,7 @@ class Links implements LinksInterface {
 	public function forPages( PageInterface ...$pages ): Links {
 		foreach ( $pages as $page ) {
 			$url = $this->generateAdminUrl( $page );
-			$this->addLink( $page->getSlug(), $url, $page->getMenuTitle() );
+			$this->addLink( $page->getSlug(), $url, $page->getPageTitle() );
 		}
 		return $this;
 	}
