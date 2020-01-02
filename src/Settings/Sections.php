@@ -109,7 +109,7 @@ class Sections implements \Countable, SectionsInterface {
 				$section[ self::ID ],
 				$section[ self::TITLE ],
 				[ $this, 'renderSection' ], //array( $this, $field['callback'] ),
-				$this->getPageName() //$section['page']
+				$this->getPageSlug() //$section['page']
 			);
 
 			$this->addSettingsFields( $section );
@@ -153,7 +153,7 @@ class Sections implements \Countable, SectionsInterface {
 				$field[ self::ID ],
 				$field['label'],
 				[ $this, 'renderField' ], //array( $this, $field['callback'] ),
-				$this->getPageName(), //$field['page'],
+				$this->getPageSlug(), //$field['page'],
 				$section[ self::ID ],
 				$field // $args
 			);
@@ -201,7 +201,7 @@ class Sections implements \Countable, SectionsInterface {
 	 */
 	private function registerSetting(): void {
 		\register_setting(
-			$this->getPageName(),
+			$this->getPageSlug(),
 			$this->options->getName(),
 			[
 				'sanitize_callback'	=> [ $this->parser->withSchema( $this->schemaForDataParser() ), 'parse' ],
@@ -231,7 +231,7 @@ class Sections implements \Countable, SectionsInterface {
 		return $this;
 	}
 
-	public function getPageName(): string {
+	public function getPageSlug(): string {
 		return $this->page->getSlug();
 	}
 

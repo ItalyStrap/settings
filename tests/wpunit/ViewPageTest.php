@@ -56,7 +56,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase {
 
 		$sections_obj = $this->make( \ItalyStrap\Settings\Sections::class, [
 			'count'		=> \count( $this->sections ),
-			'getPageName'	=> function () {
+			'getPageSlug'	=> function () {
 				return $this->page_name;
 			},
 			'getSections'	=> function () {
@@ -70,7 +70,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase {
 	private function getPage() {
 
 		$page_obj = $this->make( \ItalyStrap\Settings\Page::class, [
-			'getPageName'	=> function () {
+			'getSlug'	=> function () {
 				return $this->page_name;
 			},
 		] );
