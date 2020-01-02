@@ -39,9 +39,14 @@ use ItalyStrap\HTML\Tag;
 class Links implements LinksInterface {
 
 	/**
+	 * @var string
+	 */
+	private $default_page = 'admin.php';
+
+	/**
 	 * @var array<string>
 	 */
-	private $base_parents = [
+	private $default_pages = [
 		'options-general.php',
 		'edit-comments.php',
 		'plugins.php',
@@ -55,8 +60,8 @@ class Links implements LinksInterface {
 	/**
 	 * @return array
 	 */
-	public function getBaseParents(): array {
-		return $this->base_parents;
+	public function getDefaultPages(): array {
+		return $this->default_pages;
 	}
 
 	/**
@@ -84,23 +89,25 @@ class Links implements LinksInterface {
 		$this->tag = $tag;
 	}
 
-	private function createLink( string $slug, string $content ) {
-		return $this->tag->open( $slug, 'a', [ 'href' => $slug, 'aria-label' => $content ] )
+	private function createLink( string $url, string $content ) {
+		return $this->tag->open( $url, 'a', [ 'href' => $url, 'aria-label' => $content ] )
 			. $content
-			. $this->tag->close( $slug );
+			. $this->tag->close( $url );
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	public function forPages( PageInterface ...$pages ) {
 		foreach ( $pages as $page ) {
+			$prefix = $this->default_page . '?page=';
 
-			$prefix = 'admin.php?page=';
-
-			if ( $page->isSubmenu() && \in_array( $page->getParentPageSlug(), $this->base_parents ) ) {
+			if ( $page->isSubmenu() && \in_array( $page->getParentPageSlug(), $this->default_pages ) ) {
 				$prefix = $page->getParentPageSlug() . '?page=';
 			}
 
-			$slug = \admin_url( $prefix . $page->getPageName() );
-			$this->links[ $page->getPageName() ] = $this->createLink( $slug, $page->getMenuTitle() );
+			$url = \admin_url( $prefix . $page->getPageName() );
+			$this->links[ $page->getPageName() ] = $this->createLink( $url, $page->getMenuTitle() );
 		}
 	}
 

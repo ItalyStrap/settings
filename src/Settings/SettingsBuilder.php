@@ -27,6 +27,13 @@ class SettingsBuilder {
 	private $links;
 
 	/**
+	 * @return Links
+	 */
+	public function getLinks(): Links {
+		return $this->links;
+	}
+
+	/**
 	 * @return Options
 	 */
 	public function getOptions(): Options {

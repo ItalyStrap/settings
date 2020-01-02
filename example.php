@@ -24,7 +24,8 @@ $settings->build(
 
 $pages_obj2 = new Page(
 	ConfigFactory::make( 	[
-		'parent'		=> 'italystrap-dashboard',
+//		'parent'		=> 'italystrap-dashboard',
+		'parent'		=> 'options-general.php',
 //		'page_title'	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
 		'menu_title'	=> \__( 'Child', 'italystrap' ),
 		'menu_slug'			=> 'ciao',
@@ -34,6 +35,8 @@ $pages_obj2 = new Page(
 	new ViewPage()
 );
 $pages_obj2->boot();
+
+$settings->getLinks()->forPages( $pages_obj2 );
 
 //$options_parser = new \ItalyStrap\Settings\OptionsParser( $options_obj );
 //add_action( 'update_option', [ $options_parser, 'save' ], 10, 3 );

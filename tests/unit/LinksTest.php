@@ -1,7 +1,10 @@
 <?php
+declare(strict_types=1);
 
-class LinksTest extends \Codeception\Test\Unit
-{
+namespace ItalyStrap\Tests;
+
+class LinksTest extends \Codeception\Test\Unit {
+
 	/**
 	 * @var \UnitTester
 	 */
@@ -17,22 +20,28 @@ class LinksTest extends \Codeception\Test\Unit
 	 */
 	private $admin_url;
 
+	// phpcs:ignore -- Method from Codeception
 	protected function _before() {
+		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'apply_filters', function ( $filter_name, $value ) {
 			return $value;
 		} );
+		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'esc_attr', function ( $value ) {
 			return $value;
 		} );
+		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'esc_html', function ( $value ) {
 			return $value;
 		} );
+		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'esc_url', function ( $value ) {
 			return $value;
 		} );
 
 		$this->admin_url = $_ENV['TEST_SITE_WP_URL'] . '/wp-admin/';
 
+		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'admin_url', function ( $value = '' ) {
 			return $this->admin_url . $value;
 		} );
@@ -40,6 +49,7 @@ class LinksTest extends \Codeception\Test\Unit
 		$this->page = $this->prophesize( \ItalyStrap\Settings\Page::class );
 	}
 
+	// phpcs:ignore -- Method from Codeception
 	protected function _after() {
 	}
 
@@ -117,10 +127,10 @@ class LinksTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	public function itShouldAddsLinksForSubPageOfWP_Pages() {
+	public function itShouldAddsLinksForSubPageOfWPPages() {
 		$sut = $this->getInstance();
 
-		$parents = $sut->getBaseParents();
+		$parents = $sut->getDefaultPages();
 
 		foreach ( $parents as $key => $parent ) {
 			$slug = 'some-test-slug';
