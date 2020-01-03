@@ -82,6 +82,6 @@ class SettingsBuilder {
 		 * Load script for Tabbed admin page
 		 */
 		$asset = new AssetLoader();
-		add_action( 'admin_enqueue_scripts', [ $asset, 'load'] );
+		\add_action( 'admin_enqueue_scripts', [ $asset, 'load'] );
 	}
 }

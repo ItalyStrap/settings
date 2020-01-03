@@ -103,8 +103,8 @@ class Links implements LinksInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function addLink( string $key, string $url, string $content, array $attr = [] ): Links {
-		$this->links[ $key ] = $this->createLink( $url, $content, $attr );
+	public function addLink( string $key, string $url, string $text, array $attr = [] ): Links {
+		$this->links[ $key ] = $this->createLink( $url, $text, $attr );
 		return $this;
 	}
 

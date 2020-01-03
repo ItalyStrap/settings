@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
@@ -10,10 +11,11 @@ interface LinksInterface {
 	/**
 	 * @param string $key
 	 * @param string $url
-	 * @param string $content
+	 * @param string $text
+	 * @param array<string> $attr
 	 * @return $this
 	 */
-	public function addLink( string $key, string $url, string $content );
+	public function addLink( string $key, string $url, string $text, array $attr = [] );
 
 	/**
 	 * @return array
