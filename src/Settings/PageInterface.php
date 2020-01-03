@@ -49,6 +49,12 @@ interface PageInterface {
 	public function getSlug();
 
 	/**
+	 * @param SectionsInterface $sections
+	 * @return Page
+	 */
+	public function withSections( SectionsInterface $sections );
+
+	/**
 	 * Must be loaded at 'admin_menu' hook
 	 * Add plugin primary page in admin panel
 	 * @return bool|false|string

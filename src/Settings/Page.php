@@ -5,6 +5,10 @@ namespace ItalyStrap\Settings;
 
 use ItalyStrap\Config\ConfigInterface as Config;
 
+/**
+ * Class Page
+ * @package ItalyStrap\Settings
+ */
 class Page implements PageInterface {
 
 	use ShowableTrait;
@@ -41,32 +45,11 @@ class Page implements PageInterface {
 	/**
 	 * Pages constructor.
 	 * @param Config $config
-	 * @param SectionsInterface $sections
 	 * @param ViewPageInterface $view
 	 */
-	public function __construct( Config $config, ViewPageInterface $view, SectionsInterface $sections = null ) {
+	public function __construct( Config $config, ViewPageInterface $view ) {
 		$this->config = $config;
 		$this->view = $view;
-		if ( $sections ) {
-			$this->sections = $sections;
-			$this->sections->forPage( $this );
-			$this->view->forPage( $this );
-			$this->view->withSections( $sections );
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getMenuTitle(): string {
-		return $this->config->get( self::MENU_TITLE );
-	}
-
-	/**
-	 * @inheritDoc
-	 */
-	public function getSlug(): string {
-		return \sanitize_key( $this->config->{self::SLUG} );
 	}
 
 	/**
@@ -88,6 +71,31 @@ class Page implements PageInterface {
 	 */
 	public function getPageTitle(): string {
 		return $this->config->get( self::PAGE_TITLE, __( 'Settings' ) );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getMenuTitle(): string {
+		return $this->config->get( self::MENU_TITLE );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getSlug(): string {
+		return \sanitize_key( $this->config->{self::SLUG} );
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function withSections( SectionsInterface $sections ): Page {
+		$this->sections = $sections;
+		$this->sections->forPage( $this );
+		$this->view->forPage( $this );
+		$this->view->withSections( $sections );
+		return $this;
 	}
 
 	/**
