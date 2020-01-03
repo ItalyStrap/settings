@@ -18,12 +18,11 @@ $settings->build(
 
 $pages_obj2 = new Page(
 	ConfigFactory::make( 	[
-		'parent'		=> 'italystrap-dashboard',
-		'page_title'	=> \__( 'Dashboard 2', 'italystrap' ),
-		'menu_title'	=> \__( 'Child1', 'italystrap' ),
-		'menu_slug'			=> 'ciao1',
-//		P::VIEW			=> 'child',
-		'view'			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
+		Page::PARENT		=> 'italystrap-dashboard',
+		Page::PAGE_TITLE	=> \__( 'Dashboard 2', 'italystrap' ),
+		Page::MENU_TITLE	=> \__( 'Child1', 'italystrap' ),
+		Page::SLUG			=> 'ciao1',
+		Page::VIEW			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
 	] ),
 	new ViewPage()
 );
@@ -32,11 +31,11 @@ $settings->getLinks()->forPages( $pages_obj2 );
 
 $pages_obj3 = new Page(
 	ConfigFactory::make( 	[
-		'parent'		=> 'options-general.php',
-//		'page_title'	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
-		'menu_title'	=> \__( 'Child', 'italystrap' ),
-		'menu_slug'			=> 'ciao',
-		'view'			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
+		Page::PARENT		=> 'options-general.php',
+//		Page::PAGE_TITLE	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
+		Page::MENU_TITLE	=> \__( 'Child', 'italystrap' ),
+		Page::SLUG			=> 'ciao',
+		Page::VIEW			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
 	] ),
 	new ViewPage()
 );
