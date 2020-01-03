@@ -3,7 +3,12 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Tests;
 
+use ItalyStrap\Config\ConfigFactory;
 use ItalyStrap\Settings\Page as P;
+use ItalyStrap\Settings\PageInterface;
+use ItalyStrap\Settings\Sections;
+use ItalyStrap\Settings\ViewPage;
+use ItalyStrap\Settings\ViewPageInterface;
 
 /**
  * Class PageTest
@@ -26,6 +31,23 @@ class PageTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	private $page_config;
 
+	/**
+	 * @var \Prophecy\Prophecy\ObjectProphecy
+	 */
+	private $sections;
+
+	/**
+	 * @var \Prophecy\Prophecy\ObjectProphecy
+	 */
+	private $view;
+
+	/**
+	 * @return ViewPageInterface
+	 */
+	public function getView() {
+		return $this->view->reveal();
+	}
+
 	public function setUp(): void {
 		// Before...
 		parent::setUp();
@@ -37,6 +59,9 @@ class PageTest extends \Codeception\TestCase\WPTestCase {
 
 		global $menu, $admin_page_hooks, $_registered_pages, $_parent_pages,
 			   $submenu, $_wp_real_parent_file, $_wp_submenu_nopriv;
+
+		$this->sections = $this->prophesize( \ItalyStrap\Settings\SectionsInterface::class );
+		$this->view = $this->prophesize( \ItalyStrap\Settings\ViewPageInterface::class );
 		// Your set up methods here.
 	}
 
@@ -58,20 +83,17 @@ class PageTest extends \Codeception\TestCase\WPTestCase {
 		parent::tearDown();
 	}
 
+	private function getSections() {
+		return $this->sections->reveal();
+	}
+
 	private function getInstance( array $config = [] ) {
 
-		if ( empty( $config ) ) {
-			$config = $this->page_config;
-		}
+		$config = ConfigFactory::make( $config );
 
-		$config = \ItalyStrap\Config\ConfigFactory::make( $config );
-		$view = $this->make( \ItalyStrap\Settings\ViewPage::class );
-		$sections = $this->make( \ItalyStrap\Settings\Sections::class, [
-			'options' => $this->make( \ItalyStrap\Settings\Options::class ),
-		] );
-
-		$sut = new \ItalyStrap\Settings\Page( $config, $view, $sections );
-		$this->assertInstanceOf( \ItalyStrap\Settings\Page::class, $sut, '' );
+		$sut = new P( $config, $this->getView() );
+		$this->assertInstanceOf( PageInterface::class, $sut, '' );
+		$this->assertInstanceOf( P::class, $sut, '' );
 		return $sut;
 	}
 
@@ -85,25 +107,73 @@ class PageTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @test
 	 */
-	public function itShouldReturnPageName() {
+	public function itShouldReturnTrueIfIsSubmenu() {
 
-		$config = \array_merge(
-			$this->page_config,
-			[
-				P::SLUG	=> 'test',
-			]
-		);
+		$config = [
+			P::PARENT	=> 'test',
+		];
 
 		$sut = $this->getInstance( $config );
-		$page_name = $sut->getSlug();
-		$this->assertStringContainsString( 'test', $page_name, '' );
+		$this->assertTrue( $sut->isSubmenu(), '' );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldReturnParentPageSlug() {
+
+		$config = [
+			P::PARENT	=> 'test',
+		];
+
+		$sut = $this->getInstance( $config );
+		$this->assertStringContainsString( 'test', $sut->getParentPageSlug(), '' );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldReturnPageTitle() {
+
+		$config = [
+			P::PAGE_TITLE	=> 'test',
+		];
+
+		$sut = $this->getInstance( $config );
+		$this->assertStringContainsString( 'test', $sut->getPageTitle(), '' );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldReturnMenuTitle() {
+
+		$config = [
+			P::MENU_TITLE	=> 'test',
+		];
+
+		$sut = $this->getInstance( $config );
+		$this->assertStringContainsString( 'test', $sut->getMenuTitle(), '' );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldReturnPageSlug() {
+
+		$config = [
+			P::SLUG	=> 'test',
+		];
+
+		$sut = $this->getInstance( $config );
+		$this->assertStringContainsString( 'test', $sut->getSlug(), '' );
 	}
 
 	/**
 	 * @test
 	 */
 	public function itShouldRegister() {
-		$sut = $this->getInstance();
+		$sut = $this->getInstance( $this->page_config );
 		$sut->register();
 	}
 
