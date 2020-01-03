@@ -35,11 +35,6 @@ interface SectionsInterface {
 	public function renderField( array $args );
 
 	/**
-	 * @return string
-	 */
-	public function getPageSlug(): string;
-
-	/**
 	 * @inheritDoc
 	 */
 	public function count(): int;
@@ -49,4 +44,9 @@ interface SectionsInterface {
 	 * @return Sections
 	 */
 	public function forPage( PageInterface $page );
+
+	/**
+	 * @return string
+	 */
+	public function getPageSlug(): string;
 }

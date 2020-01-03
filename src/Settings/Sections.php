@@ -63,12 +63,11 @@ class Sections implements \Countable, SectionsInterface {
 	private $page;
 
 	/**
-	 * Initialize Class
-	 *
+	 * Sections constructor.
+	 * @param Config $config          The configuration array plugin fields.
 	 * @param FieldsInterface $fields The Fields object.
 	 * @param ParserInterface $parser
-	 * @param Options $options Get the plugin options.
-	 * @param Config $config The configuration array plugin fields.
+	 * @param Options $options        Get the plugin options.
 	 */
 	public function __construct(
 		Config $config,
@@ -77,12 +76,38 @@ class Sections implements \Countable, SectionsInterface {
 		Options $options
 	) {
 		$this->config = $config;
-
 		$this->fields = $fields;
 		$this->parser = $parser;
-
 		$this->options = $options;
-		$this->options_values = (array) $options->get();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function forPage( PageInterface $page ): Sections {
+		$this->page = $page;
+		return $this;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getPageSlug(): string {
+		return $this->page->getSlug();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getSections(): array {
+		return $this->config->toArray();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function count(): int {
+		return $this->config->count();
 	}
 
 	/**
@@ -189,6 +214,7 @@ class Sections implements \Countable, SectionsInterface {
 
 		$args['class'] = $this->field_class[ $args['id'] ];
 
+		$this->options_values = (array) $this->options->get();
 		$args['value'] = $this->options_values[ $args['id'] ] ?? $args['value'];
 		$args['id'] = $args['name'] = $this->getStringForLabel( $args );
 		echo $this->fields->render( $args ); // XSS ok.
@@ -202,7 +228,7 @@ class Sections implements \Countable, SectionsInterface {
 	private function registerSetting(): void {
 		\register_setting(
 			$this->getPageSlug(),
-			$this->options->getName(),
+			$this->getOptionsName(),
 			[
 				'sanitize_callback'	=> [ $this->parser->withSchema( $this->schemaForDataParser() ), 'parse' ],
 				'show_in_rest'      => false,
@@ -224,31 +250,11 @@ class Sections implements \Countable, SectionsInterface {
 	}
 
 	/**
-	 * @inheritDoc
-	 */
-	public function forPage( PageInterface $page ): Sections {
-		$this->page = $page;
-		return $this;
-	}
-
-	public function getPageSlug(): string {
-		return $this->page->getSlug();
-	}
-
-	public function getSections(): array {
-		return $this->config->toArray();
-	}
-
-	public function count(): int {
-		return $this->config->count();
-	}
-
-	/**
 	 * @param array $args
 	 * @return string
 	 */
 	private function getStringForLabel( array $args ): string {
-		return $this->options->getName() . '[' . $args[ 'id' ] . ']';
+		return $this->getOptionsName() . '[' . $args[ 'id' ] . ']';
 	}
 
 	/**
@@ -263,5 +269,12 @@ class Sections implements \Countable, SectionsInterface {
 	 */
 	public function unBoot() {
 		return \remove_action( self::EVENT, [ $this, 'register'] );
+	}
+
+	/**
+	 * @return string
+	 */
+	private function getOptionsName(): string {
+		return $this->options->getName();
 	}
 }
