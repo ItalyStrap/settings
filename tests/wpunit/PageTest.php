@@ -15,19 +15,23 @@ class PageTest extends \Codeception\TestCase\WPTestCase {
 	 * @var \WpunitTester
 	 */
 	protected $tester;
-	private $sections;
-	private $plugin;
+
+	/**
+	 * @var array
+	 */
+	private $sections_config;
+
 	/**
 	 * @var array|\WP_UnitTest_Factory|null
 	 */
-	private $page;
+	private $page_config;
 
 	public function setUp(): void {
 		// Before...
 		parent::setUp();
 
-		$this->sections = require codecept_data_dir( 'fixtures/config/' ) . 'sections.php';
-		$this->page = (array)require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
+		$this->sections_config = require codecept_data_dir( 'fixtures/config/' ) . 'sections.php';
+		$this->page_config = (array)require codecept_data_dir( 'fixtures/config/' ) . 'page.php';
 
 		wp_set_current_user( 1 );
 
@@ -57,7 +61,7 @@ class PageTest extends \Codeception\TestCase\WPTestCase {
 	private function getInstance( array $config = [] ) {
 
 		if ( empty( $config ) ) {
-			$config = $this->page;
+			$config = $this->page_config;
 		}
 
 		$config = \ItalyStrap\Config\ConfigFactory::make( $config );
@@ -84,7 +88,7 @@ class PageTest extends \Codeception\TestCase\WPTestCase {
 	public function itShouldReturnPageName() {
 
 		$config = \array_merge(
-			$this->page,
+			$this->page_config,
 			[
 				P::SLUG	=> 'test',
 			]

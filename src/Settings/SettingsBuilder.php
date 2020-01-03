@@ -67,9 +67,9 @@ class SettingsBuilder {
 
 			$pages_obj = new Page(
 				ConfigFactory::make( $item['page'] ),
-				new ViewPage(),
-				$sections_obj
+				new ViewPage()
 			);
+			$pages_obj->withSections( $sections_obj );
 			$pages_obj->boot();
 
 			if ( ! empty( $base_name ) ) {
