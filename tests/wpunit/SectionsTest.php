@@ -74,12 +74,16 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->sections_config = require \codecept_data_dir( '/fixtures/config/sections.php' );
 
+		global $wp_settings_sections, $wp_settings_fields;
 		// Your set up methods here.
 	}
 
 	public function tearDown(): void {
 		// Your tear down methods here.
 
+		global $wp_settings_sections, $wp_settings_fields;
+		$wp_settings_sections = [];
+		$wp_settings_fields = [];
 		// Then...
 		parent::tearDown();
 	}
@@ -139,13 +143,48 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase {
 	 * @test
 	 */
 	public function itShouldRegister() {
+		global $wp_settings_sections, $wp_settings_fields;
 		$this->options->getName()->willReturn( 'option-name' );
+		$this->fields->render()->willReturn( true );
 
 		$sut = $this->getInstance( $this->sections_config );
 
-		$this->page->getSlug()->willReturn( 'slug' );
+		$page_slug = 'slug';
+		$this->page->getSlug()->willReturn( $page_slug );
 		$sut->forPage( $this->getPage() );
 
 		$sut->register();
+
+		foreach ( $wp_settings_sections as $page => $sections ) {
+			$this->assertStringContainsString( $page_slug, $page, '' );
+
+			foreach ( $this->sections_config as $section ) {
+				$id = $section['id'];
+				$this->assertArrayHasKey( $id, $sections, '' );
+				$this->assertStringContainsString( $section['id'], $sections[ $id ]['id'], '' );
+				$this->assertStringContainsString( $section['title'], $sections[ $id ]['title'], '' );
+			}
+		}
+
+		foreach ( $wp_settings_fields as $page => $fields ) {
+			$this->assertStringContainsString( $page_slug, $page, '' );
+
+			foreach ( $this->sections_config as $section ) {
+				$id = $section['id'];
+				$this->assertArrayHasKey( $id, $fields, '' );
+
+				foreach ( $section['fields'] as $field ) {
+					codecept_debug( $field );
+					$field_id = $field['id'];
+
+					unset( $fields[ $id ][ $field_id ]['callback'] );
+
+					codecept_debug( $fields[ $id ][ $field_id ] );
+
+					$this->assertStringContainsString( $field['id'], $fields[ $id ][ $field_id ]['id'], '' );
+					$this->assertStringContainsString( $field['label'], $fields[ $id ][ $field_id ]['title'], '' );
+				}
+			}
+		}
 	}
 }
