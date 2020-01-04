@@ -30,7 +30,6 @@ interface SectionsInterface {
 	 * Get the field type
 	 *
 	 * @param array $args Array with arguments.
-	 * @return mixed|string
 	 */
 	public function renderField( array $args );
 

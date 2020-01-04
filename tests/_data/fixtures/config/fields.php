@@ -235,6 +235,7 @@ return [
 		'desc'			=> $desc,
 		'id'			=> 'media_list',
 		'type'			=> 'media_list',
+		'value'			=> 'jhbjkh',
 		'sanitize'		=> 'sanitize_text_field',
 	],
 ];

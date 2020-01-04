@@ -3,19 +3,18 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Tests;
 
+use Codeception\TestCase\WPTestCase;
 use ItalyStrap\Config\ConfigFactory;
-use ItalyStrap\DataParser\Parser;
 use ItalyStrap\DataParser\ParserInterface;
-use ItalyStrap\Fields\Fields;
 use ItalyStrap\Fields\FieldsInterface;
 use ItalyStrap\Settings\Options;
-use ItalyStrap\Settings\Page;
 use ItalyStrap\Settings\PageInterface;
 use ItalyStrap\Settings\Sections;
 use ItalyStrap\Settings\SectionsInterface;
-use function Codeception\Extension\codecept_log;
+use PHPUnit\Framework\Assert;
+use Prophecy\Argument;
 
-class SectionsTest extends \Codeception\TestCase\WPTestCase {
+class SectionsTest extends WPTestCase {
 
 	/**
 	 * @var \WpunitTester
@@ -35,9 +34,6 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase {
 	 */
 	private $sections_config;
 
-	/**
-	 * @return Page
-	 */
 	public function getPage() {
 		return $this->page->reveal();
 	}
@@ -100,6 +96,7 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase {
 
 		$this->assertInstanceOf( SectionsInterface::class, $sut, '' );
 		$this->assertInstanceOf( Sections::class, $sut, '' );
+		$this->assertInstanceOf( \Countable::class, $sut, '' );
 		return $sut;
 	}
 
@@ -107,6 +104,7 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase {
 	 * @test
 	 */
 	public function itShouldBeInstantiable() {
+		$this->options->get()->willReturn( [] );
 		$sut = $this->getInstance();
 	}
 
@@ -114,7 +112,9 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase {
 	 * @test
 	 */
 	public function itShouldRenderPageSlug() {
+		$this->options->get()->willReturn( [] );
 		$sut = $this->getInstance();
+
 		$this->page->getSlug()->willReturn( 'slug' );
 		$sut->forPage( $this->getPage() );
 
@@ -125,6 +125,7 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase {
 	 * @test
 	 */
 	public function itShouldReturnArrayOfSectionsConfig() {
+		$this->options->get()->willReturn( [] );
 		$sut = $this->getInstance( $this->sections_config );
 
 		$this->assertEquals( $this->sections_config, $sut->getSections(), '' );
@@ -134,6 +135,7 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase {
 	 * @test
 	 */
 	public function itShouldBeCountable() {
+		$this->options->get()->willReturn( [] );
 		$sut = $this->getInstance( $this->sections_config );
 
 		$this->assertCount( \count( $this->sections_config ), $sut, '' );
@@ -142,10 +144,105 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase {
 	/**
 	 * @test
 	 */
+	public function itShouldSetValuesInIdNameAndValueAndRenderField() {
+
+		$option_name = 'option-name';
+		$this->options->getName()->willReturn( $option_name );
+		$this->options->get()->willReturn( [] );
+
+		$field = [
+			'callback'	=> null,
+			'value'		=> 'the value is always set',
+			'id'		=> 'some-unique-id',
+		];
+
+		$html_returned_from_fake_fields_render = '<fake_html>';
+
+		$this->fields->render(Argument::type('array'))->will(
+			function ( array $args ) use ( $field, $option_name, $html_returned_from_fake_fields_render ) {
+
+				Assert::assertEquals( $field['value'], $args[0]['value'], '' );
+
+				$name_string = \sprintf(
+					'%s[%s]',
+					$option_name,
+					$field['id']
+				);
+
+				Assert::assertEquals( $name_string, $args[0]['id'], '' );
+				Assert::assertEquals( $name_string, $args[0]['name'], '' );
+				return $html_returned_from_fake_fields_render;
+			}
+		);
+
+		$sut = $this->getInstance( $this->sections_config );
+
+		\ob_start();
+		$sut->renderField( $field );
+		$content = \ob_get_clean();
+
+		$this->assertStringContainsString( $html_returned_from_fake_fields_render, $content, '' );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldBeClassSetted() {
+
+		$option_name = 'option-name';
+		$this->options->getName()->willReturn( $option_name );
+		$this->options->get()->willReturn( [] );
+
+		$field = [
+			'callback'	=> null,
+			'value'		=> 'the value is always set',
+			'id'		=> 'some-unique-id',
+		];
+
+		$this->fields->render(Argument::type('array'))->will(
+			function ( array $args ) {
+				Assert::assertTrue( isset( $args[0]['class'] ), '' );
+				return '';
+			}
+		);
+
+		$sut = $this->getInstance();
+		$sut->renderField( $field );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldExecutedCallable() {
+
+		$option_name = 'option-name';
+		$this->options->getName()->willReturn( $option_name );
+		$this->options->get()->willReturn( [] );
+
+		$returned_value_for_callback = 'Some random value';
+
+		$field = [
+			'callback'	=> function ( array $args ) use ( $returned_value_for_callback ) {
+				Assert::assertStringContainsString( 'the value is always set', $args['value'], '' );
+				Assert::assertStringContainsString( 'some-unique-id', $args['id'], '' );
+				return $returned_value_for_callback;
+			},
+			'value'		=> 'the value is always set',
+			'id'		=> 'some-unique-id',
+		];
+
+		$sut = $this->getInstance();
+		$sut->renderField( $field );
+		$this->assertStringContainsString( $this->getActualOutputForAssertion(), $returned_value_for_callback, '' );
+	}
+
+	/**
+	 * @test
+	 */
 	public function itShouldRegister() {
 		global $wp_settings_sections, $wp_settings_fields;
 		$this->options->getName()->willReturn( 'option-name' );
-		$this->fields->render()->willReturn( true );
+		$this->options->get()->willReturn( [] );
 
 		$sut = $this->getInstance( $this->sections_config );
 
@@ -155,34 +252,45 @@ class SectionsTest extends \Codeception\TestCase\WPTestCase {
 
 		$sut->register();
 
-		foreach ( $wp_settings_sections as $page => $sections ) {
+		foreach ( $wp_settings_sections as $page => $settings_sections ) {
 			$this->assertStringContainsString( $page_slug, $page, '' );
 
 			foreach ( $this->sections_config as $section ) {
-				$id = $section['id'];
-				$this->assertArrayHasKey( $id, $sections, '' );
-				$this->assertStringContainsString( $section['id'], $sections[ $id ]['id'], '' );
-				$this->assertStringContainsString( $section['title'], $sections[ $id ]['title'], '' );
+				$section_id = $section['id'];
+				$this->assertArrayHasKey( $section_id, $settings_sections, '' );
+				$this->assertStringContainsString(
+					$section['id'],
+					$settings_sections[ $section_id ]['id'],
+					''
+				);
+				$this->assertStringContainsString(
+					$section['title'],
+					$settings_sections[ $section_id ]['title'],
+					''
+				);
 			}
 		}
 
-		foreach ( $wp_settings_fields as $page => $fields ) {
+		foreach ( $wp_settings_fields as $page => $settings_fields ) {
 			$this->assertStringContainsString( $page_slug, $page, '' );
 
 			foreach ( $this->sections_config as $section ) {
-				$id = $section['id'];
-				$this->assertArrayHasKey( $id, $fields, '' );
+				$section_id = $section['id'];
+				$this->assertArrayHasKey( $section_id, $settings_fields, '' );
 
-				foreach ( $section['fields'] as $field ) {
-					codecept_debug( $field );
-					$field_id = $field['id'];
+				foreach ( $section['fields'] as $config_field ) {
+					$field_id = $config_field['id'];
 
-					unset( $fields[ $id ][ $field_id ]['callback'] );
-
-					codecept_debug( $fields[ $id ][ $field_id ] );
-
-					$this->assertStringContainsString( $field['id'], $fields[ $id ][ $field_id ]['id'], '' );
-					$this->assertStringContainsString( $field['label'], $fields[ $id ][ $field_id ]['title'], '' );
+					$this->assertStringContainsString(
+						$config_field['id'],
+						$settings_fields[ $section_id ][ $field_id ]['id'],
+						''
+					);
+					$this->assertStringContainsString(
+						$config_field['label'],
+						$settings_fields[ $section_id ][ $field_id ]['title'],
+						''
+					);
 				}
 			}
 		}

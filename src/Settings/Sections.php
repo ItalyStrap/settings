@@ -79,6 +79,7 @@ class Sections implements \Countable, SectionsInterface {
 		$this->fields = $fields;
 		$this->parser = $parser;
 		$this->options = $options;
+		$this->options_values = (array) $this->options->get();
 	}
 
 	/**
@@ -166,7 +167,7 @@ class Sections implements \Countable, SectionsInterface {
 	 */
 	private function addSettingsFields( $section ): void {
 		foreach ( $section[ 'fields' ] as $field ) {
-			$this->parseFieldWithDefault( $field );
+			$this->parseFieldArgsWithDefaultBeforePassingToRenderField( $field );
 			if ( ! $this->showOn( $field[ 'show_on' ] ) ) {
 				continue;
 			}
@@ -180,16 +181,15 @@ class Sections implements \Countable, SectionsInterface {
 				[ $this, 'renderField' ], //array( $this, $field['callback'] ),
 				$this->getPageSlug(), //$field['page'],
 				$section[ self::ID ],
-				$field // $args
+				$field // $args Value passed to the renderField method
 			);
 		}
 	}
 
 	/**
-	 * @todo Creare test per il `value` da usare in caso non sia ancora salvato nelle options, cazzarola
 	 * @param array $field
 	 */
-	private function parseFieldWithDefault( array &$field ) {
+	private function parseFieldArgsWithDefaultBeforePassingToRenderField( array &$field ) {
 		$field = \array_merge( [
 			'show_on'			=> true,
 			'label_for'			=> $this->getStringForLabel( $field ),
@@ -203,21 +203,16 @@ class Sections implements \Countable, SectionsInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function renderField( array $args ) {
+	public function renderField( array $args_for_fields ) {
 
-		if ( \is_callable( $args['callback'] ) ) {
-			return \call_user_func( $args['callback'], $args );
+		if ( \is_callable( $args_for_fields['callback'] ) ) {
+			echo \call_user_func( $args_for_fields['callback'], $args_for_fields );
+			return '';
 		}
 
-		// Unset label because it is already rendered by settings_field API
-		unset( $args['label'], $args['show_on'], $args['label_for'], $args[ self::LABEL_CLASS ], $args['callback'] );
+		$this->parseArgsForFieldsRenderMethod( $args_for_fields );
 
-		$args['class'] = $this->field_class[ $args['id'] ];
-
-		$this->options_values = (array) $this->options->get();
-		$args['value'] = $this->options_values[ $args['id'] ] ?? $args['value'];
-		$args['id'] = $args['name'] = $this->getStringForLabel( $args );
-		echo $this->fields->render( $args ); // XSS ok.
+		echo $this->fields->render( $args_for_fields ); // XSS ok.
 		return '';
 	}
 
@@ -258,6 +253,32 @@ class Sections implements \Countable, SectionsInterface {
 	}
 
 	/**
+	 * @return string
+	 */
+	private function getOptionsName(): string {
+		return $this->options->getName();
+	}
+
+	/**
+	 * @param array $args_for_fields
+	 */
+	private function parseArgsForFieldsRenderMethod( array &$args_for_fields ): void {
+		// Unset label because it is already rendered by settings_field API
+		unset(
+			$args_for_fields[ 'label' ],
+			$args_for_fields[ 'show_on' ],
+			$args_for_fields[ 'label_for' ],
+			$args_for_fields[ self::LABEL_CLASS ],
+			$args_for_fields[ 'callback' ]
+		);
+
+		$args_for_fields[ 'class' ] = $this->field_class[ $args_for_fields[ 'id' ] ] ?? '';
+
+		$args_for_fields[ 'value' ] = $this->options_values[ $args_for_fields[ 'id' ] ] ?? $args_for_fields[ 'value' ];
+		$args_for_fields[ 'id' ] = $args_for_fields[ 'name' ] = $this->getStringForLabel( $args_for_fields );
+	}
+
+	/**
 	 * @return bool
 	 */
 	public function boot() {
@@ -269,12 +290,5 @@ class Sections implements \Countable, SectionsInterface {
 	 */
 	public function unBoot() {
 		return \remove_action( self::EVENT, [ $this, 'register'] );
-	}
-
-	/**
-	 * @return string
-	 */
-	private function getOptionsName(): string {
-		return $this->options->getName();
 	}
 }
