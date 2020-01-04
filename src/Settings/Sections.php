@@ -151,7 +151,7 @@ class Sections implements \Countable, SectionsInterface {
 		], $section );
 	}
 
-	public function renderSection( array $args ) {
+	public function renderSection( array $args ): void {
 
 		$section = $this->config->get( $this->section_key[ $args[ self::ID ] ] . '.desc', '' );
 
@@ -159,7 +159,7 @@ class Sections implements \Countable, SectionsInterface {
 			$section = \call_user_func( $section, $args );
 		}
 
-		echo $section; // XSS ok.
+		echo \esc_html( \strval( $section ) );
 	}
 
 	/**

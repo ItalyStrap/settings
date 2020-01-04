@@ -144,6 +144,24 @@ class SectionsTest extends WPTestCase {
 	/**
 	 * @test
 	 */
+	public function itShouldRenderSectionCallback() {
+		$this->options->get()->willReturn( [] );
+		$sut = $this->getInstance( $this->sections_config );
+
+		$section = [
+			'id'		=> '',
+			'title'		=> '',
+			'callback'	=> null,
+		];
+
+
+		$sut->renderSection( $section );
+//		codecept_debug( $this->getActualOutputForAssertion() );
+	}
+
+	/**
+	 * @test
+	 */
 	public function itShouldSetValuesInIdNameAndValueAndRenderField() {
 
 		$option_name = 'option-name';
