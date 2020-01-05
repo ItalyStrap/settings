@@ -25,6 +25,13 @@ The best way to use this package is through Composer:
 composer require italystrap/settings
 ```
 
+## Idea
+
+Settings COULD HAVE 1 or more pages
+Admin page COULD HAVE menu link
+Admin page COULD HAVE 0, 1 or many section
+Sections MUST HAVE at least 1 field
+
 ## Basic Usage
 
 > TODO

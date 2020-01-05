@@ -17,13 +17,15 @@ return [
 		S::ID				=> 'general',
 		S::TITLE			=> __( 'General options page', 'italystrap' ),
 		S::DESC				=> __( 'General setting for ItalyStrap', 'italystrap' ),
-		S::FIELDS			=> require 'fields.php',
+		S::FIELDS			=> require 'fields.php', // Mandatory
 	],
 	[
 		S::TAB_TITLE		=> __( 'Advanced', 'italystrap' ),
 		S::ID				=> 'advanced',
 		S::TITLE			=> __( 'Advanced options page', 'italystrap' ),
-		S::DESC				=> __( 'Advanced setting for ItalyStrap', 'italystrap' ),
-		S::FIELDS			=> require 'fields-advanced.php',
+		S::DESC				=> function ( array $section ) {
+			return 'This is a callable description.';
+		},
+		S::FIELDS			=> require 'fields-advanced.php', // Mandatory
 	],
 ];

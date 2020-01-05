@@ -5,6 +5,7 @@ namespace ItalyStrap\Tests;
 
 use Codeception\TestCase\WPTestCase;
 use ItalyStrap\Config\ConfigFactory;
+use ItalyStrap\Config\ConfigInterface;
 use ItalyStrap\DataParser\ParserInterface;
 use ItalyStrap\Fields\FieldsInterface;
 use ItalyStrap\Settings\Options;
@@ -13,6 +14,9 @@ use ItalyStrap\Settings\Sections;
 use ItalyStrap\Settings\SectionsInterface;
 use PHPUnit\Framework\Assert;
 use Prophecy\Argument;
+use Prophecy\Promise\PromiseInterface;
+use Prophecy\Prophecy\MethodProphecy;
+use Prophecy\Prophecy\ObjectProphecy;
 
 class SectionsTest extends WPTestCase {
 
@@ -33,6 +37,18 @@ class SectionsTest extends WPTestCase {
 	 * @var array
 	 */
 	private $sections_config;
+	/**
+	 * @var \ItalyStrap\Config\Config
+	 */
+	private $config;
+	/**
+	 * @var \Prophecy\Prophecy\ObjectProphecy
+	 */
+	private $config_fake;
+
+	public function getConfigFake() {
+		return $this->config_fake->reveal();
+	}
 
 	public function getPage() {
 		return $this->page->reveal();
@@ -63,6 +79,9 @@ class SectionsTest extends WPTestCase {
 		// Before...
 		parent::setUp();
 
+
+		$this->config = ConfigFactory::make();
+		$this->config_fake =  $this->prophesize( ConfigInterface::class );
 		$this->fields =  $this->prophesize( FieldsInterface::class );
 		$this->parser = $this->prophesize( ParserInterface::class );
 		$this->options = $this->prophesize( Options::class );
@@ -84,11 +103,17 @@ class SectionsTest extends WPTestCase {
 		parent::tearDown();
 	}
 
-	private function getInstance( array $config = [] ): Sections {
-		$config = ConfigFactory::make( $config );
+	private function getInstance( array $config = [], $fake_config = null ): Sections {
+
+		$config_obj = $this->config;
+		$config_obj->merge( $config );
+
+		if ( $fake_config ) {
+			$config_obj = $fake_config;
+		}
 
 		$sut = new Sections(
-			$config,
+			$config_obj,
 			$this->getFields(),
 			$this->getParser(),
 			$this->getOptions()
@@ -144,19 +169,67 @@ class SectionsTest extends WPTestCase {
 	/**
 	 * @test
 	 */
-	public function itShouldRenderSectionCallback() {
+	public function itShouldRenderDescriptionFromCallableInSectionCallback() {
 		$this->options->get()->willReturn( [] );
-		$sut = $this->getInstance( $this->sections_config );
+
+		$promise = new class implements PromiseInterface {
+
+			/**
+			 * @inheritDoc
+			 */
+			public function execute( array $args, ObjectProphecy $object, MethodProphecy $method ) {
+				return function ( array $section ) {
+					return 'This is a callable description.';
+				};
+			}
+		};
+
+		$this->config_fake
+			->get( Argument::type('string'), Argument::any() )
+			->will( $promise );
+
+		$sut = $this->getInstance( [], $this->getConfigFake() );
 
 		$section = [
-			'id'		=> '',
-			'title'		=> '',
+			'id'		=> 'unique-id',
+			'title'		=> 'Title of the section',
 			'callback'	=> null,
 		];
 
+		$sut->renderSection( $section );
+		$this->assertStringContainsString(
+			$this->getActualOutputForAssertion(),
+			'This is a callable description.',
+			''
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldRenderDescriptionInSectionCallback() {
+		$this->options->get()->willReturn( [] );
+
+
+
+		$this->config_fake
+			->get( Argument::type('string'), Argument::any() )
+			->willReturn( '<p>Description.</p>' );
+
+		$sut = $this->getInstance( [], $this->getConfigFake() );
+
+		$section = [
+			'id'		=> 'unique-id',
+			'title'		=> 'Title of the section',
+			'callback'	=> null,
+		];
 
 		$sut->renderSection( $section );
-//		codecept_debug( $this->getActualOutputForAssertion() );
+		$this->assertStringContainsString(
+			$this->getActualOutputForAssertion(),
+			'<p>Description.</p>',
+			''
+		);
 	}
 
 	/**

@@ -22,9 +22,9 @@ interface SectionsInterface {
 	/**
 	 * Render section CB
 	 *
-	 * @param array $args The arguments for section CB.
+	 * @param array $section The arguments for section CB.
 	 */
-	public function renderSection( array $args );
+	public function renderSection( array $section );
 
 	/**
 	 * Get the field type

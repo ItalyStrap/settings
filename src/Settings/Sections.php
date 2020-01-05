@@ -134,8 +134,8 @@ class Sections implements \Countable, SectionsInterface {
 			\add_settings_section(
 				$section[ self::ID ],
 				$section[ self::TITLE ],
-				[ $this, 'renderSection' ], //array( $this, $field['callback'] ),
-				$this->getPageSlug() //$section['page']
+				[ $this, 'renderSection' ],
+				$this->getPageSlug()
 			);
 
 			$this->addSettingsFields( $section );
@@ -151,22 +151,25 @@ class Sections implements \Countable, SectionsInterface {
 		], $section );
 	}
 
-	public function renderSection( array $args ): void {
+	/**
+	 * @inheritDoc
+	 */
+	public function renderSection( array $section ): void {
 
-		$section = $this->config->get( $this->section_key[ $args[ self::ID ] ] . '.desc', '' );
+		$content = $this->config->get( $this->section_key[ $section[ self::ID ] ] . '.desc', '' );
 
-		if ( \is_callable( $section ) ) {
-			$section = \call_user_func( $section, $args );
+		if ( \is_callable( $content ) ) {
+			$content = \call_user_func( $content, $section );
 		}
 
-		echo \esc_html( \strval( $section ) );
+		echo \wp_kses_post( \strval( $content ) );
 	}
 
 	/**
 	 * @param array $section
 	 */
 	private function addSettingsFields( $section ): void {
-		foreach ( $section[ 'fields' ] as $field ) {
+		foreach ( $section[ self::FIELDS ] as $field ) {
 			$this->parseFieldArgsWithDefaultBeforePassingToRenderField( $field );
 			if ( ! $this->showOn( $field[ 'show_on' ] ) ) {
 				continue;
