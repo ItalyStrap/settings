@@ -206,17 +206,16 @@ class Sections implements \Countable, SectionsInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function renderField( array $args_for_fields ) {
+	public function renderField( array $args_for_field ): void {
 
-		if ( \is_callable( $args_for_fields['callback'] ) ) {
-			echo \call_user_func( $args_for_fields['callback'], $args_for_fields );
-			return '';
+		if ( \is_callable( $args_for_field['callback'] ) ) {
+			$content = \call_user_func( $args_for_field['callback'], $args_for_field );
+		} else {
+			$this->parseArgsForFieldsBeforeRenderMethod( $args_for_field );
+			$content = $this->fields->render( $args_for_field ); // XSS ok.
 		}
 
-		$this->parseArgsForFieldsRenderMethod( $args_for_fields );
-
-		echo $this->fields->render( $args_for_fields ); // XSS ok.
-		return '';
+		echo $content;
 	}
 
 	/**
@@ -265,7 +264,7 @@ class Sections implements \Countable, SectionsInterface {
 	/**
 	 * @param array $args_for_fields
 	 */
-	private function parseArgsForFieldsRenderMethod( array &$args_for_fields ): void {
+	private function parseArgsForFieldsBeforeRenderMethod( array &$args_for_fields ): void {
 		// Unset label because it is already rendered by settings_field API
 		unset(
 			$args_for_fields[ 'label' ],

@@ -304,7 +304,37 @@ class SectionsTest extends WPTestCase {
 	/**
 	 * @test
 	 */
-	public function itShouldExecutedCallable() {
+	public function itShouldRenderField() {
+
+		$option_name = 'option-name';
+		$this->options->getName()->willReturn( $option_name );
+		$this->options->get()->willReturn( [] );
+
+		$field = [
+			'callback'	=> null,
+			'value'		=> 'the value is always set',
+			'id'		=> 'some-unique-id',
+		];
+
+		$this->fields->render(Argument::type('array'))->will(
+			function ( array $args ) {
+				return '<fake_html>';
+			}
+		);
+
+		$sut = $this->getInstance();
+		$sut->renderField( $field );
+		$this->assertStringContainsString(
+			$this->getActualOutputForAssertion(),
+			'<fake_html>',
+			''
+		);
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldRenderFieldMethodExecutedCallableIfDeclared() {
 
 		$option_name = 'option-name';
 		$this->options->getName()->willReturn( $option_name );

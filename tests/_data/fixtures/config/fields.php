@@ -7,6 +7,16 @@ $desc = __( 'This is the description of the field, you can change it in the conf
 
 return [
 	[
+		'label'			=> __( 'Callable', 'italystrap' ),
+		'desc'			=> $desc,
+		'id'			=> 'callable',
+		'value'			=> 'some default value',
+		'sanitize'		=> 'sanitize_text_field',
+		'callback'		=> function ( array $args_for_field ) {
+			return 'This is a callback called instead of the field render method.';
+		},
+	],
+	[
 		'label'			=> __( 'Text', 'italystrap' ),
 		'desc'			=> $desc,
 		'id'			=> 'text',
