@@ -67,7 +67,6 @@ class AdminPageCest {
 		$types = \ItalyStrap\Fields\ViewFactory::getTypes();
 
 		foreach ( $this->all_options as $option ) {
-
 			if ( ! isset( $option['type'] ) ) {
 				continue;
 			}

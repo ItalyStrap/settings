@@ -200,7 +200,6 @@ class Sections implements \Countable, SectionsInterface {
 			self::LABEL_CLASS	=> '',
 			'callback'			=> null,
 			'value'				=> '',
-			'type'				=> 'text',
 		], $field );
 	}
 
