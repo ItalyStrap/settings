@@ -67,6 +67,11 @@ class AdminPageCest {
 		$types = \ItalyStrap\Fields\ViewFactory::getTypes();
 
 		foreach ( $this->all_options as $option ) {
+
+			if ( ! isset( $option['type'] ) ) {
+				continue;
+			}
+
 			if ( \strpos( $types[ $option['type'] ], 'Input' ) ) {
 				$I->seeElement( 'input', [ 'type' => $option['type'] ] );
 			} elseif ( \strpos( $types[ $option['type'] ], 'Checkbox' ) ) {
