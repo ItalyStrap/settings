@@ -22,7 +22,7 @@ class TranslateFilter implements FilterableInterface {
 	 */
 	public function filter( $data, array $schema ) {
 
-		if ( $schema['translate'] ) {
+		if ( $schema['translate'] && isset( $schema['id'] ) ) {
 			/**
 			 * @todo Maybe add some kind of error if no strings are registered
 			 */

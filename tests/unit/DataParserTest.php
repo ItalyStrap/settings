@@ -201,7 +201,7 @@ class DataParserTest extends Unit {
 	/**
 	 * @test
 	 */
-	private function itShouldReturnSanitizedValidatedAnsTranslatedEmail() {
+	public function itShouldReturnSanitizedValidatedAnsTranslatedEmail() {
 
 		$sut = $this->getInstance();
 

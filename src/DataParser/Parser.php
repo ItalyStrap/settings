@@ -69,10 +69,10 @@ class Parser implements ParserInterface {
 	}
 
 	/**
-	 * @param array $value
+	 * @param mixed $value
 	 * @param string $key
 	 * @param array $schema
-	 * @return array
+	 * @return mixed
 	 */
 	private function applyFilters( string $key, $value, array $schema ) {
 
@@ -85,7 +85,7 @@ class Parser implements ParserInterface {
 				continue;
 			}
 
-			foreach ((array) $value as $index => $item ) {
+			foreach ( (array) $value as $index => $item ) {
 				$value[ $index ] = $filter->filter( $item, $schema );
 			}
 		}
