@@ -61,7 +61,7 @@ class Parser implements ParserInterface {
 		}
 
 		foreach ( $this->schema as $key => $schema ) {
-			$data = $this->applyFilters( $data, $key, $schema );
+			$data = $this->applyFilters( $key, $data, $schema );
 		}
 
 		return $data;
@@ -73,7 +73,7 @@ class Parser implements ParserInterface {
 	 * @param array $schema
 	 * @return array
 	 */
-	private function applyFilters( array $data, $key, array $schema ): array {
+	private function applyFilters( string $key, array $data, array $schema ): array {
 
 		$this->mergeWithDefault( $schema );
 		$data = $this->assertDataValueIsSet( $data, $key );
