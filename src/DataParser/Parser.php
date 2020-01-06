@@ -68,6 +68,31 @@ class Parser implements ParserInterface {
 	}
 
 	/**
+	 * @param array $data
+	 * @param string $key
+	 * @param array $schema
+	 * @return array
+	 */
+	private function applyFilters( array $data, $key, array $schema ): array {
+
+		$this->mergeWithDefault( $schema );
+		$data = $this->assertDataValueIsSet( $data, $key );
+
+		/* @var $filter FilterableInterface */
+		foreach ( $this->filters as $filter ) {
+			if ( ! \is_array( $data[ $key ] ) ) {
+				$data[ $key ] = $filter->filter( $data[ $key ], $schema );
+				continue;
+			}
+
+			foreach ( (array) $data[ $key ] as $index => $value ) {
+				$data[ $key ][ $index ] = $filter->filter( $value, $schema );
+			}
+		}
+		return $data;
+	}
+
+	/**
 	 * @param array $schema
 	 */
 	private function mergeWithDefault( array &$schema ) {
@@ -89,31 +114,6 @@ class Parser implements ParserInterface {
 	private function assertDataValueIsSet( array $data, $key ): array {
 		if ( ! isset( $data[ $key ] ) ) {
 			$data[ $key ] = '';
-		}
-		return $data;
-	}
-
-	/**
-	 * @param array $data
-	 * @param string $key
-	 * @param array $schema
-	 * @return array
-	 */
-	private function applyFilters( array $data, $key, array $schema ): array {
-
-		$this->mergeWithDefault( $schema );
-		$data = $this->assertDataValueIsSet( $data, $key );
-
-		/* @var $filter FilterableInterface */
-		foreach ( $this->filters as $filter ) {
-			if ( ! \is_array( $data[ $key ] ) ) {
-				$data[ $key ] = $filter->filter( $data[ $key ], $schema );
-				continue;
-			}
-
-			foreach ( (array) $data[ $key ] as $index => $value ) {
-				$data[ $key ][ $index ] = $filter->filter( $value, $schema );
-			}
 		}
 		return $data;
 	}
