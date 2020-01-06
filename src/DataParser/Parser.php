@@ -53,9 +53,8 @@ class Parser implements ParserInterface {
 			throw new \RuntimeException( 'You must provide at least one filter' );
 		}
 
-		foreach ( $this->schema as $schema ) {
+		foreach ( $this->schema as $key => $schema ) {
 			$this->mergeWithDefault( $schema );
-			$key = $schema['id'];
 			$data = $this->assertDataValueIsSet( $data, $key );
 			$data = $this->applyFilters( $data, $key, $schema );
 		}
