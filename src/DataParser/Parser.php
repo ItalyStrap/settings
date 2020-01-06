@@ -75,8 +75,6 @@ class Parser implements ParserInterface {
 	 */
 	private function applyFilters( $value, array $schema ) {
 
-//		$this->mergeWithDefault( $schema );
-
 		/* @var $filter FilterableInterface */
 		foreach ( $this->filters as $filter ) {
 
@@ -93,20 +91,6 @@ class Parser implements ParserInterface {
 		}
 
 		return $value;
-	}
-
-	/**
-	 * @param array $schema
-	 */
-	private function mergeWithDefault( array &$schema ) {
-		$default = [
-//			'capability'	=> false,
-			'sanitize'		=> 'strip_tags|trim',
-			'translate'		=> false,
-			'validate'		=> false,
-		];
-
-		$schema = \array_replace_recursive( $default, $schema );
 	}
 
 	/**
