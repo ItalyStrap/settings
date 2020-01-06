@@ -9,8 +9,8 @@ use ItalyStrap\DataParser\FilterableInterface;
  * Class RequiredFilter
  * @package ItalyStrap\DataParser\Filters
  */
-class RequiredFilter implements FilterableInterface
-{
+class RequiredFilter implements FilterableInterface {
+
 	const KEY = 'required';
 
 	use DefaultSchema;

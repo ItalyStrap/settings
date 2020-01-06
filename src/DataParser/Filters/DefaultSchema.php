@@ -7,8 +7,8 @@ namespace ItalyStrap\DataParser\Filters;
  * Trait DefaultSchema
  * @package ItalyStrap\DataParser\Filters
  */
-trait DefaultSchema
-{
+trait DefaultSchema {
+
 	/**
 	 * @inheritDoc
 	 */

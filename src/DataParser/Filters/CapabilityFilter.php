@@ -9,8 +9,8 @@ use ItalyStrap\DataParser\FilterableInterface;
  * Class CapabilityFilter
  * @package ItalyStrap\DataParser\Filters
  */
-class CapabilityFilter implements FilterableInterface
-{
+class CapabilityFilter implements FilterableInterface {
+
 	const KEY = 'capability';
 
 	use DefaultSchema;

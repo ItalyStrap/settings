@@ -77,7 +77,6 @@ class Parser implements ParserInterface {
 
 		/* @var $filter FilterableInterface */
 		foreach ( $this->filters as $filter ) {
-
 			$schema = \array_replace_recursive( $filter->getDefault(), $schema );
 
 			if ( ! \is_array( $value ) ) {

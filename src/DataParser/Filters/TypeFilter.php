@@ -9,8 +9,8 @@ use ItalyStrap\DataParser\FilterableInterface;
  * Class TypeFilter
  * @package ItalyStrap\DataParser\Filters
  */
-class TypeFilter implements FilterableInterface
-{
+class TypeFilter implements FilterableInterface {
+
 	const KEY = 'data-type';
 
 	use DefaultSchema;
