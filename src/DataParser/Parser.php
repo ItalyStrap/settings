@@ -61,8 +61,6 @@ class Parser implements ParserInterface {
 		}
 
 		foreach ( $this->schema as $key => $schema ) {
-			$this->mergeWithDefault( $schema );
-			$data = $this->assertDataValueIsSet( $data, $key );
 			$data = $this->applyFilters( $data, $key, $schema );
 		}
 
@@ -102,6 +100,9 @@ class Parser implements ParserInterface {
 	 * @return array
 	 */
 	private function applyFilters( array $data, $key, array $schema ): array {
+
+		$this->mergeWithDefault( $schema );
+		$data = $this->assertDataValueIsSet( $data, $key );
 
 		/* @var $filter FilterableInterface */
 		foreach ( $this->filters as $filter ) {
