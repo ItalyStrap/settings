@@ -75,10 +75,13 @@ class Parser implements ParserInterface {
 	 */
 	private function applyFilters( $value, array $schema ) {
 
-		$this->mergeWithDefault( $schema );
+//		$this->mergeWithDefault( $schema );
 
 		/* @var $filter FilterableInterface */
 		foreach ( $this->filters as $filter ) {
+
+			$schema = \array_replace_recursive( $filter->getDefault(), $schema );
+
 			if ( ! \is_array( $value ) ) {
 				$value = $filter->filter( $value, $schema );
 				continue;

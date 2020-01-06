@@ -10,6 +10,8 @@ class TranslateFilter implements FilterableInterface {
 
 	const KEY = 'translate';
 
+	use DefaultSchema;
+
 	/**
 	 * @var Translatable
 	 */

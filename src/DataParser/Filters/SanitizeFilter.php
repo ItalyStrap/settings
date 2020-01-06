@@ -14,6 +14,8 @@ class SanitizeFilter implements FilterableInterface {
 
 	const KEY = 'sanitize';
 
+	use DefaultSchema;
+
 	/**
 	 * @var Sanitization
 	 */

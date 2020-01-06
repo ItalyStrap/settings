@@ -13,6 +13,8 @@ class RequiredFilter implements FilterableInterface
 {
 	const KEY = 'required';
 
+	use DefaultSchema;
+
 	/**
 	 * @inheritDoc
 	 */

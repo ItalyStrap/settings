@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ItalyStrap\Tests;
 
 use Codeception\Test\Unit;
+use ItalyStrap\DataParser\Filters\DefaultSchema;
 use ItalyStrap\DataParser\Parser;
 use ItalyStrap\DataParser\ParserFactory;
 use ItalyStrap\DataParser\ParserInterface;
@@ -77,14 +78,23 @@ class DataParserTest extends Unit {
 
 		$filter = new class implements \ItalyStrap\DataParser\FilterableInterface {
 
+			const KEY = 'sanitize';
+
 			private function getSanitize() {
 				return new \ItalyStrap\Cleaner\Sanitization();
 			}
 
 			public function filter( $data, array $schema ) {
 				$san = $this->getSanitize();
-				$san->addRules( $schema['sanitize'] );
+				$san->addRules( $schema[ self::KEY ] );
 				return $san->sanitize( $data );
+			}
+
+			/**
+			 * @inheritDoc
+			 */
+			public function getDefault() {
+				return [ self::KEY => 'strip_tags|trim' ];
 			}
 		};
 

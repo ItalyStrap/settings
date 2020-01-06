@@ -14,6 +14,8 @@ class ValidateFilter implements FilterableInterface {
 
 	const KEY = 'validate';
 
+	use DefaultSchema;
+
 	/**
 	 * @var Validation
 	 */

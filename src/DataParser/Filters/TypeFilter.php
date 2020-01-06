@@ -13,6 +13,8 @@ class TypeFilter implements FilterableInterface
 {
 	const KEY = 'data-type';
 
+	use DefaultSchema;
+
 	/**
 	 * @inheritDoc
 	 */

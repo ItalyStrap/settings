@@ -13,6 +13,8 @@ class CapabilityFilter implements FilterableInterface
 {
 	const KEY = 'capability';
 
+	use DefaultSchema;
+
 	/**
 	 * @inheritDoc
 	 */

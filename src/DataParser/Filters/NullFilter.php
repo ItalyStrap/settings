@@ -14,6 +14,8 @@ class NullFilter implements FilterableInterface {
 
 	const KEY = null;
 
+	use DefaultSchema;
+
 	/**
 	 * @inheritDoc
 	 */

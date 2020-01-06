@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use ItalyStrap\Settings\Sections as S;
+use ItalyStrap\DataParser\Filters\SanitizeFilter as SF;
 
 $desc = __( 'This is the description of the field, you can change it in the configuration array.', 'italystrap' );
 
@@ -11,7 +12,7 @@ return [
 		'desc'			=> $desc,
 		'id'			=> 'callable',
 		'value'			=> 'some default value',
-		'sanitize'		=> 'sanitize_text_field',
+		SF::KEY			=> 'sanitize_text_field',
 		'callback'		=> function ( array $args_for_field ) {
 			return 'This is a callback called instead of the field render method.';
 		},
