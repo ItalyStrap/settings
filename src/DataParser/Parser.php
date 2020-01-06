@@ -62,7 +62,7 @@ class Parser implements ParserInterface {
 
 		foreach ( $this->schema as $key => $schema ) {
 			$data = $this->assertDataValueIsSet( $data, $key );
-			$data[ $key ] = $this->applyFilters( $data[ $key ], $schema );
+			$data[ $key ] = $this->processFilters( $data[ $key ], $schema );
 		}
 
 		return $data;
@@ -73,7 +73,7 @@ class Parser implements ParserInterface {
 	 * @param array $schema
 	 * @return mixed
 	 */
-	private function applyFilters( $value, array $schema ) {
+	private function processFilters( $value, array $schema ) {
 
 		/* @var $filter FilterableInterface */
 		foreach ( $this->filters as $filter ) {
