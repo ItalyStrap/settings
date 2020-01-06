@@ -49,18 +49,14 @@ class Parser implements ParserInterface {
 	 */
 	public function parse( array $data ): array {
 
+		if ( empty( $this->filters ) ) {
+			throw new \RuntimeException( 'You must provide at least one filter' );
+		}
+
 		foreach ( $this->schema as $schema ) {
 			$this->mergeWithDefault( $schema );
 			$key = $schema['id'];
 			$data = $this->assertDataValueIsSet( $data, $key );
-
-			/**
-			 * @todo Maybe add some fallback sanitize here?
-			 */
-//			if ( empty( $this->filters ) ) {
-//				$data[ $key ] = \trim( \strip_tags( $data[ $key ] ) );
-//			}
-
 			$data = $this->applyFilters( $data, $key, $schema );
 		}
 

@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Tests;
 
+use ItalyStrap\DataParser\Parser;
+use ItalyStrap\DataParser\ParserFactory;
+use ItalyStrap\DataParser\ParserInterface;
+
 class DataParserTest extends \Codeception\Test\Unit {
 
 	/**
@@ -23,10 +27,10 @@ class DataParserTest extends \Codeception\Test\Unit {
 	protected function _after() {
 	}
 
-	public function getInstance(): \ItalyStrap\DataParser\Parser {
-		$sut = new \ItalyStrap\DataParser\Parser();
-		$this->assertInstanceOf( \ItalyStrap\DataParser\ParserInterface::class, $sut, '' );
-		$this->assertInstanceOf( \ItalyStrap\DataParser\Parser::class, $sut, '' );
+	public function getInstance(): Parser {
+		$sut = new Parser();
+		$this->assertInstanceOf( ParserInterface::class, $sut, '' );
+		$this->assertInstanceOf( Parser::class, $sut, '' );
 		return $sut;
 	}
 
@@ -36,18 +40,18 @@ class DataParserTest extends \Codeception\Test\Unit {
 	public function itShouldBeInstantiable() {
 		$this->getInstance();
 
-		$sut = \ItalyStrap\DataParser\ParserFactory::make();
-		$this->assertInstanceOf( \ItalyStrap\DataParser\ParserInterface::class, $sut, '' );
-		$this->assertInstanceOf( \ItalyStrap\DataParser\Parser::class, $sut, '' );
+		$sut = ParserFactory::make();
+		$this->assertInstanceOf( ParserInterface::class, $sut, '' );
+		$this->assertInstanceOf( Parser::class, $sut, '' );
 	}
 
 	/**
 	 * @test
 	 */
-	public function itShouldReturnNotFilteredData() {
+	public function itShouldThrownExceptionIfNoFiltersAreProvided() {
 		$sut = $this->getInstance();
+		$this->expectException( \RuntimeException::class );
 		$data = $sut->parse( [ 'test' => '<h1>value</h1>' ] );
-		$this->assertEquals( [ 'test' => '<h1>value</h1>' ], $data, '' );
 	}
 
 	/**
@@ -78,9 +82,9 @@ class DataParserTest extends \Codeception\Test\Unit {
 				return new \ItalyStrap\Cleaner\Sanitization();
 			}
 
-			public function filter( $data, string $key, array $key ) {
+			public function filter( $data, array $schema ) {
 				$san = $this->getSanitize();
-				$san->addRules( $key['sanitize'] );
+				$san->addRules( $schema['sanitize'] );
 				return $san->sanitize( $data );
 			}
 		};
