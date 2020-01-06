@@ -131,35 +131,16 @@ class DataParserTest extends Unit {
 		$filter = new \ItalyStrap\DataParser\Filters\ValidateFilter( $val );
 		$sut->withFilters( $filter );
 
-//		$sut->withSchema(
-//			[
-//				'email'	=> [
-//					'validate'		=> 'is_email'
-//				],
-//			]
-//		);
-//
-//		codecept_debug( $sut->getSchema() );
-
-//		$data = $sut->parse( [ 'email' => 'test@localhost.com' ] );
-//		$this->assertEquals( [ 'email' => 'test@localhost.com' ], $data, '' );
-
 		$sut->withSchema(
 			[
-				'email2'	=> [
-					'validate'		=> [
-						function ( $string ) {
-							return \is_email( $string );
-						},
-					]
+				'email'	=> [
+					'validate'		=> 'is_email'
 				],
 			]
 		);
 
-		codecept_debug( $sut->getSchema() );
-
-//		$data = $sut->parse( [ 'email2' => 'test@localhost.com' ] );
-//		$this->assertEquals( [ 'email2' => 'test@localhost.com' ], $data, '' );
+		$data = $sut->parse( [ 'email' => 'test@localhost.com' ] );
+		$this->assertEquals( [ 'email' => 'test@localhost.com' ], $data, '' );
 	}
 
 	/**
