@@ -39,6 +39,13 @@ class Parser implements ParserInterface {
 	/**
 	 * @inheritDoc
 	 */
+	public function getSchema(): array {
+		return $this->schema;
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function withFilters( FilterableInterface ...$filters ): Parser {
 		$this->filters = \array_merge( $this->filters, $filters );
 		return $this;
@@ -94,14 +101,16 @@ class Parser implements ParserInterface {
 	 * @param array $schema
 	 * @return array
 	 */
-	private function applyFilters( array $data, string $key, array $schema ): array {
+	private function applyFilters( array $data, $key, array $schema ): array {
+
+		/* @var $filter FilterableInterface */
 		foreach ( $this->filters as $filter ) {
 			if ( ! \is_array( $data[ $key ] ) ) {
 				$data[ $key ] = $filter->filter( $data[ $key ], $schema );
 				continue;
 			}
 
-			foreach ( (array)$data[ $key ] as $index => $value ) {
+			foreach ( (array) $data[ $key ] as $index => $value ) {
 				$data[ $key ][ $index ] = $filter->filter( $value, $schema );
 			}
 		}

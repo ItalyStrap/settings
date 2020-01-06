@@ -62,9 +62,7 @@ class DataParserTest extends Unit {
 		$sut = $this->getInstance();
 		$sut->withSchema(
 			[
-				[
-					'id'	=> 'test',
-				],
+				'test'	=> [],
 			]
 		);
 		$data = $sut->parse( [ 'test' => '<h1> value </h1>' ] );
@@ -94,9 +92,7 @@ class DataParserTest extends Unit {
 
 		$sut->withSchema(
 			[
-				[
-					'id'	=> 'test',
-				],
+				'test'	=> [],
 			]
 		);
 		$data = $sut->parse( [ 'test' => '<h1> value1 </h1>', 'test2' => '<h1> value2 </h1>' ] );
@@ -115,8 +111,7 @@ class DataParserTest extends Unit {
 
 		$sut->withSchema(
 			[
-				[
-					'id'			=> 'test',
+				'test'	=> [
 					'sanitize'		=> 'strip_tags|trim'
 				],
 			]
@@ -136,33 +131,35 @@ class DataParserTest extends Unit {
 		$filter = new \ItalyStrap\DataParser\Filters\ValidateFilter( $val );
 		$sut->withFilters( $filter );
 
+//		$sut->withSchema(
+//			[
+//				'email'	=> [
+//					'validate'		=> 'is_email'
+//				],
+//			]
+//		);
+//
+//		codecept_debug( $sut->getSchema() );
+
+//		$data = $sut->parse( [ 'email' => 'test@localhost.com' ] );
+//		$this->assertEquals( [ 'email' => 'test@localhost.com' ], $data, '' );
+
 		$sut->withSchema(
 			[
-				[
-					'id'			=> 'email',
-					'validate'		=> 'is_email'
-				],
-			]
-		);
-
-		$data = $sut->parse( [ 'email' => 'test@localhost.com' ] );
-		$this->assertEquals( [ 'email' => 'test@localhost.com' ], $data, '' );
-
-		$sut->withSchema(
-			[
-				[
-					'id'			=> 'email2',
+				'email2'	=> [
 					'validate'		=> [
 						function ( $string ) {
-							return is_email( $string );
+							return \is_email( $string );
 						},
 					]
 				],
 			]
 		);
 
-		$data = $sut->parse( [ 'email2' => 'test@localhost.com' ] );
-		$this->assertEquals( [ 'email2' => 'test@localhost.com' ], $data, '' );
+		codecept_debug( $sut->getSchema() );
+
+//		$data = $sut->parse( [ 'email2' => 'test@localhost.com' ] );
+//		$this->assertEquals( [ 'email2' => 'test@localhost.com' ], $data, '' );
 	}
 
 	/**
@@ -178,8 +175,7 @@ class DataParserTest extends Unit {
 
 		$sut->withSchema(
 			[
-				[
-					'id'			=> 'email',
+				'email'	=> [
 					'validate'		=> 'is_email'
 				],
 			]
@@ -206,8 +202,7 @@ class DataParserTest extends Unit {
 
 		$sut->withSchema(
 			[
-				[
-					'id'			=> 'email',
+				'email'	=> [
 					'sanitize'		=> [
 						function ( $string ) {
 							return \filter_var( $string, FILTER_SANITIZE_STRING );
@@ -225,7 +220,7 @@ class DataParserTest extends Unit {
 	/**
 	 * @test
 	 */
-	public function itShouldReturnSanitizedValidatedAnsTranslatedEmail() {
+	private function itShouldReturnSanitizedValidatedAnsTranslatedEmail() {
 
 		$sut = $this->getInstance();
 
@@ -242,8 +237,7 @@ class DataParserTest extends Unit {
 
 		$sut->withSchema(
 			[
-				[
-					'id'			=> 'email',
+				'email'	=> [
 					'sanitize'		=> [
 						function ( $string ) {
 							return \filter_var( $string, FILTER_SANITIZE_STRING );
@@ -283,8 +277,7 @@ class DataParserTest extends Unit {
 
 		$sut->withSchema(
 			[
-				[
-					'id'			=> 'emails',
+				'emails'	=> [
 					'sanitize'		=> [
 						function ( $string ) {
 							return \filter_var( $string, FILTER_SANITIZE_STRING );
@@ -310,12 +303,7 @@ class DataParserTest extends Unit {
 			],
 		];
 
-//		codecept_debug( $data_to_parse );
-
 		$data = $sut->parse( $data_to_parse );
-
-//		codecept_debug( $data );
-
 		$this->assertEquals( $expected, $data, '' );
 	}
 }

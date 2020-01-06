@@ -16,6 +16,11 @@ interface ParserInterface {
 	public function withSchema( array $schema );
 
 	/**
+	 * @return array
+	 */
+	public function getSchema(): array;
+
+	/**
 	 * @param FilterableInterface ...$filters
 	 * @return Parser
 	 */
