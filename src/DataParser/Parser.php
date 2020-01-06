@@ -57,39 +57,40 @@ class Parser implements ParserInterface {
 	public function parse( array $data ): array {
 
 		if ( empty( $this->filters ) ) {
-			throw new \RuntimeException( 'You must provide at least one filter' );
+			throw new \RuntimeException( 'You must provide at least one filter.' );
 		}
 
 		foreach ( $this->schema as $key => $schema ) {
-			$data = $this->applyFilters( $key, $data, $schema );
+			$data = $this->assertDataValueIsSet( $data, $key );
+			$data[ $key ] = $this->applyFilters( $key, $data[ $key ], $schema );
 		}
 
 		return $data;
 	}
 
 	/**
-	 * @param array $data
+	 * @param array $value
 	 * @param string $key
 	 * @param array $schema
 	 * @return array
 	 */
-	private function applyFilters( string $key, array $data, array $schema ): array {
+	private function applyFilters( string $key, $value, array $schema ) {
 
 		$this->mergeWithDefault( $schema );
-		$data = $this->assertDataValueIsSet( $data, $key );
 
 		/* @var $filter FilterableInterface */
 		foreach ( $this->filters as $filter ) {
-			if ( ! \is_array( $data[ $key ] ) ) {
-				$data[ $key ] = $filter->filter( $data[ $key ], $schema );
+			if ( ! \is_array( $value ) ) {
+				$value = $filter->filter( $value, $schema );
 				continue;
 			}
 
-			foreach ( (array) $data[ $key ] as $index => $value ) {
-				$data[ $key ][ $index ] = $filter->filter( $value, $schema );
+			foreach ((array) $value as $index => $item ) {
+				$value[ $index ] = $filter->filter( $item, $schema );
 			}
 		}
-		return $data;
+
+		return $value;
 	}
 
 	/**
