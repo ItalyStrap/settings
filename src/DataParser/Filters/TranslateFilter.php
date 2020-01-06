@@ -8,6 +8,8 @@ use ItalyStrap\DataParser\FilterableInterface;
 
 class TranslateFilter implements FilterableInterface {
 
+	const KEY = 'translate';
+
 	/**
 	 * @var Translatable
 	 */
@@ -22,7 +24,8 @@ class TranslateFilter implements FilterableInterface {
 	 */
 	public function filter( $data, array $schema ) {
 
-		if ( $schema['translate'] && isset( $schema['id'] ) ) {
+		if ( $schema[ self::KEY ] && isset( $schema['id'] ) ) {
+
 			/**
 			 * @todo Maybe add some kind of error if no strings are registered
 			 */

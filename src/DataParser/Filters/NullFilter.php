@@ -12,6 +12,8 @@ use ItalyStrap\DataParser\FilterableInterface;
  */
 class NullFilter implements FilterableInterface {
 
+	const KEY = null;
+
 	/**
 	 * @inheritDoc
 	 */

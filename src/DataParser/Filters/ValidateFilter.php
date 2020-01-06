@@ -12,6 +12,8 @@ use ItalyStrap\DataParser\FilterableInterface;
  */
 class ValidateFilter implements FilterableInterface {
 
+	const KEY = 'validate';
+
 	/**
 	 * @var Validation
 	 */
@@ -26,11 +28,11 @@ class ValidateFilter implements FilterableInterface {
 	 */
 	public function filter( $data, array $schema ) {
 
-		if ( ! $schema['validate'] ) {
+		if ( ! $schema[ self::KEY ] ) {
 			return $data;
 		}
 
-		$this->validation->addRules( $schema['validate'] );
+		$this->validation->addRules( $schema[ self::KEY ] );
 
 		if ( false === $this->validation->validate( \strval( $data ) ) ) {
 

@@ -11,6 +11,7 @@ use ItalyStrap\DataParser\FilterableInterface;
  */
 class TypeFilter implements FilterableInterface
 {
+	const KEY = 'data-type';
 
 	/**
 	 * @inheritDoc

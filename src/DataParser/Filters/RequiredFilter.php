@@ -11,6 +11,7 @@ use ItalyStrap\DataParser\FilterableInterface;
  */
 class RequiredFilter implements FilterableInterface
 {
+	const KEY = 'required';
 
 	/**
 	 * @inheritDoc

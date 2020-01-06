@@ -12,6 +12,8 @@ use ItalyStrap\DataParser\FilterableInterface;
  */
 class SanitizeFilter implements FilterableInterface {
 
+	const KEY = 'sanitize';
+
 	/**
 	 * @var Sanitization
 	 */
@@ -26,7 +28,7 @@ class SanitizeFilter implements FilterableInterface {
 	 */
 	public function filter( $data, array $schema ) {
 
-		$this->sanitization->addRules( $schema['sanitize'] );
+		$this->sanitization->addRules( $schema[ self::KEY ] );
 		$data = $this->sanitization->sanitize( $data );
 
 		return $data;

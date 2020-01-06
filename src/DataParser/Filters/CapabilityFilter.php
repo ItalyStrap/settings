@@ -11,6 +11,7 @@ use ItalyStrap\DataParser\FilterableInterface;
  */
 class CapabilityFilter implements FilterableInterface
 {
+	const KEY = 'capability';
 
 	/**
 	 * @inheritDoc
