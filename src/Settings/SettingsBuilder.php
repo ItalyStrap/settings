@@ -26,6 +26,10 @@ class SettingsBuilder {
 	 * @var Links
 	 */
 	private $links;
+	/**
+	 * @var \ItalyStrap\DataParser\Parser
+	 */
+	private $parser;
 
 	/**
 	 * @return Links
@@ -55,12 +59,13 @@ class SettingsBuilder {
 
 		$this->options = new Options( $option_name );
 		$this->links = new Links( new Tag( new Attributes() ) );
+		$this->parser = ParserFactory::make( $plugin_name );
 
 		foreach ( $config as $item ) {
 			$sections_obj = new Sections(
 				ConfigFactory::make( $item['sections'] ),
 				new Fields(),
-				ParserFactory::make( $plugin_name ),
+				$this->parser,
 				$this->options
 			);
 			$sections_obj->boot();
