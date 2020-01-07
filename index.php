@@ -7,8 +7,8 @@ Author: Enea Overclokk
 Author URI: https://italystrap.com
 Version: 1.0.0
 License: GPL2
-Text Domain: Text Domain
-Domain Path: Domain Path
+Text Domain: ItalyStrap
+Domain Path: languages
 */
 
 /*

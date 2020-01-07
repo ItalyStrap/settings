@@ -26,23 +26,26 @@ class Translator implements Translatable {
 	 *
 	 * @var string
 	 */
-	private $plugin_name = '';
+	private $domain = '';
+
+	/**
+	 * @return string
+	 */
+	public function getDomain(): string {
+		return $this->domain;
+	}
 
 	/**
 	 * Constructor
 	 *
-	 * @param  string $plugin_name The name of the plugin.
+	 * @param  string $domain The name of the plugin.
 	 */
-	public function __construct( $plugin_name ) {
-		$this->plugin_name = $plugin_name;
+	public function __construct( $domain ) {
+		$this->domain = $domain;
 	}
 
 	/**
-	 * Return the language 2-4 letters code
-	 *
-	 * @since   1.0.0
-	 *
-	 * @return     string 4 letters cod of the locale
+	 * @inheritDoc
 	 */
 	public function getLanguage(): string {
 
@@ -56,12 +59,22 @@ class Translator implements Translatable {
 			case \function_exists( 'pll_current_language' ):
 				return \pll_current_language();
 
+			case \function_exists( 'get_user_locale' ):
+				return \get_user_locale();
+
 			default:
 				/**
 				 * @link https://codex.wordpress.org/Function_Reference/get_locale
 				 */
-				return get_locale();
+				return \get_locale();
 		}
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function getAvailableLanguages( $dir = null ): array {
+		return \get_available_languages( $dir );
 	}
 
 	/**
@@ -71,20 +84,20 @@ class Translator implements Translatable {
 
 		switch ( true ) {
 			case \function_exists( 'icl_register_string' ):
-				\icl_register_string( $this->plugin_name, $string_name, $value );
+				\icl_register_string( $this->domain, $string_name, $value );
 				break;
 
 			case \class_exists( 'CMLTranslations' ):
 				\CMLTranslations::add(
 					$string_name,
 					$value,
-					\str_replace( ' ', '-', $this->plugin_name )
+					\str_replace( ' ', '-', $this->domain )
 				);
 				break;
 
 			case \function_exists( 'pll_register_string' ):
 				\pll_register_string(
-					\str_replace( ' ', '-', $this->plugin_name ),
+					\str_replace( ' ', '-', $this->domain ),
 					$string_name
 				);
 				break;
@@ -101,11 +114,11 @@ class Translator implements Translatable {
 
 		switch ( true ) {
 			case \function_exists( 'icl_unregister_string' ):
-				\icl_unregister_string( $this->plugin_name, $string_name );
+				\icl_unregister_string( $this->domain, $string_name );
 				break;
 
 			case \has_filter( 'cml_my_translations' ):
-				\CMLTranslations::delete( \str_replace( ' ', '-', $this->plugin_name ) );
+				\CMLTranslations::delete( \str_replace( ' ', '-', $this->domain ) );
 				break;
 
 			default:
@@ -121,13 +134,13 @@ class Translator implements Translatable {
 
 		switch ( true ) {
 			case \function_exists( 'icl_t' ):
-				return \icl_t( $this->plugin_name, $string_name, $value );
+				return \icl_t( $this->domain, $string_name, $value );
 
 			case \has_filter( 'cml_my_translations' ):
 				return \CMLTranslations::get(
 					\CMLLanguage::get_current_id(),
 					\strtolower( $string_name ),
-					\str_replace( ' ', '-', $this->plugin_name )
+					\str_replace( ' ', '-', $this->domain )
 				);
 
 			case \function_exists( 'pll__' ):
@@ -136,20 +149,5 @@ class Translator implements Translatable {
 			default:
 				return $value;
 		}
-	}
-
-	/**
-	 *
-	 */
-	public function textDomain() {
-
-		/**
-		 * Make theme available for translation.
-		 */
-		\load_theme_textdomain( 'italystrap', $this->config->get( 'PARENTPATH' ) . '/languages' );
-
-//		if ( is_child_theme() ) {
-//			\load_child_theme_textdomain( 'CHILD', $this->config->get( 'CHILDPATH' ) . '/languages' );
-//		}
 	}
 }

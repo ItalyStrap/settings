@@ -5,14 +5,14 @@ use ItalyStrap\Settings\Page;
 use ItalyStrap\Settings\SettingsBuilder;
 use ItalyStrap\Settings\ViewPage;
 
-$plugin_name = 'ItalyStrap';
+$domain = 'ItalyStrap';
 $option_name = 'italystrap';
 
 $settings = new SettingsBuilder();
 $settings->build(
 	ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/settings.php' ),
 	$option_name,
-	$plugin_name,
+	$domain,
 	ITALYSTRAP_BASENAME
 );
 
@@ -44,12 +44,3 @@ $settings->getLinks()->forPages( $pages_obj3 );
 
 $settings->getLinks()->addLink( 'key-for-css', 'http://localhost.com', 'Custom', [ 'target' => '_blank' ] );
 
-/**
- * Adjust priority to make sure this runs
- */
-//\add_action( 'init', function () use ( $plugin ) {
-	/**
-	 * Load po file
-	 */
-//	\load_plugin_textdomain( $plugin['options_name'], null, \dirname( ITALYSTRAP_BASENAME ) . '/languages' );
-//}, 100 );

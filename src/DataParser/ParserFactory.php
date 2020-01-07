@@ -17,18 +17,18 @@ use ItalyStrap\DataParser\Filters\ValidateFilter;
 class ParserFactory {
 
 	/**
-	 * @param string $plugin_name
+	 * @param string $domain
 	 * @return Parser
 	 */
-	public static function make( string $plugin_name = '' ): Parser {
+	public static function make( string $domain = '' ): Parser {
 
 		$filters = [
 			new SanitizeFilter( new Sanitization() ),
 			new ValidateFilter( new Validation() )
 		];
 
-		if ( ! empty( $plugin_name ) ) {
-			$filters[] = new TranslateFilter( new Translator( $plugin_name ) );
+		if ( ! empty( $domain ) ) {
+			$filters[] = new TranslateFilter( new Translator( $domain ) );
 		}
 
 		return ( new \ItalyStrap\DataParser\Parser() )->withFilters( ...$filters	);

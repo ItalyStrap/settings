@@ -16,9 +16,20 @@ namespace ItalyStrap\I18N;
 interface Translatable {
 
 	/**
-	 * Add registration for multilanguage string (contain hook)
+	 * Return the language 2-4 letters code
 	 *
-	 * @since   1.0.0
+	 * @return string 4 letters cod of the locale
+	 */
+	public function getLanguage();
+
+	/**
+	 * @param null $dir
+	 * @return array
+	 */
+	public function getAvailableLanguages( $dir = null );
+
+	/**
+	 * Add registration for multilanguage string (contain hook)
 	 *
 	 * @param     string $string_name              The name of the string.
 	 * @param     string $value                    The value.
@@ -29,16 +40,12 @@ interface Translatable {
 	 * Unregister multilanguage string, Polylang missing support of this feature
 	 * For deleting Pulylang string go to the Polylang string translation admin page.
 	 *
-	 * @since   1.0.0
-	 *
 	 * @param     string $string_name The name of the string.
 	 */
 	public function deregisterString( $string_name );
 
 	/**
 	 * Get multilanguage string
-	 *
-	 * @since   1.0.0
 	 *
 	 * @param     string $string_name              The name of the string.
 	 * @param     string $value                    The value.

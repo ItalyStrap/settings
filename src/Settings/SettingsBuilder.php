@@ -6,10 +6,13 @@ namespace ItalyStrap\Settings;
 use Auryn\Injector;
 use ItalyStrap\Config\ConfigFactory;
 use ItalyStrap\Config\ConfigInterface;
+use ItalyStrap\DataParser\Parser;
 use ItalyStrap\DataParser\ParserFactory;
 use ItalyStrap\Fields\Fields;
 use ItalyStrap\HTML\Attributes;
 use ItalyStrap\HTML\Tag;
+use ProxyManager\Factory\LazyLoadingValueHolderFactory;
+use ProxyManager\Proxy\LazyLoadingInterface;
 
 /**
  * Class SettingsFactory
@@ -48,18 +51,18 @@ class SettingsBuilder {
 	/**
 	 * @param ConfigInterface<array> $config
 	 * @param string $option_name
-	 * @param string $plugin_name
+	 * @param string $domain
 	 * @param string $base_name
 	 *
 	 * @return void
 	 */
-	public function build( ConfigInterface $config, $option_name, $plugin_name = '', $base_name = '' ): void {
+	public function build( ConfigInterface $config, $option_name, $domain = '', $base_name = '' ): void {
 
 		$injector = new Injector();
 
 		$this->options = new Options( $option_name );
 		$this->links = new Links( new Tag( new Attributes() ) );
-		$this->parser = ParserFactory::make( $plugin_name );
+		$this->parser = ParserFactory::make( $domain );
 
 		foreach ( $config as $item ) {
 			$sections_obj = new Sections(
