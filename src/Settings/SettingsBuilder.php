@@ -11,8 +11,6 @@ use ItalyStrap\DataParser\ParserFactory;
 use ItalyStrap\Fields\Fields;
 use ItalyStrap\HTML\Attributes;
 use ItalyStrap\HTML\Tag;
-use ProxyManager\Factory\LazyLoadingValueHolderFactory;
-use ProxyManager\Proxy\LazyLoadingInterface;
 
 /**
  * Class SettingsFactory
