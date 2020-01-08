@@ -56,7 +56,7 @@ class OptionsParser implements OptionsParserInterface {
 	 *
 	 */
 	public function preloadOption() {
-		if ( empty( $this->options->getAll() ) ) {
+		if ( empty( $this->options->toArray() ) ) {
 			$default = $this->getPluginSettingsArrayDefault();
 			$this->options->addAll( $default );
 			$this->setThemeMods( (array) $default );
