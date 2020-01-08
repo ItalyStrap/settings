@@ -3,8 +3,13 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
-class Options implements OptionsInterface
-{
+use ItalyStrap\Config\Config;
+
+/**
+ * Class Options
+ * @package ItalyStrap\Settings
+ */
+class Options extends Config implements OptionsInterface {
 
 	/**
 	 * @var string
@@ -18,7 +23,7 @@ class Options implements OptionsInterface
 
 	public function __construct( string $name, $default = [] ) {
 		$this->name = $name;
-		$this->default = $default;
+		parent::__construct( (array) \get_option( $this->name, $default ), $default );
 	}
 
 	/**
@@ -31,22 +36,22 @@ class Options implements OptionsInterface
 	/**
 	 * @return array
 	 */
-	public function get(): array {
-		return (array) \get_option( $this->name, $this->default );
+	public function getAll(): array {
+		return parent::toArray();
 	}
 
 	/**
 	 * @param array $values
 	 * @return bool
 	 */
-	public function add( array $values = [] ) {
+	public function addAll( array $values = [] ) {
 		return \add_option( $this->name, $values );
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function remove() {
+	public function removeAll() {
 		return \delete_option( $this->name );
 	}
 }

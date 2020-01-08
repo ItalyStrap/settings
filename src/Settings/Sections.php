@@ -79,7 +79,6 @@ class Sections implements \Countable, SectionsInterface {
 		$this->fields = $fields;
 		$this->parser = $parser;
 		$this->options = $options;
-		$this->options_values = (array) $this->options->get();
 	}
 
 	/**
@@ -276,7 +275,7 @@ class Sections implements \Countable, SectionsInterface {
 
 		$args_for_fields[ 'class' ] = $this->field_class[ $args_for_fields[ 'id' ] ] ?? '';
 
-		$args_for_fields[ 'value' ] = $this->options_values[ $args_for_fields[ 'id' ] ] ?? $args_for_fields[ 'value' ];
+		$args_for_fields[ 'value' ] = $this->options->get( $args_for_fields[ 'id' ], $args_for_fields[ 'value' ] );
 		$args_for_fields[ 'id' ] = $args_for_fields[ 'name' ] = $this->getStringForLabel( $args_for_fields );
 	}
 

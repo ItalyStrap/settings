@@ -29,7 +29,7 @@ class OptionsTest extends \Codeception\Test\Unit {
 		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'get_option', function ( $key, $default = [] ) {
 
-			if ( !\array_key_exists( $key, $this->option_storage ) ) {
+			if ( ! \array_key_exists( $key, $this->option_storage ) ) {
 				return $default;
 			}
 
@@ -41,9 +41,10 @@ class OptionsTest extends \Codeception\Test\Unit {
 	protected function _after() {
 	}
 
-	public function getIntance( $name = '', $group = '', $values = [] ): OptionsInterface {
+	public function getIntance( $name = '', $values = [] ): OptionsInterface {
 		$sut = new \ItalyStrap\Settings\Options( $name, $values );
 		$this->assertInstanceOf( \ItalyStrap\Settings\Options::class, $sut );
+		$this->assertInstanceOf( \ItalyStrap\Settings\OptionsInterface::class, $sut );
 		return $sut;
 	}
 
@@ -51,7 +52,7 @@ class OptionsTest extends \Codeception\Test\Unit {
 	 * @test
 	 */
 	public function itShouldBeinstantiable() {
-		$this->getIntance( 'test' );
+		$sut = $this->getIntance( 'test' );
 	}
 
 	/**
@@ -71,7 +72,7 @@ class OptionsTest extends \Codeception\Test\Unit {
 		\add_option( $option_name, ['key' => 'value'] );
 
 		$sut = $this->getIntance( $option_name );
-		$this->assertArrayHasKey( 'key', $sut->get(), '' );
+		$this->assertArrayHasKey( 'key', $sut->getAll(), '' );
 	}
 
 	/**
@@ -80,7 +81,27 @@ class OptionsTest extends \Codeception\Test\Unit {
 	public function itShouldReturnDefaultValueIfArrayKeyDoesNotExists() {
 
 		$option_name = 'test';
-		$sut = $this->getIntance( $option_name, '', ['key' => 'value'] );
-		$this->assertArrayHasKey( 'key', $sut->get(), '' );
+		$sut = $this->getIntance( $option_name, ['key' => 'value'] );
+		$this->assertArrayHasKey( 'key', $sut->getAll(), '' );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldGetKey() {
+
+		$option_name = 'test';
+		$sut = $this->getIntance( $option_name, ['key' => 'value'] );
+		$this->assertStringContainsString( 'value', $sut->get( 'key' ), '' );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldReturnDefaultValue() {
+
+		$option_name = 'test';
+		$sut = $this->getIntance( $option_name );
+		$this->assertStringContainsString( 'value', $sut->get( 'key', 'value' ), '' );
 	}
 }

@@ -129,7 +129,7 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldBeInstantiable() {
-		$this->options->get()->willReturn( [] );
+		$this->options->getAll()->willReturn( [] );
 		$sut = $this->getInstance();
 	}
 
@@ -137,7 +137,7 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldRenderPageSlug() {
-		$this->options->get()->willReturn( [] );
+		$this->options->getAll()->willReturn( [] );
 		$sut = $this->getInstance();
 
 		$this->page->getSlug()->willReturn( 'slug' );
@@ -150,7 +150,7 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldReturnArrayOfSectionsConfig() {
-		$this->options->get()->willReturn( [] );
+		$this->options->getAll()->willReturn( [] );
 		$sut = $this->getInstance( $this->sections_config );
 
 		$this->assertEquals( $this->sections_config, $sut->getSections(), '' );
@@ -160,7 +160,7 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldBeCountable() {
-		$this->options->get()->willReturn( [] );
+		$this->options->getAll()->willReturn( [] );
 		$sut = $this->getInstance( $this->sections_config );
 
 		$this->assertCount( \count( $this->sections_config ), $sut, '' );
@@ -170,7 +170,7 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldRenderDescriptionFromCallableInSectionCallback() {
-		$this->options->get()->willReturn( [] );
+		$this->options->getAll()->willReturn( [] );
 
 		$promise = new class implements PromiseInterface {
 
@@ -208,7 +208,7 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldRenderDescriptionInSectionCallback() {
-		$this->options->get()->willReturn( [] );
+		$this->options->getAll()->willReturn( [] );
 
 
 
@@ -239,7 +239,7 @@ class SectionsTest extends WPTestCase {
 
 		$option_name = 'option-name';
 		$this->options->getName()->willReturn( $option_name );
-		$this->options->get()->willReturn( [] );
+		$this->options->getAll()->willReturn( [] );
 
 		$field = [
 			'callback'	=> null,
@@ -247,12 +247,18 @@ class SectionsTest extends WPTestCase {
 			'id'		=> 'some-unique-id',
 		];
 
+		$this->options->get( $field['id'], $field['value'] )->willReturn( $field['value'] );
+
 		$html_returned_from_fake_fields_render = '<fake_html>';
 
 		$this->fields->render(Argument::type('array'))->will(
 			function ( array $args ) use ( $field, $option_name, $html_returned_from_fake_fields_render ) {
 
-				Assert::assertEquals( $field['value'], $args[0]['value'], '' );
+				Assert::assertEquals(
+					$field['value'],
+					$args[0]['value'],
+					'This have to return default value in case is not set'
+				);
 
 				$name_string = \sprintf(
 					'%s[%s]',
@@ -282,7 +288,8 @@ class SectionsTest extends WPTestCase {
 
 		$option_name = 'option-name';
 		$this->options->getName()->willReturn( $option_name );
-		$this->options->get()->willReturn( [] );
+		$this->options->getAll()->willReturn( [] );
+		$this->options->get( Argument::type('string'), Argument::any() )->willReturn( [] );
 
 		$field = [
 			'callback'	=> null,
@@ -308,7 +315,8 @@ class SectionsTest extends WPTestCase {
 
 		$option_name = 'option-name';
 		$this->options->getName()->willReturn( $option_name );
-		$this->options->get()->willReturn( [] );
+		$this->options->getAll()->willReturn( [] );
+		$this->options->get( Argument::type('string'), Argument::any() )->willReturn( [] );
 
 		$field = [
 			'callback'	=> null,
@@ -338,7 +346,7 @@ class SectionsTest extends WPTestCase {
 
 		$option_name = 'option-name';
 		$this->options->getName()->willReturn( $option_name );
-		$this->options->get()->willReturn( [] );
+		$this->options->getAll()->willReturn( [] );
 
 		$returned_value_for_callback = 'Some random value';
 
@@ -363,7 +371,7 @@ class SectionsTest extends WPTestCase {
 	public function itShouldRegister() {
 		global $wp_settings_sections, $wp_settings_fields;
 		$this->options->getName()->willReturn( 'option-name' );
-		$this->options->get()->willReturn( [] );
+		$this->options->getAll()->willReturn( [] );
 
 		$sut = $this->getInstance( $this->sections_config );
 

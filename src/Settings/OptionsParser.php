@@ -56,9 +56,9 @@ class OptionsParser implements OptionsParserInterface {
 	 *
 	 */
 	public function preloadOption() {
-		if ( empty( $this->options->get() ) ) {
+		if ( empty( $this->options->getAll() ) ) {
 			$default = $this->getPluginSettingsArrayDefault();
-			$this->options->add( $default );
+			$this->options->addAll( $default );
 			$this->setThemeMods( (array) $default );
 		}
 	}
@@ -67,7 +67,7 @@ class OptionsParser implements OptionsParserInterface {
 	 * Delete option
 	 */
 	public function deleteOption() {
-		$this->options->remove();
+		$this->options->removeAll();
 		$this->removeThemeMods( $this->getPluginSettingsArrayDefault() );
 	}
 
