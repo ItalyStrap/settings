@@ -10,8 +10,19 @@ use ItalyStrap\Config\ConfigInterface;
  * @package ItalyStrap\Settings
  */
 interface OptionsInterface extends ConfigInterface {
+
 	/**
 	 * @return string
 	 */
 	public function getName();
+
+	/**
+	 * @return string
+	 */
+	public function addAll();
+
+	/**
+	 * @return string
+	 */
+	public function removeAll();
 }
