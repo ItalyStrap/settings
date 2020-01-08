@@ -47,7 +47,7 @@ class Sections implements \Countable, SectionsInterface {
 	private $parser;
 
 	/**
-	 * @var Options
+	 * @var OptionsInterface
 	 */
 	private $options;
 
@@ -64,16 +64,16 @@ class Sections implements \Countable, SectionsInterface {
 
 	/**
 	 * Sections constructor.
-	 * @param Config $config          The configuration array plugin fields.
+	 * @param Config $config The configuration array plugin fields.
 	 * @param FieldsInterface $fields The Fields object.
 	 * @param ParserInterface $parser
-	 * @param Options $options        Get the plugin options.
+	 * @param OptionsInterface $options Get the plugin options.
 	 */
 	public function __construct(
 		Config $config,
 		FieldsInterface $fields,
 		ParserInterface $parser,
-		Options $options
+		OptionsInterface $options
 	) {
 		$this->config = $config;
 		$this->fields = $fields;

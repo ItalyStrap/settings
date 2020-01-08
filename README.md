@@ -25,12 +25,14 @@ The best way to use this package is through Composer:
 composer require italystrap/settings
 ```
 
-## Idea
+## Idea of the structure
 
-Settings COULD HAVE 1 or more pages
-Admin page COULD HAVE menu link
-Admin page COULD HAVE 0, 1 or many section
-Sections MUST HAVE at least 1 field
+* Plugin MUST HAVE one options storage (call get_option one time with all the options)
+* Plugin COULD HAVE one or more settings pages
+* Settings page COULD HAVE one menu link
+* Settings page COULD HAVE 0, 1 or many section
+* Sections MUST HAVE at least 1 field
+* Sections ARE separated by tabs
 
 ## Basic Usage
 

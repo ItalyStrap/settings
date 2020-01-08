@@ -15,7 +15,7 @@ class OptionsParser implements OptionsParserInterface {
 	/**
 	 * The plugin options
 	 *
-	 * @var Options
+	 * @var OptionsInterface
 	 */
 	protected $options;
 
@@ -29,9 +29,9 @@ class OptionsParser implements OptionsParserInterface {
 	/**
 	 * Initialize Class
 	 *
-	 * @param Options $options Get the plugin options.
+	 * @param OptionsInterface $options Get the plugin options.
 	 */
-	public function __construct( Options $options ) {
+	public function __construct( OptionsInterface $options ) {
 		$this->options = $options;
 	}
 

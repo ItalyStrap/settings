@@ -3,11 +3,8 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
-/**
- * Class Options
- * @package ItalyStrap\Settings
- */
-class Options {
+class Options implements OptionsInterface
+{
 
 	/**
 	 * @var string
@@ -25,9 +22,9 @@ class Options {
 	}
 
 	/**
-	 * @return mixed
+	 * @inheritDoc
 	 */
-	public function getName() {
+	public function getName(): string {
 		return $this->name;
 	}
 

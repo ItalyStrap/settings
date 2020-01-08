@@ -19,7 +19,7 @@ use ItalyStrap\HTML\Tag;
 class SettingsBuilder {
 
 	/**
-	 * @var Options
+	 * @var OptionsInterface
 	 */
 	private $options;
 
@@ -28,7 +28,7 @@ class SettingsBuilder {
 	 */
 	private $links;
 	/**
-	 * @var \ItalyStrap\DataParser\Parser
+	 * @var Parser
 	 */
 	private $parser;
 
@@ -40,9 +40,9 @@ class SettingsBuilder {
 	}
 
 	/**
-	 * @return Options
+	 * @return OptionsInterface
 	 */
-	public function getOptions(): Options {
+	public function getOptions(): OptionsInterface {
 		return $this->options;
 	}
 

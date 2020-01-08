@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Tests;
 
+use ItalyStrap\Settings\OptionsInterface;
+
 class OptionsTest extends \Codeception\Test\Unit {
 
 	/**
@@ -39,7 +41,7 @@ class OptionsTest extends \Codeception\Test\Unit {
 	protected function _after() {
 	}
 
-	public function getIntance( $name = '', $group = '', $values = [] ): \ItalyStrap\Settings\Options {
+	public function getIntance( $name = '', $group = '', $values = [] ): OptionsInterface {
 		$sut = new \ItalyStrap\Settings\Options( $name, $values );
 		$this->assertInstanceOf( \ItalyStrap\Settings\Options::class, $sut );
 		return $sut;
