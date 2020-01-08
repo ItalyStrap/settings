@@ -79,6 +79,9 @@ class Sections implements \Countable, SectionsInterface {
 		$this->fields = $fields;
 		$this->parser = $parser;
 		$this->options = $options;
+//		if ( empty( $this->options->toArray() ) ) {
+//			$this->options->addAll( $this->defaultValue() );
+//		}
 	}
 
 	/**
@@ -243,6 +246,18 @@ class Sections implements \Countable, SectionsInterface {
 		}
 
 		return $schema;
+	}
+
+	private function defaultValue() {
+
+		$default = [];
+		foreach ( $this->config->toArray() as $section ) {
+			foreach ( $section['fields'] as $field ) {
+				$default[ $field['id'] ] = $field['value'] ?? '';
+			}
+		}
+
+		return $default;
 	}
 
 	/**
