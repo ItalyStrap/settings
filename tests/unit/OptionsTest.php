@@ -72,7 +72,7 @@ class OptionsTest extends \Codeception\Test\Unit {
 		\add_option( $option_name, ['key' => 'value'] );
 
 		$sut = $this->getIntance( $option_name );
-		$this->assertArrayHasKey( 'key', $sut->getAll(), '' );
+		$this->assertArrayHasKey( 'key', $sut->toArray(), '' );
 	}
 
 	/**
@@ -82,7 +82,7 @@ class OptionsTest extends \Codeception\Test\Unit {
 
 		$option_name = 'test';
 		$sut = $this->getIntance( $option_name, ['key' => 'value'] );
-		$this->assertArrayHasKey( 'key', $sut->getAll(), '' );
+		$this->assertArrayHasKey( 'key', $sut->toArray(), '' );
 	}
 
 	/**

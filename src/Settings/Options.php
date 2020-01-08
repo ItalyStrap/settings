@@ -34,13 +34,6 @@ class Options extends Config implements OptionsInterface {
 	}
 
 	/**
-	 * @return array
-	 */
-	public function getAll(): array {
-		return parent::toArray();
-	}
-
-	/**
 	 * @param array $values
 	 * @return bool
 	 */
