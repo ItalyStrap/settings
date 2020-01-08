@@ -129,7 +129,7 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldBeInstantiable() {
-		$this->options->getAll()->willReturn( [] );
+		$this->options->toArray()->willReturn( [] );
 		$sut = $this->getInstance();
 	}
 
@@ -137,7 +137,7 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldRenderPageSlug() {
-		$this->options->getAll()->willReturn( [] );
+		$this->options->toArray()->willReturn( [] );
 		$sut = $this->getInstance();
 
 		$this->page->getSlug()->willReturn( 'slug' );
@@ -150,7 +150,7 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldReturnArrayOfSectionsConfig() {
-		$this->options->getAll()->willReturn( [] );
+		$this->options->toArray()->willReturn( [] );
 		$sut = $this->getInstance( $this->sections_config );
 
 		$this->assertEquals( $this->sections_config, $sut->getSections(), '' );
@@ -160,7 +160,7 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldBeCountable() {
-		$this->options->getAll()->willReturn( [] );
+		$this->options->toArray()->willReturn( [] );
 		$sut = $this->getInstance( $this->sections_config );
 
 		$this->assertCount( \count( $this->sections_config ), $sut, '' );
@@ -170,7 +170,7 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldRenderDescriptionFromCallableInSectionCallback() {
-		$this->options->getAll()->willReturn( [] );
+		$this->options->toArray()->willReturn( [] );
 
 		$promise = new class implements PromiseInterface {
 
@@ -208,7 +208,7 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldRenderDescriptionInSectionCallback() {
-		$this->options->getAll()->willReturn( [] );
+		$this->options->toArray()->willReturn( [] );
 
 
 
@@ -239,7 +239,7 @@ class SectionsTest extends WPTestCase {
 
 		$option_name = 'option-name';
 		$this->options->getName()->willReturn( $option_name );
-		$this->options->getAll()->willReturn( [] );
+		$this->options->toArray()->willReturn( [] );
 
 		$field = [
 			'callback'	=> null,
@@ -288,7 +288,7 @@ class SectionsTest extends WPTestCase {
 
 		$option_name = 'option-name';
 		$this->options->getName()->willReturn( $option_name );
-		$this->options->getAll()->willReturn( [] );
+		$this->options->toArray()->willReturn( [] );
 		$this->options->get( Argument::type('string'), Argument::any() )->willReturn( [] );
 
 		$field = [
@@ -315,7 +315,7 @@ class SectionsTest extends WPTestCase {
 
 		$option_name = 'option-name';
 		$this->options->getName()->willReturn( $option_name );
-		$this->options->getAll()->willReturn( [] );
+		$this->options->toArray()->willReturn( [] );
 		$this->options->get( Argument::type('string'), Argument::any() )->willReturn( [] );
 
 		$field = [
@@ -346,7 +346,7 @@ class SectionsTest extends WPTestCase {
 
 		$option_name = 'option-name';
 		$this->options->getName()->willReturn( $option_name );
-		$this->options->getAll()->willReturn( [] );
+		$this->options->toArray()->willReturn( [] );
 
 		$returned_value_for_callback = 'Some random value';
 
@@ -371,7 +371,7 @@ class SectionsTest extends WPTestCase {
 	public function itShouldRegister() {
 		global $wp_settings_sections, $wp_settings_fields;
 		$this->options->getName()->willReturn( 'option-name' );
-		$this->options->getAll()->willReturn( [] );
+		$this->options->toArray()->willReturn( [] );
 
 		$sut = $this->getInstance( $this->sections_config );
 
