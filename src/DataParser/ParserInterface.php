@@ -32,5 +32,5 @@ interface ParserInterface {
 	 * @param array<int|string> $data The input array.
 	 * @return array<int|string>      Return the array sanitized
 	 */
-	public function parse( array $data ): array;
+	public function parseValues( array $data ): array;
 }

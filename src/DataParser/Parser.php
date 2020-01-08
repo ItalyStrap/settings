@@ -54,7 +54,7 @@ class Parser implements ParserInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function parse( array $data ): array {
+	public function parseValues( array $data ): array {
 
 		if ( empty( $this->filters ) ) {
 			throw new \RuntimeException( 'You must provide at least one filter.' );
@@ -62,7 +62,7 @@ class Parser implements ParserInterface {
 
 		foreach ( $this->schema as $key => $schema ) {
 			$data = $this->assertDataValueIsSet( $data, $key );
-			$data[ $key ] = $this->processFilters( $data[ $key ], $schema );
+			$data[ $key ] = $this->parseValue( $data[ $key ], $schema );
 		}
 
 		return $data;
@@ -73,7 +73,7 @@ class Parser implements ParserInterface {
 	 * @param array $schema
 	 * @return mixed
 	 */
-	private function processFilters( $value, array $schema ) {
+	private function parseValue( $value, array $schema ) {
 
 		/* @var $filter FilterableInterface */
 		foreach ( $this->filters as $filter ) {

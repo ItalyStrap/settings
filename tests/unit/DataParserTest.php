@@ -53,7 +53,7 @@ class DataParserTest extends Unit {
 	public function itShouldThrownExceptionIfNoFiltersAreProvided() {
 		$sut = $this->getInstance();
 		$this->expectException( \RuntimeException::class );
-		$data = $sut->parse( [ 'test' => '<h1>value</h1>' ] );
+		$data = $sut->parseValues( [ 'test' => '<h1>value</h1>' ] );
 	}
 
 	/**
@@ -66,7 +66,7 @@ class DataParserTest extends Unit {
 				'test'	=> [],
 			]
 		);
-		$data = $sut->parse( [ 'test' => '<h1> value </h1>' ] );
+		$data = $sut->parseValues( [ 'test' => '<h1> value </h1>' ] );
 		$this->assertEquals( [ 'test' => 'value' ], $data, '' );
 	}
 
@@ -105,7 +105,7 @@ class DataParserTest extends Unit {
 				'test'	=> [],
 			]
 		);
-		$data = $sut->parse( [ 'test' => '<h1> value1 </h1>', 'test2' => '<h1> value2 </h1>' ] );
+		$data = $sut->parseValues( [ 'test' => '<h1> value1 </h1>', 'test2' => '<h1> value2 </h1>' ] );
 		$this->assertEquals( [ 'test' => 'value1', 'test2' => '<h1> value2 </h1>' ], $data, '' );
 	}
 
@@ -126,7 +126,7 @@ class DataParserTest extends Unit {
 				],
 			]
 		);
-		$data = $sut->parse( [ 'test' => '<h1> value1 </h1>', 'test2' => '<h1> value2 </h1>' ] );
+		$data = $sut->parseValues( [ 'test' => '<h1> value1 </h1>', 'test2' => '<h1> value2 </h1>' ] );
 		$this->assertEquals( [ 'test' => 'value1', 'test2' => '<h1> value2 </h1>' ], $data, '' );
 	}
 
@@ -149,7 +149,7 @@ class DataParserTest extends Unit {
 			]
 		);
 
-		$data = $sut->parse( [ 'email' => 'test@localhost.com' ] );
+		$data = $sut->parseValues( [ 'email' => 'test@localhost.com' ] );
 		$this->assertEquals( [ 'email' => 'test@localhost.com' ], $data, '' );
 	}
 
@@ -172,7 +172,7 @@ class DataParserTest extends Unit {
 			]
 		);
 
-		$data = $sut->parse( [ 'email' => 'invalid_email' ] );
+		$data = $sut->parseValues( [ 'email' => 'invalid_email' ] );
 		$this->assertEquals( [ 'email' => '' ], $data, '' );
 	}
 
@@ -204,7 +204,7 @@ class DataParserTest extends Unit {
 			]
 		);
 
-		$data = $sut->parse( [ 'email' => '<p>test@localhost.com</p>' ] );
+		$data = $sut->parseValues( [ 'email' => '<p>test@localhost.com</p>' ] );
 		$this->assertEquals( [ 'email' => 'test@localhost.com' ], $data, '' );
 	}
 
@@ -240,7 +240,7 @@ class DataParserTest extends Unit {
 			]
 		);
 
-		$data = $sut->parse( [ 'email' => '<p>test@localhost.com</p>' ] );
+		$data = $sut->parseValues( [ 'email' => '<p>test@localhost.com</p>' ] );
 		$this->assertEquals( [ 'email' => 'test@localhost.com' ], $data, '' );
 	}
 
@@ -294,7 +294,7 @@ class DataParserTest extends Unit {
 			],
 		];
 
-		$data = $sut->parse( $data_to_parse );
+		$data = $sut->parseValues( $data_to_parse );
 		$this->assertEquals( $expected, $data, '' );
 	}
 }
