@@ -17,12 +17,12 @@ interface OptionsInterface extends ConfigInterface {
 	public function getName();
 
 	/**
-	 * @return string
+	 * @inheritDoc
 	 */
-	public function addAll();
+	public function addAll( array $values = [] );
 
 	/**
-	 * @return string
+	 * @return bool
 	 */
 	public function removeAll();
 }

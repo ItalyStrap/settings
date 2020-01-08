@@ -49,7 +49,7 @@ class Options extends Config implements OptionsInterface {
 	}
 
 	/**
-	 * @return bool
+	 * @inheritDoc
 	 */
 	public function removeAll() {
 		return \delete_option( $this->name );
