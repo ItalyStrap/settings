@@ -36,7 +36,7 @@ use ItalyStrap\HTML\Tag;
 /**
  * Class for Plugin_Links
  */
-class Links implements LinksInterface {
+class PluginLinks implements PluginLinksInterface {
 
 	/**
 	 * @var string
@@ -92,7 +92,7 @@ class Links implements LinksInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function forPages( PageInterface ...$pages ): Links {
+	public function forPages( PageInterface ...$pages ): PluginLinks {
 		foreach ( $pages as $page ) {
 			$url = $this->generateAdminUrl( $page );
 			$this->addLink( $page->getSlug(), $url, $page->getPageTitle() );
@@ -103,7 +103,7 @@ class Links implements LinksInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function addLink( string $key, string $url, string $text, array $attr = [] ): Links {
+	public function addLink( string $key, string $url, string $text, array $attr = [] ): PluginLinks {
 		$this->links[ $key ] = $this->createLink( $url, $text, $attr );
 		return $this;
 	}

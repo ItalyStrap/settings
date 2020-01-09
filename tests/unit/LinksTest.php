@@ -53,10 +53,10 @@ class LinksTest extends \Codeception\Test\Unit {
 	protected function _after() {
 	}
 
-	private function getInstance(): \ItalyStrap\Settings\Links {
+	private function getInstance(): \ItalyStrap\Settings\PluginLinks {
 		$tag = new \ItalyStrap\HTML\Tag( new \ItalyStrap\HTML\Attributes() );
-		$sut = new \ItalyStrap\Settings\Links( $tag );
-		$this->assertInstanceOf( \ItalyStrap\Settings\Links::class, $sut, '' );
+		$sut = new \ItalyStrap\Settings\PluginLinks( $tag );
+		$this->assertInstanceOf( \ItalyStrap\Settings\PluginLinks::class, $sut, '' );
 		return $sut;
 	}
 

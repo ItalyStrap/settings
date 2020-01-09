@@ -6,7 +6,7 @@ namespace ItalyStrap\Settings;
 /**
  * Class for Plugin_Links
  */
-interface LinksInterface {
+interface PluginLinksInterface {
 
 	/**
 	 * @param string $key

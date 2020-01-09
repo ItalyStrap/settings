@@ -14,22 +14,22 @@ $settings = new SettingsBuilder(
 	ITALYSTRAP_BASENAME
 );
 
-$settings->addPage(
-	[
-		Page::PARENT		=> 'italystrap-dashboard',
-		Page::PAGE_TITLE	=> \__( 'Dashboard 2', 'italystrap' ),
-		Page::MENU_TITLE	=> \__( 'Child1', 'italystrap' ),
-		Page::SLUG			=> 'ciao1',
-		Page::VIEW			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
-	]
-);
+//$settings->addPage(
+//	[
+//		Page::PARENT		=> 'italystrap-dashboard',
+//		Page::PAGE_TITLE	=> \__( 'Dashboard 2', 'italystrap' ),
+//		Page::MENU_TITLE	=> \__( 'Child1', 'italystrap' ),
+//		Page::SLUG			=> 'ciao1',
+//		Page::VIEW			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
+//	]
+//);
 
 $settings->addPage(
 	[
 		Page::PARENT		=> 'options-general.php',
 //		Page::PAGE_TITLE	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
-		Page::MENU_TITLE	=> \__( 'Child', 'italystrap' ),
-		Page::SLUG			=> 'ciao',
+		Page::MENU_TITLE	=> \__( 'Child-general', 'italystrap' ),
+		Page::SLUG			=> 'Child-general',
 		Page::VIEW			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
 	]
 );

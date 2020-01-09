@@ -23,7 +23,7 @@ class SettingsBuilder {
 	private $options;
 
 	/**
-	 * @var Links
+	 * @var PluginLinks
 	 */
 	private $links;
 
@@ -62,12 +62,12 @@ class SettingsBuilder {
 	}
 
 	/**
-	 * @return Links
+	 * @return PluginLinks
 	 */
-	public function getLinks(): Links {
+	public function getLinks(): PluginLinks {
 
 		if ( empty( $this->links ) ) {
-			$this->links = new Links( new Tag( new Attributes() ) );
+			$this->links = new PluginLinks( new Tag( new Attributes() ) );
 		}
 
 		return $this->links;
@@ -141,7 +141,7 @@ class SettingsBuilder {
 
 		$pages_obj->boot();
 
-		if ( !empty( $this->base_name ) ) {
+		if ( ! empty( $this->base_name ) ) {
 			$this->getLinks()->forPages( $pages_obj );
 			$this->getLinks()->boot( $this->base_name );
 		}
