@@ -111,8 +111,7 @@ class SettingsBuilder {
 		$injector = new Injector();
 
 		foreach ($this->config as $item) {
-			$sections_obj = $this->addSections( $item );
-
+			$sections_obj = $this->addSections( $item[ 'sections' ] );
 			$this->addPage( $item[ 'page' ], $sections_obj );
 		}
 
@@ -128,7 +127,7 @@ class SettingsBuilder {
 	 * @param Sections $sections_obj
 	 * @return SettingsBuilder
 	 */
-	public function addPage( $item, Sections $sections_obj = null ): SettingsBuilder {
+	public function addPage( array $item, Sections $sections_obj = null ): SettingsBuilder {
 
 		$pages_obj = new Page(
 			ConfigFactory::make( $item ),
@@ -151,16 +150,18 @@ class SettingsBuilder {
 	}
 
 	/**
-	 * @param $item
+	 * @param array $item
 	 * @return Sections
 	 */
-	public function addSections( $item ): Sections {
+	public function addSections( array $item ): Sections {
+
 		$sections_obj = new Sections(
-			ConfigFactory::make( $item[ 'sections' ] ),
+			ConfigFactory::make( $item ),
 			new Fields(),
 			ParserFactory::make( $this->domain ),
 			$this->getOptions()
 		);
+
 		return $sections_obj;
 	}
 }
