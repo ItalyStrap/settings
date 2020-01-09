@@ -107,7 +107,7 @@ class ViewPageTest extends \Codeception\TestCase\WPTestCase {
 	public function itShouldBeRenderCustomPageProvided() {
 		$sut = $this->getInstance();
 		$sut->withSections( $this->getSections() );
-		$sut->render( codecept_data_dir( 'fixtures/view/' ) . 'settings_form.php' );
+		$sut->render( codecept_data_dir( 'fixtures/view/' ) . 'empty_form.php' );
 		$output = $this->getActualOutputForAssertion();
 		$this->assertStringContainsString( '<h1>Form Test</h1>', $output, '' );
 	}
