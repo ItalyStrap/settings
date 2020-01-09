@@ -44,7 +44,7 @@ class SettingsBuilder {
 	private $base_name;
 
 	/**
-	 * @var array<Page|Sections>
+	 * @var array
 	 */
 	private $pages;
 
@@ -78,7 +78,7 @@ class SettingsBuilder {
 	 * @param array $attr
 	 * @return $this
 	 */
-	public function addCustomLink( string $key, string $url, string $text, array $attr = [] ) {
+	public function addCustomPluginLink( string $key, string $url, string $text, array $attr = [] ) {
 		$this->getLinks()->addLink( ...\func_get_args() );
 		return $this;
 	}
@@ -133,12 +133,12 @@ class SettingsBuilder {
 			new ViewPage()
 		);
 
-		$this->addBootable( $pages_obj->getSlug(), $pages_obj );
+		$this->pages[ $pages_obj->getSlug() ][] = $pages_obj;
 
 		if ( ! empty( $sections ) ) {
 			$sections = $this->addSections( $sections );
 			$pages_obj->withSections( $sections );
-			$this->addBootable( $pages_obj->getSlug(), $sections );
+			$this->pages[ $pages_obj->getSlug() ][] = $sections;
 		}
 
 		if ( ! empty( $this->base_name ) ) {
@@ -162,13 +162,5 @@ class SettingsBuilder {
 		);
 
 		return $sections_obj;
-	}
-
-	/**
-	 * @param string $key
-	 * @param object $value
-	 */
-	public function addBootable( string $key, $value ): void {
-		$this->pages[ $key ][] = $value;
 	}
 }

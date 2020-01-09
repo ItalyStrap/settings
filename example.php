@@ -40,6 +40,11 @@ $settings->addPage(
 	]
 );
 
-$settings->addCustomLink( 'key-for-css', 'http://localhost.com', 'Custom', [ 'target' => '_blank' ] );
+$settings->addCustomPluginLink(
+	'key-for-css',
+	'http://localhost.com',
+	'Custom',
+	[ 'target' => '_blank' ]
+);
 
 $settings->build();
