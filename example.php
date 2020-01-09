@@ -1,25 +1,32 @@
 <?php
 
-use ItalyStrap\Config\ConfigFactory;
 use ItalyStrap\Settings\Page;
 use ItalyStrap\Settings\SettingsBuilder;
-use ItalyStrap\Settings\ViewPage;
 
-$domain = 'ItalyStrap';
+$text_domain = 'ItalyStrap';
 $option_name = 'italystrap';
-$settings_config = require __DIR__ . '/tests/_data/fixtures/config/settings.php';
+$settings_config = \ItalyStrap\Config\ConfigFactory::make(
+	require __DIR__ . '/tests/_data/fixtures/config/settings.php'
+);
 
+// Initialize the builder
 $settings = new SettingsBuilder(
 	$option_name,
-	$domain,
+	$text_domain,
 	ITALYSTRAP_BASENAME
 );
 
+// You can add configuration via the \ItalyStrap\Config\ConfigFactory::class
 $settings->addPage(
-	$settings_config[0]['page'],
-	$settings_config[0]['sections']
+	$settings_config->get( 'page' ),
+	$settings_config->get( 'sections' )
 );
 
+// Ora manually
+// The section parameter is optional
+// Not every page need a section with fields
+// For example in a docs page
+// Manu title and slug are mandatory
 $settings->addPage(
 	[
 		Page::PARENT		=> 'italystrap-dashboard',
@@ -30,6 +37,7 @@ $settings->addPage(
 	]
 );
 
+// You can also add a sub page either for you parent page or for the WP admin pages
 $settings->addPage(
 	[
 		Page::PARENT		=> 'options-general.php',
@@ -40,6 +48,8 @@ $settings->addPage(
 	]
 );
 
+// You can also add a link to the plugins.php page in your plugin link for activation
+// For example if you want to add an external link to your docs.
 $settings->addCustomPluginLink(
 	'key-for-css',
 	'http://localhost.com',
@@ -47,4 +57,5 @@ $settings->addCustomPluginLink(
 	[ 'target' => '_blank' ]
 );
 
+// After you added pages[?section] and/or link call the build() method.
 $settings->build();

@@ -25,7 +25,9 @@ class SettingsBuilderTest extends \Codeception\Test\Unit {
 	}
 
 	private function getInstance() {
-		$sut = new SettingsBuilder();
+		$sut = new SettingsBuilder(
+			'option-name'
+		);
 		$this->assertInstanceOf( SettingsBuilder::class, $sut, '' );
 		return $sut;
 	}
@@ -33,7 +35,7 @@ class SettingsBuilderTest extends \Codeception\Test\Unit {
 	/**
 	 * @test
 	 */
-//	public function itShouldBeInstantiable() {
-//		$sut = $this->getInstance();
-//	}
+	public function itShouldBeInstantiable() {
+		$sut = $this->getInstance();
+	}
 }
