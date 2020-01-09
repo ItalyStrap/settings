@@ -110,10 +110,11 @@ class SettingsBuilder {
 
 		$injector = new Injector();
 
-		foreach ($this->config as $item) {
-			$sections_obj = $this->addSections( $item[ 'sections' ] );
-			$this->addPage( $item[ 'page' ], $sections_obj );
+		foreach ( $this->config as $item ) {
+			$this->addPage( $item[ 'page' ], $item[ 'sections' ] );
 		}
+
+		$this->getLinks()->boot( $this->base_name );
 
 		/**
 		 * Load script for Tabbed admin page
@@ -123,29 +124,28 @@ class SettingsBuilder {
 	}
 
 	/**
-	 * @param array $item
-	 * @param Sections $sections_obj
+	 * @param array $page
+	 * @param Sections $sections
 	 * @return SettingsBuilder
 	 */
-	public function addPage( array $item, Sections $sections_obj = null ): SettingsBuilder {
+	public function addPage( array $page, array $sections = [] ): SettingsBuilder {
 
 		$pages_obj = new Page(
-			ConfigFactory::make( $item ),
+			ConfigFactory::make( $page ),
 			new ViewPage()
 		);
 
-		if ( $sections_obj ) {
-			$pages_obj->withSections( $sections_obj );
-			$sections_obj->boot();
+		if ( ! empty( $sections ) ) {
+			$sections = $this->addSections( $sections );
+			$pages_obj->withSections( $sections );
+			$sections->boot();
 		}
-
-		$pages_obj->boot();
 
 		if ( ! empty( $this->base_name ) ) {
 			$this->getLinks()->forPages( $pages_obj );
-			$this->getLinks()->boot( $this->base_name );
 		}
 
+		$pages_obj->boot();
 		return $this;
 	}
 
