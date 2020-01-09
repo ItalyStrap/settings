@@ -3,26 +3,32 @@
 use ItalyStrap\Config\ConfigFactory;
 use ItalyStrap\Settings\Page;
 use ItalyStrap\Settings\SettingsBuilder;
+use ItalyStrap\Settings\ViewPage;
 
 $domain = 'ItalyStrap';
 $option_name = 'italystrap';
+$settings_config = require __DIR__ . '/tests/_data/fixtures/config/settings.php';
 
 $settings = new SettingsBuilder(
-	ConfigFactory::make( require __DIR__ . '/tests/_data/fixtures/config/settings.php' ),
 	$option_name,
 	$domain,
 	ITALYSTRAP_BASENAME
 );
 
-//$settings->addPage(
-//	[
-//		Page::PARENT		=> 'italystrap-dashboard',
-//		Page::PAGE_TITLE	=> \__( 'Dashboard 2', 'italystrap' ),
-//		Page::MENU_TITLE	=> \__( 'Child1', 'italystrap' ),
-//		Page::SLUG			=> 'ciao1',
-//		Page::VIEW			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
-//	]
-//);
+$settings->addPage(
+	$settings_config[0]['page'],
+	$settings_config[0]['sections']
+);
+
+$settings->addPage(
+	[
+		Page::PARENT		=> 'italystrap-dashboard',
+		Page::PAGE_TITLE	=> \__( 'Dashboard 2', 'italystrap' ),
+		Page::MENU_TITLE	=> \__( 'Child1', 'italystrap' ),
+		Page::SLUG			=> 'ciaodgsdfghsdf1',
+		Page::VIEW			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
+	]
+);
 
 $settings->addPage(
 	[

@@ -28,11 +28,6 @@ class SettingsBuilder {
 	private $links;
 
 	/**
-	 * @var ConfigInterface
-	 */
-	private $config;
-
-	/**
 	 * @var string
 	 */
 	private $option_name;
@@ -49,13 +44,11 @@ class SettingsBuilder {
 	private $base_name;
 
 	/**
-	 * @param ConfigInterface<array> $config
 	 * @param string $option_name
 	 * @param string $domain
 	 * @param string $base_name
 	 */
-	public function __construct( ConfigInterface $config, $option_name, $domain = '', $base_name = '' ) {
-		$this->config = $config;
+	public function __construct( $option_name, $domain = '', $base_name = '' ) {
 		$this->option_name = $option_name;
 		$this->domain = $domain;
 		$this->base_name = $base_name;
@@ -108,12 +101,6 @@ class SettingsBuilder {
 	 */
 	public function build(): void {
 
-		$injector = new Injector();
-
-		foreach ( $this->config as $item ) {
-			$this->addPage( $item[ 'page' ], $item[ 'sections' ] );
-		}
-
 		$this->getLinks()->boot( $this->base_name );
 
 		/**
@@ -151,9 +138,9 @@ class SettingsBuilder {
 
 	/**
 	 * @param array $item
-	 * @return Sections
+	 * @return array
 	 */
-	public function addSections( array $item ): Sections {
+	private function addSections( array $item ): Sections {
 
 		$sections_obj = new Sections(
 			ConfigFactory::make( $item ),
