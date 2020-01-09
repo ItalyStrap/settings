@@ -6,7 +6,6 @@ namespace ItalyStrap\Settings;
 use Auryn\Injector;
 use ItalyStrap\Config\ConfigFactory;
 use ItalyStrap\Config\ConfigInterface;
-use ItalyStrap\DataParser\Parser;
 use ItalyStrap\DataParser\ParserFactory;
 use ItalyStrap\Fields\Fields;
 use ItalyStrap\HTML\Attributes;
@@ -112,14 +111,9 @@ class SettingsBuilder {
 		$injector = new Injector();
 
 		foreach ($this->config as $item) {
-			$sections_obj = new Sections(
-				ConfigFactory::make( $item[ 'sections' ] ),
-				new Fields(),
-				ParserFactory::make( $this->domain ),
-				$this->getOptions()
-			);
+			$sections_obj = $this->addSections( $item );
 
-			$this->page( $item[ 'page' ], $sections_obj );
+			$this->addPage( $item[ 'page' ], $sections_obj );
 		}
 
 		/**
@@ -134,7 +128,7 @@ class SettingsBuilder {
 	 * @param Sections $sections_obj
 	 * @return SettingsBuilder
 	 */
-	public function page( $item, Sections $sections_obj = null ): SettingsBuilder {
+	public function addPage( $item, Sections $sections_obj = null ): SettingsBuilder {
 
 		$pages_obj = new Page(
 			ConfigFactory::make( $item ),
@@ -154,5 +148,19 @@ class SettingsBuilder {
 		}
 
 		return $this;
+	}
+
+	/**
+	 * @param $item
+	 * @return Sections
+	 */
+	public function addSections( $item ): Sections {
+		$sections_obj = new Sections(
+			ConfigFactory::make( $item[ 'sections' ] ),
+			new Fields(),
+			ParserFactory::make( $this->domain ),
+			$this->getOptions()
+		);
+		return $sections_obj;
 	}
 }

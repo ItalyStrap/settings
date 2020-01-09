@@ -14,7 +14,7 @@ $settings = new SettingsBuilder(
 	ITALYSTRAP_BASENAME
 );
 
-$settings->page(
+$settings->addPage(
 	[
 		Page::PARENT		=> 'italystrap-dashboard',
 		Page::PAGE_TITLE	=> \__( 'Dashboard 2', 'italystrap' ),
@@ -24,7 +24,7 @@ $settings->page(
 	]
 );
 
-$settings->page(
+$settings->addPage(
 	[
 		Page::PARENT		=> 'options-general.php',
 //		Page::PAGE_TITLE	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
