@@ -16,8 +16,8 @@ use ItalyStrap\HTML\Tag;
  * Class SettingsFactory
  * @package ItalyStrap\Settings
  */
-class SettingsBuilder
-{
+class SettingsBuilder {
+
 	/**
 	 * @var OptionsInterface
 	 */
@@ -102,7 +102,6 @@ class SettingsBuilder
 	 * @param iterable $item
 	 */
 	public function withPage( iterable $item ) {
-
 	}
 
 	/**
@@ -113,7 +112,6 @@ class SettingsBuilder
 		$injector = new Injector();
 
 		foreach ($this->config as $item) {
-
 			$sections_obj = new Sections(
 				ConfigFactory::make( $item[ 'sections' ] ),
 				new Fields(),

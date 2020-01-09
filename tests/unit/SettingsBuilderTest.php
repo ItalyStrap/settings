@@ -9,16 +9,18 @@ use ItalyStrap\Settings\SettingsBuilder;
  * Class SettingsBuilderTest
  * @package ItalyStrap\Tests
  */
-class SettingsBuilderTest extends \Codeception\Test\Unit
-{
+class SettingsBuilderTest extends \Codeception\Test\Unit {
+
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
 
+	// phpcs:ignore -- Method from Codeception
 	protected function _before() {
 	}
 
+	// phpcs:ignore -- Method from Codeception
 	protected function _after() {
 	}
 
