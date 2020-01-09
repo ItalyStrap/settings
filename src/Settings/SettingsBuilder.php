@@ -123,7 +123,7 @@ class SettingsBuilder {
 
 	/**
 	 * @param array $page
-	 * @param Sections $sections
+	 * @param array $sections
 	 * @return SettingsBuilder
 	 */
 	public function addPage( array $page, array $sections = [] ): SettingsBuilder {
@@ -150,7 +150,7 @@ class SettingsBuilder {
 
 	/**
 	 * @param array $item
-	 * @return array
+	 * @return Sections
 	 */
 	private function addSections( array $item ): Sections {
 
@@ -165,7 +165,8 @@ class SettingsBuilder {
 	}
 
 	/**
-	 * @param Page $pages_obj
+	 * @param string $key
+	 * @param object $value
 	 */
 	public function addBootable( string $key, $value ): void {
 		$this->pages[ $key ][] = $value;
