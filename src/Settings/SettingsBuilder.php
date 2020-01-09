@@ -67,7 +67,7 @@ class SettingsBuilder
 	 */
 	public function getLinks(): Links {
 
-		if ( \is_null( $this->links ) ) {
+		if ( empty( $this->links ) ) {
 			$this->links = new Links( new Tag( new Attributes() ) );
 		}
 
@@ -91,7 +91,7 @@ class SettingsBuilder
 	 */
 	public function getOptions(): OptionsInterface {
 
-		if ( \is_null( $this->options ) ) {
+		if ( empty( $this->options ) ) {
 			$this->options = new Options( $this->option_name );
 		}
 
