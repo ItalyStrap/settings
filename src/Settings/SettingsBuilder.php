@@ -44,6 +44,11 @@ class SettingsBuilder {
 	private $base_name;
 
 	/**
+	 * @var array<Page|Sections>
+	 */
+	private $pages;
+
+	/**
 	 * @param string $option_name
 	 * @param string $domain
 	 * @param string $base_name
@@ -101,13 +106,19 @@ class SettingsBuilder {
 	 */
 	public function build(): void {
 
+		\array_map( function ( array $to_boot ) {
+			foreach ( $to_boot as $bootable ) {
+				$bootable->boot();
+			}
+		}, $this->pages );
+
 		$this->getLinks()->boot( $this->base_name );
 
 		/**
 		 * Load script for Tabbed admin page
 		 */
 		$asset = new AssetLoader();
-		\add_action( 'admin_enqueue_scripts', [$asset, 'load'] );
+		\add_action( 'admin_enqueue_scripts', [ $asset, 'load' ] );
 	}
 
 	/**
@@ -122,17 +133,18 @@ class SettingsBuilder {
 			new ViewPage()
 		);
 
+		$this->addBootable( $pages_obj->getSlug(), $pages_obj );
+
 		if ( ! empty( $sections ) ) {
 			$sections = $this->addSections( $sections );
 			$pages_obj->withSections( $sections );
-			$sections->boot();
+			$this->addBootable( $pages_obj->getSlug(), $sections );
 		}
 
 		if ( ! empty( $this->base_name ) ) {
 			$this->getLinks()->forPages( $pages_obj );
 		}
 
-		$pages_obj->boot();
 		return $this;
 	}
 
@@ -150,5 +162,12 @@ class SettingsBuilder {
 		);
 
 		return $sections_obj;
+	}
+
+	/**
+	 * @param Page $pages_obj
+	 */
+	public function addBootable( string $key, $value ): void {
+		$this->pages[ $key ][] = $value;
 	}
 }
