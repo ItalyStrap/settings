@@ -7,7 +7,7 @@
 [![License](https://img.shields.io/packagist/l/italystrap/settings.svg)](https://packagist.org/packages/italystrap/settings)
 ![PHP from Packagist](https://img.shields.io/packagist/php-v/italystrap/settings)
 
-PHP Sanitizer and Validation OOP way
+WordPress Settings API OOP way
 
 **Work in progress:** the project is currently in beta until considered viable. Until a 1.0.0 release the code in this repository is not stable. Expect changes breaking backward compatibility between minor versions (0.1.x -> 0.2.x).
 
