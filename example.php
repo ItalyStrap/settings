@@ -25,8 +25,8 @@ $settings->addPage(
 		Page::PARENT		=> 'italystrap-dashboard',
 		Page::PAGE_TITLE	=> \__( 'Dashboard 2', 'italystrap' ),
 		Page::MENU_TITLE	=> \__( 'Child1', 'italystrap' ),
-		Page::SLUG			=> 'ciaodgsdfghsdf1',
-		Page::VIEW			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
+		Page::SLUG			=> 'slug-for-child-page',
+		Page::VIEW			=> __DIR__ . '/tests/_data/fixtures/view/empty_form.php',
 	]
 );
 
@@ -35,8 +35,8 @@ $settings->addPage(
 		Page::PARENT		=> 'options-general.php',
 //		Page::PAGE_TITLE	=> \__( 'ItalyStrap Dashboard 2', 'italystrap' ),
 		Page::MENU_TITLE	=> \__( 'Child-general', 'italystrap' ),
-		Page::SLUG			=> 'Child-general',
-		Page::VIEW			=> __DIR__ . '/tests/_data/fixtures/view/settings_form.php',
+		Page::SLUG			=> 'slug-for-child-general',
+		Page::VIEW			=> __DIR__ . '/tests/_data/fixtures/view/empty_form.php',
 	]
 );
 
