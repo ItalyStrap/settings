@@ -31,7 +31,7 @@ class SettingsBuilderTest extends \Codeception\Test\Unit
 	/**
 	 * @test
 	 */
-	public function itShouldBeInstantiable() {
-		$sut = $this->getInstance();
-	}
+//	public function itShouldBeInstantiable() {
+//		$sut = $this->getInstance();
+//	}
 }
