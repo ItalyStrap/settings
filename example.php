@@ -3,7 +3,6 @@
 use ItalyStrap\Config\ConfigFactory;
 use ItalyStrap\Settings\Page;
 use ItalyStrap\Settings\SettingsBuilder;
-use ItalyStrap\Settings\ViewPage;
 
 $domain = 'ItalyStrap';
 $option_name = 'italystrap';
