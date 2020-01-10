@@ -9,8 +9,8 @@ use ItalyStrap\DataParser\FilterableInterface;
  * Class BaseFilter
  * @package ItalyStrap\Tests
  */
-class BaseFilter extends \Codeception\Test\Unit
-{
+class BaseFilter extends \Codeception\Test\Unit {
+
 	/**
 	 * @test
 	 */

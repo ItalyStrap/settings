@@ -17,8 +17,8 @@ require_once 'BaseFilter.php';
  * Class SanitizeTest
  * @package ItalyStrap\Tests
  */
-class SanitizeTest extends BaseFilter
-{
+class SanitizeTest extends BaseFilter {
+
 	/**
 	 * @var \UnitTester
 	 */

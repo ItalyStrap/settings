@@ -14,16 +14,15 @@ require_once 'BaseFilter.php';
  * Class NullTest
  * @package ItalyStrap\Tests
  */
-class NullTest extends BaseFilter
-{
+class NullTest extends BaseFilter {
+
 	/**
 	 * @var \UnitTester
 	 */
 	protected $tester;
 
 	// phpcs:ignore -- Method from Codeception
-	protected function _before()
-	{
+	protected function _before() {
 		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'current_user_can', function ( $string ) {
 			return true;
@@ -31,8 +30,7 @@ class NullTest extends BaseFilter
 	}
 
 	// phpcs:ignore -- Method from Codeception
-	protected function _after()
-	{
+	protected function _after() {
 	}
 
 	protected function getInstance(): FilterableInterface {

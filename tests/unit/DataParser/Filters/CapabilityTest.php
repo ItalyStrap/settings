@@ -11,28 +11,26 @@ require_once 'BaseFilter.php';
  * Class CapabilityTest
  * @package ItalyStrap\Tests
  */
-class CapabilityTest extends BaseFilter
-{
-    /**
-     * @var \UnitTester
-     */
-    protected $tester;
+class CapabilityTest extends BaseFilter {
+
+	/**
+	 * @var \UnitTester
+	 */
+	protected $tester;
 
 	// phpcs:ignore -- Method from Codeception
-    protected function _before()
-    {
+    protected function _before() {
 		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'current_user_can', function ( $string ) {
 			return true;
 		} );
-    }
+	}
 
 	// phpcs:ignore -- Method from Codeception
-    protected function _after()
-    {
-    }
+    protected function _after() {
+	}
 
-    protected function getInstance(): FilterableInterface {
+	protected function getInstance(): FilterableInterface {
 		$sut = new CapabilityFilter();
 		$this->assertInstanceOf( CapabilityFilter::class, $sut, '' );
 		return $sut;

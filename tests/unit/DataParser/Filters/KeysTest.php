@@ -9,33 +9,32 @@ use ItalyStrap\DataParser\Filters\Keys;
  * Class KeysTest
  * @package ItalyStrap\Tests
  */
-class KeysTest extends \Codeception\Test\Unit
-{
-    /**
-     * @var \UnitTester
-     */
-    protected $tester;
+class KeysTest extends \Codeception\Test\Unit {
+
+	/**
+	 * @var \UnitTester
+	 */
+	protected $tester;
 
 	// phpcs:ignore -- Method from Codeception
-    protected function _before()
-    {
-    }
+    protected function _before() {
+	}
 
 	// phpcs:ignore -- Method from Codeception
-    protected function _after()
-    {
-    }
+    protected function _after() {
+	}
 
 	private function getInstance(): Keys {
-		return new class implements Keys {};
-    }
+		return new class implements Keys {
+		};
+	}
 
 	/**
 	 * @test
 	 */
 	public function itShouldBeInstantiable() {
 		$sut = $this->getInstance();
-    }
+	}
 
 	/**
 	 * @test
@@ -50,5 +49,5 @@ class KeysTest extends \Codeception\Test\Unit
 		$this->assertStringContainsString( 'translate', $sut::TRANSLATE, '' );
 		$this->assertStringContainsString( 'data-type', $sut::TYPE, '' );
 		$this->assertStringContainsString( 'validate', $sut::VALIDATE, '' );
-    }
+	}
 }
