@@ -28,11 +28,11 @@ class SanitizeFilter implements FilterableInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function filter( $data, array $schema ) {
+	public function filter( string $key, $value, array $schema ) {
 
 		$this->sanitization->addRules( $schema[ self::KEY ] );
-		$data = $this->sanitization->sanitize( $data );
+		$value = $this->sanitization->sanitize( $value );
 
-		return $data;
+		return $value;
 	}
 }

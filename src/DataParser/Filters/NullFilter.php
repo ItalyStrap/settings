@@ -19,7 +19,7 @@ class NullFilter implements FilterableInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function filter( $data, array $schema ) {
-		return $data;
+	public function filter( string $key, $value, array $schema ) {
+		return $value;
 	}
 }

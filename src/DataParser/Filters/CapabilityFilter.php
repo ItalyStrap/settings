@@ -18,7 +18,12 @@ class CapabilityFilter implements FilterableInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function filter( $data, array $schema ) {
-		// TODO: Implement filter() method.
+	public function filter( string $key, $value, array $schema ) {
+
+		if ( \current_user_can( $schema[ self::KEY ] ) ) {
+			return $value;
+		}
+
+		return $value;
 	}
 }

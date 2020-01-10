@@ -18,7 +18,7 @@ class RequiredFilter implements FilterableInterface {
 	/**
 	 * @inheritDoc
 	 */
-	public function filter( $data, array $schema ) {
+	public function filter( string $key, $value, array $schema ) {
 		// TODO: Implement filter() method.
 	}
 }

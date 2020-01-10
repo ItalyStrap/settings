@@ -6,12 +6,12 @@ namespace ItalyStrap\DataParser\Filters;
 use ItalyStrap\DataParser\FilterableInterface;
 
 /**
- * Class TypeFilter
+ * Class ThemeModFilter
  * @package ItalyStrap\DataParser\Filters
  */
-class TypeFilter implements FilterableInterface {
+class ThemeModFilter implements FilterableInterface {
 
-	const KEY = 'data-type';
+	const KEY = 'option-type';
 
 	use DefaultSchema;
 
@@ -19,6 +19,11 @@ class TypeFilter implements FilterableInterface {
 	 * @inheritDoc
 	 */
 	public function filter( string $key, $value, array $schema ) {
-		// TODO: Implement filter() method.
+
+		if ( 'theme_mod' === $schema['option_type'] ) {
+			\set_theme_mod( $key, $value );
+		}
+
+		return $value;
 	}
 }

@@ -22,9 +22,10 @@ interface FilterableInterface {
 	 *
 	 * The return value could be the type of int or string
 	 *
-	 * @param int|string|array $data
+	 * @param string $key
+	 * @param mixed $value
 	 * @param array<mixed> $schema
 	 * @return mixed
 	 */
-	public function filter( $data, array $schema );
+	public function filter( string $key, $value, array $schema );
 }

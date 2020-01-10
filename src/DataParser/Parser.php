@@ -61,46 +61,41 @@ class Parser implements ParserInterface {
 		}
 
 		foreach ( $this->schema as $key => $schema ) {
-			$data = $this->assertDataValueIsSet( $data, $key );
-			$data[ $key ] = $this->parseValue( $data[ $key ], $schema );
+			$data = $this->assertDataValueIsSet( $key, $data );
+			$data[ $key ] = $this->parseValue( $key, $data[ $key ], $schema );
 		}
 
 		return $data;
 	}
 
 	/**
+	 * @param string $key
 	 * @param mixed $value
 	 * @param array $schema
 	 * @return mixed
 	 */
-	private function parseValue( $value, array $schema ) {
+	private function parseValue( string $key, $value, array $schema ) {
 
 		/* @var $filter FilterableInterface */
 		foreach ( $this->filters as $filter ) {
 			$schema = \array_replace_recursive( $filter->getDefault(), $schema );
-
-			if ( ! \is_array( $value ) ) {
-				$value = $filter->filter( $value, $schema );
-				continue;
-			}
-
-			foreach ( (array) $value as $index => $item ) {
-				$value[ $index ] = $filter->filter( $item, $schema );
-			}
+			$value = $filter->filter( $key, $value, $schema );
 		}
 
 		return $value;
 	}
 
 	/**
-	 * @param array $data
 	 * @param string $key
+	 * @param array $data
 	 * @return array
 	 */
-	private function assertDataValueIsSet( array $data, $key ): array {
+	private function assertDataValueIsSet( string $key, array $data ): array {
+
 		if ( ! isset( $data[ $key ] ) ) {
 			$data[ $key ] = '';
 		}
+
 		return $data;
 	}
 }

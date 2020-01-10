@@ -4,10 +4,17 @@ declare(strict_types=1);
 namespace ItalyStrap\Tests;
 
 use Codeception\Test\Unit;
+use ItalyStrap\Cleaner\Sanitization;
+use ItalyStrap\Cleaner\Validation;
+use ItalyStrap\DataParser\FilterableInterface;
 use ItalyStrap\DataParser\Filters\DefaultSchema;
+use ItalyStrap\DataParser\Filters\SanitizeFilter;
+use ItalyStrap\DataParser\Filters\TranslateFilter;
+use ItalyStrap\DataParser\Filters\ValidateFilter;
 use ItalyStrap\DataParser\Parser;
 use ItalyStrap\DataParser\ParserFactory;
 use ItalyStrap\DataParser\ParserInterface;
+use ItalyStrap\I18N\Translator;
 
 class DataParserTest extends Unit {
 
@@ -59,35 +66,21 @@ class DataParserTest extends Unit {
 	/**
 	 * @test
 	 */
-	private function itShouldReturnFilteredDataWithDefaultStripTagsAndTrimIfNoFiltersAreProvided() {
-		$sut = $this->getInstance();
-		$sut->withSchema(
-			[
-				'test'	=> [],
-			]
-		);
-		$data = $sut->parseValues( [ 'test' => '<h1> value </h1>' ] );
-		$this->assertEquals( [ 'test' => 'value' ], $data, '' );
-	}
-
-	/**
-	 * @test
-	 */
 	public function itShouldReturnFilteredDataWithProvidedCustomFilters() {
 		$sut = $this->getInstance();
 
-		$filter = new class implements \ItalyStrap\DataParser\FilterableInterface {
+		$filter = new class implements FilterableInterface {
 
 			const KEY = 'sanitize';
 
 			private function getSanitize() {
-				return new \ItalyStrap\Cleaner\Sanitization();
+				return new Sanitization();
 			}
 
-			public function filter( $data, array $schema ) {
+			public function filter( string $key, $value, array $schema ) {
 				$san = $this->getSanitize();
 				$san->addRules( $schema[ self::KEY ] );
-				return $san->sanitize( $data );
+				return $san->sanitize( $value );
 			}
 
 			/**
@@ -105,8 +98,19 @@ class DataParserTest extends Unit {
 				'test'	=> [],
 			]
 		);
-		$data = $sut->parseValues( [ 'test' => '<h1> value1 </h1>', 'test2' => '<h1> value2 </h1>' ] );
-		$this->assertEquals( [ 'test' => 'value1', 'test2' => '<h1> value2 </h1>' ], $data, '' );
+		$data = $sut->parseValues(
+			[
+				'test'	=> '<h1> value1 </h1>',
+				'test2'	=> '<h1> value2 </h1>'
+			]
+		);
+		$this->assertEquals(
+			[
+				'test'	=> 'value1',
+				'test2'	=> '<h1> value2 </h1>'
+			],
+			$data, ''
+		);
 	}
 
 	/**
@@ -115,8 +119,8 @@ class DataParserTest extends Unit {
 	public function itShouldReturnFilteredDataWithProvidedFilters() {
 		$sut = $this->getInstance();
 
-		$san = new \ItalyStrap\Cleaner\Sanitization();
-		$filter = new \ItalyStrap\DataParser\Filters\SanitizeFilter( $san );
+		$san = new Sanitization();
+		$filter = new SanitizeFilter( $san );
 		$sut->withFilters( $filter );
 
 		$sut->withSchema(
@@ -137,8 +141,8 @@ class DataParserTest extends Unit {
 
 		$sut = $this->getInstance();
 
-		$val = new \ItalyStrap\Cleaner\Validation();
-		$filter = new \ItalyStrap\DataParser\Filters\ValidateFilter( $val );
+		$val = new Validation();
+		$filter = new ValidateFilter( $val );
 		$sut->withFilters( $filter );
 
 		$sut->withSchema(
@@ -160,8 +164,8 @@ class DataParserTest extends Unit {
 
 		$sut = $this->getInstance();
 
-		$val = new \ItalyStrap\Cleaner\Validation();
-		$filter = new \ItalyStrap\DataParser\Filters\ValidateFilter( $val );
+		$val = new Validation();
+		$filter = new ValidateFilter( $val );
 		$sut->withFilters( $filter );
 
 		$sut->withSchema(
@@ -183,11 +187,11 @@ class DataParserTest extends Unit {
 
 		$sut = $this->getInstance();
 
-		$san = new \ItalyStrap\Cleaner\Sanitization();
-		$filter_san = new \ItalyStrap\DataParser\Filters\SanitizeFilter( $san );
+		$san = new Sanitization();
+		$filter_san = new SanitizeFilter( $san );
 
-		$val = new \ItalyStrap\Cleaner\Validation();
-		$filter_val = new \ItalyStrap\DataParser\Filters\ValidateFilter( $val );
+		$val = new Validation();
+		$filter_val = new ValidateFilter( $val );
 
 		$sut->withFilters( $filter_san, $filter_val );
 
@@ -215,14 +219,14 @@ class DataParserTest extends Unit {
 
 		$sut = $this->getInstance();
 
-		$san = new \ItalyStrap\Cleaner\Sanitization();
-		$filter_san = new \ItalyStrap\DataParser\Filters\SanitizeFilter( $san );
+		$san = new Sanitization();
+		$filter_san = new SanitizeFilter( $san );
 
-		$val = new \ItalyStrap\Cleaner\Validation();
-		$filter_val = new \ItalyStrap\DataParser\Filters\ValidateFilter( $val );
+		$val = new Validation();
+		$filter_val = new ValidateFilter( $val );
 
-		$tras = new \ItalyStrap\I18N\Translator( 'name' );
-		$filter_tras = new \ItalyStrap\DataParser\Filters\TranslateFilter( $tras );
+		$tras = new Translator( 'name' );
+		$filter_tras = new TranslateFilter( $tras );
 
 		$sut->withFilters( $filter_san, $filter_val, $filter_tras );
 
@@ -251,19 +255,11 @@ class DataParserTest extends Unit {
 
 		$sut = $this->getInstance();
 
-		$san = new \ItalyStrap\Cleaner\Sanitization();
-		$filter_san = new \ItalyStrap\DataParser\Filters\SanitizeFilter( $san );
-
-		$val = new \ItalyStrap\Cleaner\Validation();
-		$filter_val = new \ItalyStrap\DataParser\Filters\ValidateFilter( $val );
-
-		$tras = new \ItalyStrap\I18N\Translator( 'name' );
-		$filter_tras = new \ItalyStrap\DataParser\Filters\TranslateFilter( $tras );
+		$san = new Sanitization();
+		$filter_san = new SanitizeFilter( $san );
 
 		$sut->withFilters(
-			$filter_san,
-			$filter_val,
-			$filter_tras
+			$filter_san
 		);
 
 		$sut->withSchema(
@@ -271,11 +267,17 @@ class DataParserTest extends Unit {
 				'emails'	=> [
 					'sanitize'		=> [
 						function ( $string ) {
-							return \filter_var( $string, FILTER_SANITIZE_STRING );
+							if ( ! \is_array( $string ) ) {
+								return \filter_var( $string, FILTER_SANITIZE_STRING );
+							}
+
+							foreach ( (array) $string as $key => $value ) {
+								$string[ $key ] = \filter_var( $value, FILTER_SANITIZE_STRING );
+							}
+
+							return $string;
 						},
 					],
-			//					'validate'		=> 'is_email',
-			//					'translate'		=> true,
 				],
 			]
 		);
