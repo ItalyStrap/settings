@@ -11,6 +11,7 @@ use Prophecy\Argument;
 // phpcs:disable
 require_once 'BaseFilter.php';
 // phpcs:enable
+
 /**
  * Class SanitizeTest
  * @package ItalyStrap\Tests
@@ -36,11 +37,6 @@ class SanitizeTest extends BaseFilter {
 
 	// phpcs:ignore -- Method from Codeception
 	protected function _before() {
-		// phpcs:ignore -- This is not a constant definition
-		\tad\FunctionMockerLe\define( 'current_user_can', function ( $string ) {
-			return true;
-		} );
-
 		$this->sanitization = $this->prophesize( Sanitization::class );
 	}
 
