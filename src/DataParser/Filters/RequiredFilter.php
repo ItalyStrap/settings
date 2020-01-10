@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ItalyStrap\DataParser\Filters;
 
+use ItalyStrap\DataParser\Exception\ValueRequired;
 use ItalyStrap\DataParser\FilterableInterface;
 
 /**
@@ -19,6 +20,14 @@ class RequiredFilter implements FilterableInterface {
 	 * @inheritDoc
 	 */
 	public function filter( string $key, $value, array $schema ) {
-		// TODO: Implement filter() method.
+
+		if ( $schema[ self::KEY ] && empty( $value ) ) {
+			throw new ValueRequired( \sprintf(
+				'The value with key: %s is required.',
+				$key
+			) );
+		}
+
+		return $value;
 	}
 }
