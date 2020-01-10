@@ -9,7 +9,7 @@ use RuntimeException;
  * Class ValueRequired
  * @package ItalyStrap\DataParser\Exception
  */
-class ValueRequired extends RuntimeException
-{
+class ValueRequired extends RuntimeException {
+
 
 }

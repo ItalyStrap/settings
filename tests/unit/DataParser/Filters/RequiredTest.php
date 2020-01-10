@@ -18,8 +18,8 @@ require_once 'BaseFilter.php';
  * Class RequiredTest
  * @package ItalyStrap\Tests
  */
-class RequiredTest extends BaseFilter
-{
+class RequiredTest extends BaseFilter {
+
 
 	/**
 	 * @var \UnitTester
@@ -53,8 +53,8 @@ class RequiredTest extends BaseFilter
 	 * @test
 	 */
 	public function itShouldThrownExceptionIfValueIsRequired() {
-	$sut = $this->getInstance();
-	$this->expectException( ValueRequired::class );
-	$sut->filter( 'key', '', [ $sut::KEY => true ] );
-}
+		$sut = $this->getInstance();
+		$this->expectException( ValueRequired::class );
+		$sut->filter( 'key', '', [ $sut::KEY => true ] );
+	}
 }
