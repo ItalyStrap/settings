@@ -7,7 +7,7 @@ namespace ItalyStrap\DataParser\Exception;
  * Class ValueRejected
  * @package ItalyStrap\DataParser\Exception
  */
-class ValueRejected extends \RuntimeException
-{
+class ValueRejected extends \RuntimeException {
+
 
 }

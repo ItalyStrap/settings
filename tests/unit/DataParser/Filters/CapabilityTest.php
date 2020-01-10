@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Tests;
 
+use ItalyStrap\DataParser\Exception\ValueRejected;
 use ItalyStrap\DataParser\FilterableInterface;
 use ItalyStrap\DataParser\Filters\CapabilityFilter;
 use Symfony\Component\VarDumper\VarDumper;
@@ -43,8 +44,18 @@ class CapabilityTest extends BaseFilter {
 	/**
 	 * @test
 	 */
-	public function itShouldFilter() {
+	public function itShouldReturnValueIfUserHasCorrectCapability() {
 		$sut = $this->getInstance();
-		$sut->filter( 'key', 'value', [ $sut::KEY => 'manage_optionsd' ] );
+		$value = $sut->filter( 'key', 'value', [ $sut::KEY => 'manage_options' ] );
+		$this->assertStringContainsString( 'value', $value, '' );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldThrownExceptionIfUserHaveNotPermissionToSave() {
+		$sut = $this->getInstance();
+		$this->expectException( ValueRejected::class );
+		$sut->filter( 'key', 'value', [ $sut::KEY => 'no-caps' ] );
 	}
 }
