@@ -5,6 +5,7 @@ namespace ItalyStrap\Tests;
 
 use ItalyStrap\DataParser\FilterableInterface;
 use ItalyStrap\DataParser\Filters\CapabilityFilter;
+use Symfony\Component\VarDumper\VarDumper;
 
 // phpcs:disable
 require_once 'BaseFilter.php';
@@ -25,7 +26,7 @@ class CapabilityTest extends BaseFilter {
     protected function _before() {
 		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'current_user_can', function ( $string ) {
-			return true;
+			return 'manage_options' === $string;
 		} );
 	}
 
@@ -42,8 +43,8 @@ class CapabilityTest extends BaseFilter {
 	/**
 	 * @test
 	 */
-//	public function itShouldFilter() {
-//		$sut = $this->getInstance();
-//		$sut->filter( '', '', [ $sut::KEY => false ] );
-//	}
+	public function itShouldFilter() {
+		$sut = $this->getInstance();
+		$sut->filter( 'key', 'value', [ $sut::KEY => 'manage_optionsd' ] );
+	}
 }
