@@ -56,9 +56,7 @@ class Parser implements ParserInterface {
 	 */
 	public function parseValues( array $data ): array {
 
-		if ( empty( $this->filters ) ) {
-			throw new \RuntimeException( 'You must provide at least one filter.' );
-		}
+		$this->assertHasFilters();
 
 		foreach ( $this->schema as $key => $schema ) {
 			$data = $this->assertDataValueIsSet( $key, $data );
@@ -97,5 +95,16 @@ class Parser implements ParserInterface {
 		}
 
 		return $data;
+	}
+
+	private function assertHasFilters(): void {
+		if ( empty( $this->filters ) ) {
+			throw new \RuntimeException(
+				\sprintf(
+					'You must provide at least one filter that implements %s.',
+					FilterableInterface::class
+				)
+			);
+		}
 	}
 }

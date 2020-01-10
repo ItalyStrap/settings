@@ -20,7 +20,7 @@ class ThemeModFilter implements FilterableInterface {
 	 */
 	public function filter( string $key, $value, array $schema ) {
 
-		if ( 'theme_mod' === $schema['option_type'] ) {
+		if ( 'theme_mod' === $schema[ self::KEY ] ) {
 			\set_theme_mod( $key, $value );
 		}
 

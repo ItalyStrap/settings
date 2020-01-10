@@ -16,7 +16,7 @@ use ItalyStrap\DataParser\ParserFactory;
 use ItalyStrap\DataParser\ParserInterface;
 use ItalyStrap\I18N\Translator;
 
-class DataParserTest extends Unit {
+class ParserTest extends Unit {
 
 	/**
 	 * @var \UnitTester
