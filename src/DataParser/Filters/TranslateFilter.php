@@ -26,12 +26,12 @@ class TranslateFilter implements FilterableInterface {
 	 */
 	public function filter( string $key, $value, array $schema ) {
 
-		if ( $schema[ self::KEY ] && isset( $schema['id'] ) ) {
+		if ( $schema[ self::KEY ] ) {
 
 			/**
 			 * @todo Maybe add some kind of error if no strings are registered
 			 */
-			$this->translator->registerString( $schema['id'], \strip_tags( \strval( $value ) ) );
+			$this->translator->registerString( $key, \strip_tags( \strval( $value ) ) );
 		}
 
 		return $value;

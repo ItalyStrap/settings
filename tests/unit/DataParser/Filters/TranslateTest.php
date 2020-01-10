@@ -58,7 +58,7 @@ class TranslateTest extends BaseFilter {
 	public function itShouldFilter() {
 
 		$sut = $this->getInstance();
-		$value = $sut->filter( '', 'value', [ $sut::KEY => true, 'id' => 'key' ] );
+		$value = $sut->filter( '', 'value', [ $sut::KEY => true ] );
 		$this->assertStringContainsString( 'value', $value, '' );
 	}
 }
