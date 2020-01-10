@@ -8,7 +8,9 @@ use ItalyStrap\DataParser\Filters\CapabilityFilter;
 use ItalyStrap\DataParser\Filters\DefaultSchema;
 use ItalyStrap\DataParser\Filters\NullFilter;
 
+// phpcs:disable
 require_once 'BaseFilter.php';
+// phpcs:enable
 
 /**
  * Class NullTest

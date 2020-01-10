@@ -6,7 +6,10 @@ namespace ItalyStrap\Tests;
 use ItalyStrap\DataParser\FilterableInterface;
 use ItalyStrap\DataParser\Filters\CapabilityFilter;
 
+// phpcs:disable
 require_once 'BaseFilter.php';
+// phpcs:enable
+
 /**
  * Class CapabilityTest
  * @package ItalyStrap\Tests

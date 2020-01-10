@@ -5,14 +5,12 @@ namespace ItalyStrap\Tests;
 
 use ItalyStrap\Cleaner\Sanitization;
 use ItalyStrap\DataParser\FilterableInterface;
-use ItalyStrap\DataParser\Filters\CapabilityFilter;
-use ItalyStrap\DataParser\Filters\DefaultSchema;
-use ItalyStrap\DataParser\Filters\NullFilter;
 use ItalyStrap\DataParser\Filters\SanitizeFilter;
 use Prophecy\Argument;
 
+// phpcs:disable
 require_once 'BaseFilter.php';
-
+// phpcs:enable
 /**
  * Class SanitizeTest
  * @package ItalyStrap\Tests
