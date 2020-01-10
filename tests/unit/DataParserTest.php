@@ -109,7 +109,8 @@ class DataParserTest extends Unit {
 				'test'	=> 'value1',
 				'test2'	=> '<h1> value2 </h1>'
 			],
-			$data, ''
+			$data,
+			''
 		);
 	}
 
