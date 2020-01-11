@@ -9,7 +9,7 @@ use RuntimeException;
  * Class InvalidValue
  * @package ItalyStrap\DataParser\Exception
  */
-class InvalidValue extends RuntimeException
-{
+class InvalidValue extends RuntimeException {
+
 
 }
