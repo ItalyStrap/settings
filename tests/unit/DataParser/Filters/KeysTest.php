@@ -47,7 +47,6 @@ class KeysTest extends \Codeception\Test\Unit {
 		$this->assertStringContainsString( 'sanitize', $sut::SANITIZE, '' );
 		$this->assertStringContainsString( 'option-type', $sut::THEME_MOD, '' );
 		$this->assertStringContainsString( 'translate', $sut::TRANSLATE, '' );
-		$this->assertStringContainsString( 'data-type', $sut::TYPE, '' );
 		$this->assertStringContainsString( 'validate', $sut::VALIDATE, '' );
 	}
 }

@@ -13,6 +13,5 @@ interface Keys {
 	const SANITIZE = SanitizeFilter::KEY;
 	const THEME_MOD = ThemeModFilter::KEY;
 	const TRANSLATE = TranslateFilter::KEY;
-	const TYPE = TypeFilter::KEY;
 	const VALIDATE = ValidateFilter::KEY;
 }

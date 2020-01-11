@@ -48,10 +48,6 @@ class ParserTest extends Unit {
 	 */
 	public function itShouldBeInstantiable() {
 		$this->getInstance();
-
-		$sut = ParserFactory::make();
-		$this->assertInstanceOf( ParserInterface::class, $sut, '' );
-		$this->assertInstanceOf( Parser::class, $sut, '' );
 	}
 
 	/**
