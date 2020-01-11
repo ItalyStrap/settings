@@ -7,20 +7,18 @@ use ItalyStrap\DataParser\Parser;
 use ItalyStrap\DataParser\ParserFactory;
 use ItalyStrap\DataParser\ParserInterface;
 
-class ParserFactoryTest extends \Codeception\Test\Unit
-{
-    /**
-     * @var \UnitTester
-     */
-    protected $tester;
+class ParserFactoryTest extends \Codeception\Test\Unit {
 
-    protected function _before()
-    {
-    }
+	/**
+	 * @var \UnitTester
+	 */
+	protected $tester;
 
-    protected function _after()
-    {
-    }
+	protected function _before() {
+	}
+
+	protected function _after() {
+	}
 
 	/**
 	 * @test

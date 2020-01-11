@@ -12,7 +12,6 @@ use ItalyStrap\DataParser\Filters\SanitizeFilter;
 use ItalyStrap\DataParser\Filters\TranslateFilter;
 use ItalyStrap\DataParser\Filters\ValidateFilter;
 use ItalyStrap\DataParser\Parser;
-use ItalyStrap\DataParser\ParserFactory;
 use ItalyStrap\DataParser\ParserInterface;
 use ItalyStrap\I18N\Translator;
 
