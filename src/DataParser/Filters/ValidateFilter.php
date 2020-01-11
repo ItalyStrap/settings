@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace ItalyStrap\DataParser\Filters;
 
 use ItalyStrap\Cleaner\Validation;
+use ItalyStrap\DataParser\Exception\InvalidValue;
 use ItalyStrap\DataParser\FilterableInterface;
 
 /**
@@ -37,12 +38,10 @@ class ValidateFilter implements FilterableInterface {
 		$this->validation->addRules( $schema[ self::KEY ] );
 
 		if ( false === $this->validation->validate( \strval( $value ) ) ) {
-
-			/**
-			 * Validate fields if $field['validate'] is set
-			 * @todo add_settings_error()
-			 */
-			return '';
+			throw new InvalidValue( \sprintf(
+				'The "%s" is not valid.',
+				$key
+			) );
 		}
 
 		return $value;

@@ -6,6 +6,7 @@ namespace ItalyStrap\Tests;
 use Codeception\Test\Unit;
 use ItalyStrap\Cleaner\Sanitization;
 use ItalyStrap\Cleaner\Validation;
+use ItalyStrap\DataParser\Exception\InvalidValue;
 use ItalyStrap\DataParser\FilterableInterface;
 use ItalyStrap\DataParser\Filters\DefaultSchema;
 use ItalyStrap\DataParser\Filters\SanitizeFilter;
@@ -177,8 +178,9 @@ class ParserTest extends Unit {
 			]
 		);
 
+		$this->expectException( InvalidValue::class );
 		$data = $sut->parseValues( [ 'email' => 'invalid_email' ] );
-		$this->assertEquals( [ 'email' => '' ], $data, '' );
+//		$this->assertEquals( [ 'email' => '' ], $data, '' );
 	}
 
 	/**
