@@ -65,6 +65,15 @@ class ValidateTest extends BaseFilter {
 	/**
 	 * @test
 	 */
+	public function itShouldReturnValidEmailIfValidationInSchemaIsFalse() {
+		$sut = $this->getInstance();
+		$value = $sut->filter( 'key', 'test@localhost.com', [ $sut::KEY => false ] );
+		$this->assertStringContainsString( 'test@localhost.com', $value, '' );
+	}
+
+	/**
+	 * @test
+	 */
 	public function itShouldReturnValidEmailIfValidationReturnTrue() {
 
 		$this->validation->addRules( Argument::type( 'string' ) )->willReturn( new Validation() );

@@ -38,7 +38,7 @@ class NullTest extends BaseFilter {
 	protected function getInstance(): FilterableInterface {
 
 		$sut = new class extends NullFilter {
-			const KEY = 'some-value';
+			const KEY = 'some-key';
 			use DefaultSchema;
 		};
 
@@ -52,6 +52,8 @@ class NullTest extends BaseFilter {
 	public function itShouldFilter() {
 		$sut = $this->getInstance();
 		$value = $sut->filter( '', 'value', [ $sut::KEY => false ] );
+		$this->assertStringContainsString( 'value', $value, '' );
+		$value = $sut->filter( '', 'value', [ $sut::KEY => true ] );
 		$this->assertStringContainsString( 'value', $value, '' );
 	}
 }

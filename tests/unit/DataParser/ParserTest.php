@@ -8,7 +8,6 @@ use ItalyStrap\Cleaner\Sanitization;
 use ItalyStrap\Cleaner\Validation;
 use ItalyStrap\DataParser\Exception\InvalidValue;
 use ItalyStrap\DataParser\FilterableInterface;
-use ItalyStrap\DataParser\Filters\DefaultSchema;
 use ItalyStrap\DataParser\Filters\SanitizeFilter;
 use ItalyStrap\DataParser\Filters\TranslateFilter;
 use ItalyStrap\DataParser\Filters\ValidateFilter;
@@ -53,6 +52,21 @@ class ParserTest extends Unit {
 		$sut = ParserFactory::make();
 		$this->assertInstanceOf( ParserInterface::class, $sut, '' );
 		$this->assertInstanceOf( Parser::class, $sut, '' );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldGetSchema() {
+		$sut = $this->getInstance();
+		$this->assertIsArray( $sut->getSchema(), '' );
+		$this->assertEmpty( $sut->getSchema(), '' );
+
+		$sut->withSchema( [ 'some-key' => 'some-value' ] );
+		$this->assertIsArray( $sut->getSchema(), '' );
+		$this->assertNotEmpty( $sut->getSchema(), '' );
+		$this->assertArrayHasKey( 'some-key', $sut->getSchema(), '' );
+		$this->assertEquals( [ 'some-key' => 'some-value' ], $sut->getSchema(), '' );
 	}
 
 	/**
@@ -139,6 +153,28 @@ class ParserTest extends Unit {
 	/**
 	 * @test
 	 */
+	public function itShouldCheckeAndReturnEmptyStringIfDataHasNotKeyFromSchema() {
+		$sut = $this->getInstance();
+
+		$san = new Sanitization();
+		$filter = new SanitizeFilter( $san );
+		$sut->withFilters( $filter );
+
+		$sut->withSchema(
+			[
+				'test'	=> [
+					'sanitize'		=> 'strip_tags|trim'
+				],
+			]
+		);
+		$data = $sut->parseValues( [ 'other-key' => 'with-value' ] );
+		$this->assertIsString( $data['test'], '' );
+		$this->assertTrue( isset( $data['test'] ), '' );
+	}
+
+	/**
+	 * @test
+	 */
 	public function itShouldReturnValidatedDataWithProvidedFilters() {
 
 		$sut = $this->getInstance();
@@ -180,7 +216,6 @@ class ParserTest extends Unit {
 
 		$this->expectException( InvalidValue::class );
 		$data = $sut->parseValues( [ 'email' => 'invalid_email' ] );
-//		$this->assertEquals( [ 'email' => '' ], $data, '' );
 	}
 
 	/**

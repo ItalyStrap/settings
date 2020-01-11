@@ -43,7 +43,7 @@ class RequiredTest extends BaseFilter {
 	/**
 	 * @test
 	 */
-	public function ifValueIsNotRequiredCouldReturnAlsoAnEmptyValue() {
+	public function ifValueIsNotRequiredCouldReturnAnEmptyValue() {
 		$sut = $this->getInstance();
 		$value = $sut->filter( 'key', '', [ $sut::KEY => false ] );
 		$this->assertStringContainsString( '', $value, '' );

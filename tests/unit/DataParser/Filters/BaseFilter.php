@@ -27,5 +27,6 @@ class BaseFilter extends \Codeception\Test\Unit {
 		/** @var FilterableInterface $sut */
 		$sut = $this->getInstance();
 		$this->assertArrayHasKey( $sut::KEY, $sut->getDefault(), '' );
+		$this->assertFalse( $sut->getDefault()[ $sut::KEY ], '' );
 	}
 }

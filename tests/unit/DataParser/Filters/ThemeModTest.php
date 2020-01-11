@@ -22,10 +22,26 @@ class ThemeModTest extends BaseFilter {
 	 */
 	protected $tester;
 
+	/**
+	 * @var bool
+	 */
+	private $mod_is_called;
+
+	/**
+	 * @return bool
+	 */
+	public function isModCalled(): bool {
+		return $this->mod_is_called;
+	}
+
 	// phpcs:ignore -- Method from Codeception
 	protected function _before() {
+
+		$this->mod_is_called = false;
+
 		// phpcs:ignore -- This is not a constant definition
 		\tad\FunctionMockerLe\define( 'set_theme_mod', function ( $key, $string ) {
+			$this->mod_is_called = true;
 			return $string;
 		} );
 	}
@@ -43,10 +59,20 @@ class ThemeModTest extends BaseFilter {
 	/**
 	 * @test
 	 */
-	public function itShouldFilter() {
-
+	public function itShouldSetThemeMod() {
 		$sut = $this->getInstance();
-		$value = $sut->filter( '', 'value', [$sut::KEY => 'theme_mod'] );
+		$value = $sut->filter( '', 'value', [ $sut::KEY => 'theme_mod' ] );
 		$this->assertStringContainsString( 'value', $value, '' );
+		$this->assertTrue( $this->isModCalled() );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldNotSetThemeMod() {
+		$sut = $this->getInstance();
+		$value = $sut->filter( '', 'value', [ $sut::KEY => false ] );
+		$this->assertStringContainsString( 'value', $value, '' );
+		$this->assertFalse( $this->isModCalled() );
 	}
 }

@@ -7,6 +7,7 @@ use ItalyStrap\DataParser\FilterableInterface;
 use ItalyStrap\DataParser\Filters\ThemeModFilter;
 use ItalyStrap\DataParser\Filters\TranslateFilter;
 use ItalyStrap\I18N\Translator;
+use Prophecy\Argument;
 
 // phpcs:disable
 require_once 'BaseFilter.php';
@@ -31,6 +32,18 @@ class TranslateTest extends BaseFilter {
 	private $translator;
 
 	/**
+	 * @var bool
+	 */
+	private $translator_called;
+
+	/**
+	 * @return bool
+	 */
+	public function isTranslatorCalled(): bool {
+		return $this->translator_called;
+	}
+
+	/**
 	 * @return Translator
 	 */
 	public function getTranslator(): Translator {
@@ -39,6 +52,7 @@ class TranslateTest extends BaseFilter {
 
 	// phpcs:ignore -- Method from Codeception
 	protected function _before() {
+		$this->translator_called = false;
 		$this->translator = $this->prophesize( Translator::class );
 	}
 
@@ -55,10 +69,40 @@ class TranslateTest extends BaseFilter {
 	/**
 	 * @test
 	 */
-	public function itShouldFilter() {
+	public function itShouldRegisterTranslatedString() {
+
+		$test = $this;
+
+		$this->translator->registerString(
+			Argument::type('string'),
+			Argument::type('string')
+		)->will( function ( $args ) use ( $test ) {
+			$test->translator_called = true;
+		} );
 
 		$sut = $this->getInstance();
-		$value = $sut->filter( '', 'value', [ $sut::KEY => true ] );
+		$value = $sut->filter( 'some-key', 'value', [ $sut::KEY => true ] );
 		$this->assertStringContainsString( 'value', $value, '' );
+		$this->assertTrue( $this->isTranslatorCalled(), '' );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldNotRegisterTranslatedString() {
+
+		$test = $this;
+
+		$this->translator->registerString(
+			Argument::type('string'),
+			Argument::type('string')
+		)->will( function ( $args ) use ( $test ) {
+			$test->translator_called = true;
+		} );
+
+		$sut = $this->getInstance();
+		$value = $sut->filter( '', 'value', [ $sut::KEY => false ] );
+		$this->assertStringContainsString( 'value', $value, '' );
+		$this->assertFalse( $this->isTranslatorCalled(), '' );
 	}
 }

@@ -53,7 +53,7 @@ class CapabilityTest extends BaseFilter {
 	/**
 	 * @test
 	 */
-	public function itShouldThrownExceptionIfUserHaveNotPermissionToSave() {
+	public function itShouldThrownExceptionIfUserHasNotTheRightPermissionToSave() {
 		$sut = $this->getInstance();
 		$this->expectException( ValueRejected::class );
 		$sut->filter( 'key', 'value', [ $sut::KEY => 'no-caps' ] );
