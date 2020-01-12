@@ -248,17 +248,17 @@ class Sections implements \Countable, SectionsInterface {
 		return $schema;
 	}
 
-	private function defaultValue() {
-
-		$default = [];
-		foreach ( $this->config->toArray() as $section ) {
-			foreach ( $section['fields'] as $field ) {
-				$default[ $field['id'] ] = $field['value'] ?? '';
-			}
-		}
-
-		return $default;
-	}
+//	private function defaultValue() {
+//
+//		$default = [];
+//		foreach ( $this->config->toArray() as $section ) {
+//			foreach ( $section['fields'] as $field ) {
+//				$default[ $field['id'] ] = $field['value'] ?? '';
+//			}
+//		}
+//
+//		return $default;
+//	}
 
 	/**
 	 * @param array $args

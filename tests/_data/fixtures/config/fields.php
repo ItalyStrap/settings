@@ -23,6 +23,7 @@ return [
 		'id'			=> 'text',
 		'type'			=> 'text',
 		'value'			=> 'some default value',
+		'required'		=> true,
 		'sanitize'		=> 'sanitize_text_field',
 	],
 	[
