@@ -14,9 +14,11 @@ class ParserFactoryTest extends \Codeception\Test\Unit {
 	 */
 	protected $tester;
 
+	// phpcs:ignore -- Method from Codeception
 	protected function _before() {
 	}
 
+	// phpcs:ignore -- Method from Codeception
 	protected function _after() {
 	}
 

@@ -6,20 +6,20 @@ namespace ItalyStrap\Tests;
 use Codeception\Test\Unit;
 use ItalyStrap\I18N\Translator;
 
-class I18NTest extends Unit
-{
-    /**
-     * @var \UnitTester
-     */
-    protected $tester;
+class I18NTest extends Unit {
 
-    protected function _before()
-    {
-    }
+	/**
+	 * @var \UnitTester
+	 */
+	protected $tester;
 
-    protected function _after()
-    {
-    }
+	// phpcs:ignore -- Method from Codeception
+	protected function _before() {
+	}
+
+	// phpcs:ignore -- Method from Codeception
+	protected function _after() {
+	}
 
 	private function getInstance() {
 		$sut = new Translator( 'some-domain' );
