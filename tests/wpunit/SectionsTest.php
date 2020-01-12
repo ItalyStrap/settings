@@ -6,6 +6,7 @@ namespace ItalyStrap\Tests;
 use Codeception\TestCase\WPTestCase;
 use ItalyStrap\Config\ConfigFactory;
 use ItalyStrap\Config\ConfigInterface;
+use ItalyStrap\DataParser\Parser;
 use ItalyStrap\DataParser\ParserInterface;
 use ItalyStrap\Fields\FieldsInterface;
 use ItalyStrap\Settings\Options;
@@ -89,16 +90,17 @@ class SectionsTest extends WPTestCase {
 
 		$this->sections_config = require \codecept_data_dir( '/fixtures/config/sections.php' );
 
-		global $wp_settings_sections, $wp_settings_fields;
+		global $wp_settings_sections, $wp_settings_fields, $wp_registered_settings;
 		// Your set up methods here.
 	}
 
 	public function tearDown(): void {
 		// Your tear down methods here.
 
-		global $wp_settings_sections, $wp_settings_fields;
+		global $wp_settings_sections, $wp_settings_fields, $wp_registered_settings;
 		$wp_settings_sections = [];
 		$wp_settings_fields = [];
+		$wp_registered_settings = [];
 		// Then...
 		parent::tearDown();
 	}
@@ -369,9 +371,13 @@ class SectionsTest extends WPTestCase {
 	 * @test
 	 */
 	public function itShouldRegister() {
-		global $wp_settings_sections, $wp_settings_fields;
-		$this->options->getName()->willReturn( 'option-name' );
+		global $wp_settings_sections, $wp_settings_fields, $wp_registered_settings;
+
+		$option_name = 'option-name';
+		$this->options->getName()->willReturn( $option_name );
 		$this->options->toArray()->willReturn( [] );
+		$this->parser->withSchema( Argument::type('array') )->willReturn( new Parser() );
+		$this->parser->parseValues( Argument::type('array') )->willReturn([]);
 
 		$sut = $this->getInstance( $this->sections_config );
 
@@ -380,6 +386,15 @@ class SectionsTest extends WPTestCase {
 		$sut->forPage( $this->getPage() );
 
 		$sut->register();
+
+		$this->assertArrayHasKey( 'sanitize_callback', $wp_registered_settings[ $option_name ], '' );
+		$callable = $wp_registered_settings['option-name']['sanitize_callback'];
+		$this->assertStringContainsString(
+			'parseValues',
+			$wp_registered_settings['option-name']['sanitize_callback'][1],
+			''
+		);
+		$this->assertTrue( \is_callable( $callable ), '' );
 
 		foreach ( $wp_settings_sections as $page => $settings_sections ) {
 			$this->assertStringContainsString( $page_slug, $page, '' );

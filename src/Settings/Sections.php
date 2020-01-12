@@ -229,7 +229,7 @@ class Sections implements \Countable, SectionsInterface {
 			$this->getPageSlug(),
 			$this->getOptionsName(),
 			[
-				'sanitize_callback'	=> [ $this->parser->withSchema( $this->schemaForDataParser() ), 'parse' ],
+				'sanitize_callback'	=> [ $this->parser->withSchema( $this->schemaForDataParser() ), 'parseValues' ],
 				'show_in_rest'      => false,
 				'description'       => '',
 			]
