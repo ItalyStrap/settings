@@ -178,7 +178,7 @@ class SettingsBuilder {
 
 	private function makeParser(): ParserInterface {
 
-		$callable = function () {
+		$callable = function (): array {
 
 			$filters = [
 				new SanitizeFilter( new Sanitization() ),
