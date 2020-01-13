@@ -4,12 +4,18 @@ declare(strict_types=1);
 namespace ItalyStrap\Settings;
 
 use Auryn\Injector;
+use ItalyStrap\Cleaner\Sanitization;
+use ItalyStrap\Cleaner\Validation;
 use ItalyStrap\Config\ConfigFactory;
-use ItalyStrap\Config\ConfigInterface;
-use ItalyStrap\DataParser\ParserFactory;
+use ItalyStrap\DataParser\Filters\SanitizeFilter;
+use ItalyStrap\DataParser\Filters\TranslateFilter;
+use ItalyStrap\DataParser\Filters\ValidateFilter;
+use ItalyStrap\DataParser\Parser;
+use ItalyStrap\DataParser\ParserInterface;
 use ItalyStrap\Fields\Fields;
 use ItalyStrap\HTML\Attributes;
 use ItalyStrap\HTML\Tag;
+use ItalyStrap\I18N\Translator;
 
 /**
  * Class SettingsFactory
@@ -47,6 +53,11 @@ class SettingsBuilder {
 	 * @var array
 	 */
 	private $pages;
+
+	/**
+	 * @var ParserInterface
+	 */
+	private $parser;
 
 	/**
 	 * @param string $option_name
@@ -154,10 +165,21 @@ class SettingsBuilder {
 	 */
 	private function addSections( array $item ): Sections {
 
+		$filters = [
+			new SanitizeFilter( new Sanitization() ),
+			new ValidateFilter( new Validation() )
+		];
+
+		if ( ! empty( $this->domain ) ) {
+			$filters[] = new TranslateFilter( new Translator( $this->domain ) );
+		}
+
+		$this->parser = ( new Parser() )->withFilters( ...$filters	);
+
 		$sections_obj = new Sections(
 			ConfigFactory::make( $item ),
 			new Fields(),
-			ParserFactory::make( $this->domain ),
+			$this->parser,
 			$this->getOptions()
 		);
 

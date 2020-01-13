@@ -5,6 +5,7 @@ namespace ItalyStrap\Tests;
 
 use ItalyStrap\DataParser\Filters\NullFilter;
 use ItalyStrap\DataParser\LazyParser;
+use ItalyStrap\DataParser\Parser;
 use ItalyStrap\DataParser\ParserInterface;
 
 class LazyParserTest extends \Codeception\Test\Unit {
@@ -20,9 +21,25 @@ class LazyParserTest extends \Codeception\Test\Unit {
 	 */
 	private $filters_callback;
 
+	/**
+	 * @var bool
+	 */
+	private $called = false;
+
 	// phpcs:ignore -- Method from Codeception
+
+	/**
+	 * @return bool
+	 */
+	private function isCalledFiltersCallback(): bool {
+		return $this->called;
+	}
+
 	protected function _before() {
 		$this->filters_callback = function (): array {
+
+			$this->called = true;
+
 			$filters = [
 				new NullFilter(),
 			];
@@ -55,7 +72,9 @@ class LazyParserTest extends \Codeception\Test\Unit {
 	 */
 	public function itShouldBeInstantiablehjcgf() {
 		$sut = $this->getInstance();
+		$this->assertFalse( $this->isCalledFiltersCallback(), '' );
 		$data = $sut->parseValues( ['key' => 'value'] );
+		$this->assertTrue( $this->isCalledFiltersCallback(), '' );
 		$this->assertEquals( ['key' => 'value'], $data, '' );
 	}
 }
