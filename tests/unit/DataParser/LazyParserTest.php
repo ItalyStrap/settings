@@ -7,8 +7,8 @@ use ItalyStrap\DataParser\Filters\NullFilter;
 use ItalyStrap\DataParser\LazyParser;
 use ItalyStrap\DataParser\ParserInterface;
 
-class LazyParserTest extends \Codeception\Test\Unit
-{
+class LazyParserTest extends \Codeception\Test\Unit {
+
 
 	/**
 	 * @var \UnitTester
@@ -39,6 +39,7 @@ class LazyParserTest extends \Codeception\Test\Unit
 		$sut = new LazyParser( $this->filters_callback );
 		$this->assertInstanceOf( ParserInterface::class, $sut, '' );
 		$this->assertInstanceOf( LazyParser::class, $sut, '' );
+		$this->assertInstanceOf( Parser::class, $sut, '' );
 		return $sut;
 	}
 
