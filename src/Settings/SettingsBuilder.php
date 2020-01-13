@@ -10,6 +10,7 @@ use ItalyStrap\Config\ConfigFactory;
 use ItalyStrap\DataParser\Filters\SanitizeFilter;
 use ItalyStrap\DataParser\Filters\TranslateFilter;
 use ItalyStrap\DataParser\Filters\ValidateFilter;
+use ItalyStrap\DataParser\LazyParser;
 use ItalyStrap\DataParser\Parser;
 use ItalyStrap\DataParser\ParserInterface;
 use ItalyStrap\Fields\Fields;
@@ -165,24 +166,32 @@ class SettingsBuilder {
 	 */
 	private function addSections( array $item ): Sections {
 
-		$filters = [
-			new SanitizeFilter( new Sanitization() ),
-			new ValidateFilter( new Validation() )
-		];
-
-		if ( ! empty( $this->domain ) ) {
-			$filters[] = new TranslateFilter( new Translator( $this->domain ) );
-		}
-
-		$this->parser = ( new Parser() )->withFilters( ...$filters	);
-
 		$sections_obj = new Sections(
 			ConfigFactory::make( $item ),
 			new Fields(),
-			$this->parser,
+			$this->makeParser(),
 			$this->getOptions()
 		);
 
 		return $sections_obj;
+	}
+
+	private function makeParser(): ParserInterface {
+
+		$callable = function () {
+
+			$filters = [
+				new SanitizeFilter( new Sanitization() ),
+				new ValidateFilter( new Validation() )
+			];
+
+			if ( !empty( $this->domain ) ) {
+				$filters[] = new TranslateFilter( new Translator( $this->domain ) );
+			}
+
+			return $filters;
+		};
+
+		return new LazyParser( $callable );
 	}
 }
