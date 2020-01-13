@@ -73,6 +73,7 @@ return [
 		'desc'			=> $desc,
 		'id'			=> 'email',
 		'type'			=> 'email',
+//		'required'		=> true,
 		'validate'		=> 'is_email',
 		Key::SANITIZE	=> 'sanitize_text_field',
 		// 'option_type'	=> 'theme_mod',
