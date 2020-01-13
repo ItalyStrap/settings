@@ -35,6 +35,7 @@ class LazyParserTest extends \Codeception\Test\Unit {
 		return $this->called;
 	}
 
+	// phpcs:ignore -- Method from Codeception
 	protected function _before() {
 		$this->filters_callback = function (): array {
 
