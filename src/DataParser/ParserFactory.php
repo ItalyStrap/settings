@@ -31,6 +31,6 @@ class ParserFactory {
 			$filters[] = new TranslateFilter( new Translator( $domain ) );
 		}
 
-		return ( new \ItalyStrap\DataParser\Parser() )->withFilters( ...$filters	);
+		return ( new Parser() )->withFilters( ...$filters	);
 	}
 }

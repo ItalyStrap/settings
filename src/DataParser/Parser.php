@@ -21,14 +21,6 @@ class Parser implements ParserInterface {
 	private $filters = [];
 
 	/**
-	 * DataParser constructor.
-	 * @param array $schema
-	 */
-	public function __construct( array $schema = [] ) {
-		$this->schema = $schema;
-	}
-
-	/**
 	 * @inheritDoc
 	 */
 	public function withSchema( array $schema ): Parser {
