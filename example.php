@@ -9,6 +9,26 @@ $settings_config = \ItalyStrap\Config\ConfigFactory::make(
 	require __DIR__ . '/tests/_data/fixtures/config/settings.php'
 );
 
+$default_headers = array(
+	'Name'        => 'Plugin Name',
+	'PluginURI'   => 'Plugin URI',
+	'Version'     => 'Version',
+	'Description' => 'Description',
+	'Author'      => 'Author',
+	'AuthorURI'   => 'Author URI',
+	'TextDomain'  => 'Text Domain',
+	'DomainPath'  => 'Domain Path',
+	'Network'     => 'Network',
+	'RequiresWP'  => 'Requires at least',
+	'RequiresPHP' => 'Requires PHP',
+);
+
+d_footer( get_file_data( ITALYSTRAP_FILE, $default_headers ) );
+
+//add_action( 'admin_init', function () {
+//	d(get_plugin_data( ITALYSTRAP_FILE ));
+//} );
+
 // Initialize the builder
 $settings = new SettingsBuilder(
 	$option_name,

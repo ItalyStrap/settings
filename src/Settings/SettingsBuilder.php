@@ -11,7 +11,6 @@ use ItalyStrap\DataParser\Filters\SanitizeFilter;
 use ItalyStrap\DataParser\Filters\TranslateFilter;
 use ItalyStrap\DataParser\Filters\ValidateFilter;
 use ItalyStrap\DataParser\LazyParser;
-use ItalyStrap\DataParser\Parser;
 use ItalyStrap\DataParser\ParserInterface;
 use ItalyStrap\Fields\Fields;
 use ItalyStrap\HTML\Attributes;
@@ -108,12 +107,6 @@ class SettingsBuilder {
 	}
 
 	/**
-	 * @param iterable $item
-	 */
-	public function withPage( iterable $item ) {
-	}
-
-	/**
 	 * @return void
 	 */
 	public function build(): void {
@@ -176,7 +169,7 @@ class SettingsBuilder {
 		return $sections_obj;
 	}
 
-	private function makeParser(): ParserInterface {
+	protected function makeParser(): ParserInterface {
 
 		$callable = function (): array {
 

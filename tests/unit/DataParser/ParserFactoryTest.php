@@ -29,8 +29,5 @@ class ParserFactoryTest extends \Codeception\Test\Unit {
 		$sut = ParserFactory::make();
 		$this->assertInstanceOf( ParserInterface::class, $sut, '' );
 		$this->assertInstanceOf( Parser::class, $sut, '' );
-		$sut = ParserFactory::make( 'some-domain' );
-		$this->assertInstanceOf( ParserInterface::class, $sut, '' );
-		$this->assertInstanceOf( Parser::class, $sut, '' );
 	}
 }
