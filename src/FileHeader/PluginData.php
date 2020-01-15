@@ -58,8 +58,16 @@ class PluginData {
 
 		foreach (self::HEADERS as $field => $regex) {
 			$all_headers[ $field ] = '';
-			if ( \preg_match( '/^[ \t\/*#@]*' . \preg_quote( $regex, '/' ) . ':(.*)$/mi', $content, $match ) && $match[ 1 ] ) {
-				$all_headers[ $field ] = \trim( \preg_replace( '/\s*(?:\*\/|\?>).*/', '', $match[ 1 ] ) );
+			if (
+				\preg_match(
+				'/^[ \t\/*#@]*' . \preg_quote( $regex, '/' ) . ':(.*)$/mi',
+				$content,
+				$match
+				) && $match[ 1 ]
+			) {
+				$all_headers[ $field ] = \trim(
+					\preg_replace( '/\s*(?:\*\/|\?>).*/', '', $match[ 1 ] )
+				);
 			}
 		}
 
