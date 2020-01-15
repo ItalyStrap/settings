@@ -62,7 +62,33 @@ class PluginDataTest extends Unit {
 	public function itShouldRenderTextDomain() {
 
 		$this->file->fread( Argument::type('integer') )->willReturn(
-			\file_get_contents( codecept_root_dir('index.php') )
+			\file_get_contents( codecept_data_dir( 'fixtures/file-header/plugin.php' ) )
+		);
+
+		$sut = $this->getIntance();
+		$this->assertStringContainsString( 'ItalyStrap', $sut->textDomain(), '' );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldRenderTextDomainFromDocBlock() {
+
+		$this->file->fread( Argument::type('integer') )->willReturn(
+			\file_get_contents( codecept_data_dir( 'fixtures/file-header/plugin-with-docblock.php' ) )
+		);
+
+		$sut = $this->getIntance();
+		$this->assertStringContainsString( 'ItalyStrap', $sut->textDomain(), '' );
+	}
+
+	/**
+	 * @test
+	 */
+	public function itShouldRenderTextDomainFromStylesCss() {
+
+		$this->file->fread( Argument::type('integer') )->willReturn(
+			\file_get_contents( codecept_data_dir( 'fixtures/file-header/styles.css' ) )
 		);
 
 		$sut = $this->getIntance();
