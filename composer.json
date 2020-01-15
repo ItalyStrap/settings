@@ -36,6 +36,7 @@
         "psr-4": {
             "ItalyStrap\\I18N\\": "src/I18N/",
             "ItalyStrap\\DataParser\\": "src/DataParser/",
+            "ItalyStrap\\FileHeader\\": "src/FileHeader/",
             "ItalyStrap\\Settings\\": "src/Settings/"
         }
     },

@@ -58,16 +58,22 @@ class SettingsBuilder {
 	 * @var ParserInterface
 	 */
 	private $parser;
+	/**
+	 * @var string
+	 */
+	private $plugin_file;
 
 	/**
 	 * @param string $option_name
 	 * @param string $domain
 	 * @param string $base_name
+	 * @param string $plugin_file
 	 */
-	public function __construct( $option_name, $domain = '', $base_name = '' ) {
+	public function __construct( $option_name, $domain = '', $base_name = '', string $plugin_file = '' ) {
 		$this->option_name = $option_name;
 		$this->domain = $domain;
 		$this->base_name = $base_name;
+		$this->plugin_file = $plugin_file;
 	}
 
 	/**
@@ -117,6 +123,7 @@ class SettingsBuilder {
 			}
 		}, $this->pages );
 
+//		$plugin = new PluginData( new \SplFileObject( $this->plugin_file ) );
 		$this->getLinks()->boot( $this->base_name );
 
 		/**

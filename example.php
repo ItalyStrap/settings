@@ -9,6 +9,19 @@ $settings_config = \ItalyStrap\Config\ConfigFactory::make(
 	require __DIR__ . '/tests/_data/fixtures/config/settings.php'
 );
 
+$file = new \SplFileObject( ITALYSTRAP_FILE );
+
+//d_footer(
+//	ITALYSTRAP_FILE,
+//	$file->getRealPath(),
+//	dirname( plugin_basename( $file->getRealPath() ) ),
+//	$file->getBasename(),
+//	$file->getFilename()
+//);
+
+
+
+
 $default_headers = array(
 	'Name'        => 'Plugin Name',
 	'PluginURI'   => 'Plugin URI',
@@ -23,8 +36,8 @@ $default_headers = array(
 	'RequiresPHP' => 'Requires PHP',
 );
 
-d_footer( get_file_data( ITALYSTRAP_FILE, $default_headers ) );
-
+//d_footer( get_file_data( ITALYSTRAP_FILE, $default_headers ) );
+////
 //add_action( 'admin_init', function () {
 //	d(get_plugin_data( ITALYSTRAP_FILE ));
 //} );
