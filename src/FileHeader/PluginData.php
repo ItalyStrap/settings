@@ -60,9 +60,9 @@ class PluginData {
 			$all_headers[ $field ] = '';
 			if (
 				\preg_match(
-				'/^[ \t\/*#@]*' . \preg_quote( $regex, '/' ) . ':(.*)$/mi',
-				$content,
-				$match
+					'/^[ \t\/*#@]*' . \preg_quote( $regex, '/' ) . ':(.*)$/mi',
+					$content,
+					$match
 				) && $match[ 1 ]
 			) {
 				$all_headers[ $field ] = \trim(
