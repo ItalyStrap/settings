@@ -48,8 +48,6 @@ class PluginData {
 	}
 
 	/**
-	 * @param $all_headers
-	 * @param $match
 	 * @return array
 	 */
 	private function headers(): array {
