@@ -3,12 +3,12 @@ declare(strict_types=1);
 
 namespace ItalyStrap\FileHeader;
 
-use SplFileInfo;
+use SplFileObject;
 
 class PluginData {
 
 	/**
-	 * @var SplFileInfo
+	 * @var SplFileObject
 	 */
 	private $file;
 
@@ -36,9 +36,9 @@ class PluginData {
 
 	/**
 	 * PluginData constructor.
-	 * @param SplFileInfo $file
+	 * @param SplFileObject $file
 	 */
-	public function __construct( SplFileInfo $file ) {
+	public function __construct( SplFileObject $file ) {
 		$this->file = $file;
 		$this->headers = $this->headers();
 	}
@@ -54,6 +54,7 @@ class PluginData {
 		$content = $this->file->fread( 8 * 1024 );
 		$content = \str_replace( "\r", "\n", $content );
 
+		$all_headers = [];
 		foreach (self::HEADERS as $field => $regex) {
 			$all_headers[ $field ] = '';
 			if (
