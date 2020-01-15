@@ -5,8 +5,8 @@ namespace ItalyStrap\FileHeader;
 
 use SplFileInfo;
 
-class PluginData
-{
+class PluginData {
+
 	/**
 	 * @var SplFileInfo
 	 */

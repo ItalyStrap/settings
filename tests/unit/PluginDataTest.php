@@ -15,8 +15,8 @@ use UnitTester;
  * Class PluginDataTest
  * @package ItalyStrap\Tests
  */
-class PluginDataTest extends Unit
-{
+class PluginDataTest extends Unit {
+
 	/**
 	 * @var UnitTester
 	 */
