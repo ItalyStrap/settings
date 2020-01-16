@@ -12,6 +12,7 @@ use SplFileObject;
 use UnitTester;
 
 /**
+ * @link https://codex.wordpress.org/File_Header
  * Class PluginDataTest
  * @package ItalyStrap\Tests
  */

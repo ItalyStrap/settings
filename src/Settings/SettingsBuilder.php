@@ -52,7 +52,7 @@ class SettingsBuilder {
 	/**
 	 * @var array
 	 */
-	private $pages;
+	private $pages_obj;
 
 	/**
 	 * @var ParserInterface
@@ -62,6 +62,11 @@ class SettingsBuilder {
 	 * @var string
 	 */
 	private $plugin_file;
+
+	/**
+	 * @var array
+	 */
+	private $pages;
 
 	/**
 	 * @param string $option_name
@@ -79,7 +84,7 @@ class SettingsBuilder {
 	/**
 	 * @return PluginLinks
 	 */
-	public function getLinks(): PluginLinks {
+	public function links(): PluginLinks {
 
 		if ( empty( $this->links ) ) {
 			$this->links = new PluginLinks( new Tag( new Attributes() ) );
@@ -89,21 +94,9 @@ class SettingsBuilder {
 	}
 
 	/**
-	 * @param string $key
-	 * @param string $url
-	 * @param string $text
-	 * @param array $attr
-	 * @return $this
-	 */
-	public function addCustomPluginLink( string $key, string $url, string $text, array $attr = [] ) {
-		$this->getLinks()->addLink( ...\func_get_args() );
-		return $this;
-	}
-
-	/**
 	 * @return OptionsInterface
 	 */
-	public function getOptions(): OptionsInterface {
+	public function options(): OptionsInterface {
 
 		if ( empty( $this->options ) ) {
 			$this->options = new Options( $this->option_name );
@@ -112,71 +105,7 @@ class SettingsBuilder {
 		return $this->options;
 	}
 
-	/**
-	 * @return void
-	 */
-	public function build(): void {
-
-		\array_map( function ( array $to_boot ) {
-			foreach ( $to_boot as $bootable ) {
-				$bootable->boot();
-			}
-		}, $this->pages );
-
-//		$plugin = new PluginData( new \SplFileObject( $this->plugin_file ) );
-		$this->getLinks()->boot( $this->base_name );
-
-		/**
-		 * Load script for Tabbed admin page
-		 */
-		$asset = new AssetLoader();
-		\add_action( 'admin_enqueue_scripts', [ $asset, 'load' ] );
-	}
-
-	/**
-	 * @param array $page
-	 * @param array $sections
-	 * @return SettingsBuilder
-	 */
-	public function addPage( array $page, array $sections = [] ): SettingsBuilder {
-
-		$pages_obj = new Page(
-			ConfigFactory::make( $page ),
-			new ViewPage()
-		);
-
-		$this->pages[ $pages_obj->getSlug() ][] = $pages_obj;
-
-		if ( ! empty( $sections ) ) {
-			$sections = $this->addSections( $sections );
-			$pages_obj->withSections( $sections );
-			$this->pages[ $pages_obj->getSlug() ][] = $sections;
-		}
-
-		if ( ! empty( $this->base_name ) ) {
-			$this->getLinks()->forPages( $pages_obj );
-		}
-
-		return $this;
-	}
-
-	/**
-	 * @param array $item
-	 * @return Sections
-	 */
-	private function addSections( array $item ): Sections {
-
-		$sections_obj = new Sections(
-			ConfigFactory::make( $item ),
-			new Fields(),
-			$this->makeParser(),
-			$this->getOptions()
-		);
-
-		return $sections_obj;
-	}
-
-	protected function makeParser(): ParserInterface {
+	protected function parser(): ParserInterface {
 
 		$callable = function (): array {
 
@@ -193,5 +122,74 @@ class SettingsBuilder {
 		};
 
 		return new LazyParser( $callable );
+	}
+
+	/**
+	 * @param string $key
+	 * @param string $url
+	 * @param string $text
+	 * @param array $attr
+	 * @return $this
+	 */
+	public function addCustomPluginLink( string $key, string $url, string $text, array $attr = [] ) {
+		$this->links()->addLink( ...\func_get_args() );
+		return $this;
+	}
+
+	/**
+	 * @param array $page
+	 * @param array $sections
+	 * @return SettingsBuilder
+	 */
+	public function addPage( array $page, array $sections = [] ): SettingsBuilder {
+
+		$this->pages[ $page[ PAGE::SLUG ] ][] = $page;
+		$this->pages[ $page[ PAGE::SLUG ] ][] = $sections;
+
+		$pages_obj = new Page(
+			ConfigFactory::make( $page ),
+			new ViewPage()
+		);
+
+		$this->pages_obj[ $pages_obj->getSlug() ][] = $pages_obj;
+
+		if ( ! empty( $sections ) ) {
+			$sections_obj = new Sections(
+				ConfigFactory::make( $sections ),
+				new Fields(),
+				$this->parser(),
+				$this->options()
+			);
+
+			$pages_obj->withSections( $sections_obj );
+			$this->pages_obj[ $pages_obj->getSlug() ][] = $sections_obj;
+		}
+
+		if ( ! empty( $this->base_name ) ) {
+			$this->links()->forPages( $pages_obj );
+		}
+
+		return $this;
+	}
+
+	/**
+	 * @return void
+	 */
+	public function build(): void {
+
+		\array_map( function ( array $to_boot ) {
+			foreach ( $to_boot as $bootable ) {
+				$bootable->boot();
+			}
+		}, $this->pages_obj );
+
+//		$plugin = new PluginData( new \SplFileObject( $this->plugin_file ) );
+		$this->links()->boot( $this->base_name );
+
+		/**
+		 * Load script for Tabbed admin page
+		 */
+		$asset = new AssetLoader();
+		\add_action( 'admin_enqueue_scripts', [ $asset, 'load' ] );
 	}
 }
