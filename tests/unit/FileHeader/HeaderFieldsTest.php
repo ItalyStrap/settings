@@ -4,7 +4,8 @@ declare(strict_types=1);
 namespace ItalyStrap\Tests;
 
 use Codeception\Test\Unit;
-use ItalyStrap\FileHeader\PluginData;
+use ItalyStrap\FileHeader\HeaderFields;
+use ItalyStrap\FileHeader\Plugin;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
 use SplFileInfo;
@@ -16,7 +17,7 @@ use UnitTester;
  * Class PluginDataTest
  * @package ItalyStrap\Tests
  */
-class PluginDataTest extends Unit {
+class HeaderFieldsTest extends Unit {
 
 	/**
 	 * @var UnitTester
@@ -31,7 +32,7 @@ class PluginDataTest extends Unit {
 	/**
 	 * @return SplFileInfo
 	 */
-	public function getFile(): SplFileInfo {
+	public function getFile(): SplFileObject {
 		return $this->file->reveal();
 	}
 
@@ -44,9 +45,9 @@ class PluginDataTest extends Unit {
 		$this->file = $this->prophesize( SplFileObject::class );
 	}
 
-	public function getIntance(): PluginData {
-		$sut = new PluginData( $this->getFile() );
-		$this->assertInstanceOf( PluginData::class, $sut );
+	public function getIntance(): HeaderFields {
+		$sut = new HeaderFields( $this->getFile() );
+		$this->assertInstanceOf( HeaderFields::class, $sut );
 		return $sut;
 	}
 
@@ -55,6 +56,33 @@ class PluginDataTest extends Unit {
 	 */
 	public function itShouldBeInstantiable() {
 		$sut = $this->getIntance();
+	}
+
+	public function providerPluginFields() {
+
+		$data = [];
+		foreach ( Plugin::HEADERS as $key => $value ) {
+			$data[ $key ] = [
+				$key,
+				$value
+			];
+		}
+
+		return $data;
+	}
+
+	/**
+	 * @test
+	 * @dataProvider providerPluginFields()
+	 */
+	public function itShouldHasKeyInFields( $key, $value = '' ) {
+
+		$this->file->fread( Argument::type('integer') )->willReturn(
+			\file_get_contents( codecept_data_dir( 'fixtures/file-header/plugin.php' ) )
+		);
+
+		$sut = $this->getIntance();
+		$this->assertArrayHasKey( $key, $sut->fields(), '' );
 	}
 
 	/**

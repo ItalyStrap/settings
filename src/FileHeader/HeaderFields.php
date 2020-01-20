@@ -3,36 +3,19 @@ declare(strict_types=1);
 
 namespace ItalyStrap\FileHeader;
 
+use ItalyStrap\Config\Config;
 use SplFileObject;
 
-class PluginData {
+/**
+ * Class PluginData
+ * @package ItalyStrap\FileHeader
+ */
+class HeaderFields extends Config implements Plugin {
 
 	/**
 	 * @var SplFileObject
 	 */
 	private $file;
-
-	const NAME = 'Name';
-	const TEXT_DOMAIN = 'TextDomain';
-
-	const HEADERS = [
-		self::NAME        => 'Plugin Name',
-		'PluginURI'   => 'Plugin URI',
-		'Version'     => 'Version',
-		'Description' => 'Description',
-		'Author'      => 'Author',
-		'AuthorURI'   => 'Author URI',
-		self::TEXT_DOMAIN  => 'Text Domain',
-		'DomainPath'  => 'Domain Path',
-		'Network'     => 'Network',
-		'RequiresWP'  => 'Requires at least',
-		'RequiresPHP' => 'Requires PHP',
-	];
-
-	/**
-	 * @var array
-	 */
-	private $headers;
 
 	/**
 	 * PluginData constructor.
@@ -40,17 +23,17 @@ class PluginData {
 	 */
 	public function __construct( SplFileObject $file ) {
 		$this->file = $file;
-		$this->headers = $this->headers();
+		parent::__construct( $this->fields() );
 	}
 
 	public function textDomain(): string {
-		return $this->headers[ self::TEXT_DOMAIN ];
+		return (string) $this->get( self::TEXT_DOMAIN );
 	}
 
 	/**
 	 * @return array
 	 */
-	private function headers(): array {
+	public function fields(): array {
 		$content = $this->file->fread( 8 * 1024 );
 		$content = \str_replace( "\r", "\n", $content );
 
