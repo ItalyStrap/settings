@@ -143,8 +143,8 @@ class SettingsBuilder {
 	 */
 	public function addPage( array $page, array $sections = [] ): SettingsBuilder {
 
-		$this->pages[ $page[ PAGE::SLUG ] ][] = $page;
-		$this->pages[ $page[ PAGE::SLUG ] ][] = $sections;
+		$this->pages[ $page[ Page::SLUG ] ][] = $page;
+		$this->pages[ $page[ Page::SLUG ] ][] = $sections;
 
 		$pages_obj = new Page(
 			ConfigFactory::make( $page ),
