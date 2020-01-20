@@ -7,8 +7,8 @@ namespace ItalyStrap\FileHeader;
  * Interface CustomTemplate
  * @package ItalyStrap\FileHeader
  */
-interface CustomTemplate
-{
+interface CustomTemplate {
+
 	const TEMPLATE_NAME = 'TemplateName';
 	const TEMPLATE_POST_TYPE = 'Template Post Type';
 

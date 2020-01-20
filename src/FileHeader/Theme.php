@@ -8,8 +8,8 @@ namespace ItalyStrap\FileHeader;
  * @link https://developer.wordpress.org/themes/basics/main-stylesheet-style-css/
  * @package ItalyStrap\FileHeader
  */
-interface Theme extends CommonKeys
-{
+interface Theme extends CommonKeys {
+
 	const THEME_URI = 'ThemeURI';
 	const TAGS = 'Tags';
 	const TEMPLATE = 'Template';

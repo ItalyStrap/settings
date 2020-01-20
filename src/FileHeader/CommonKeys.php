@@ -7,8 +7,8 @@ namespace ItalyStrap\FileHeader;
  * Interface CommonKeys
  * @package ItalyStrap\FileHeader
  */
-interface CommonKeys
-{
+interface CommonKeys {
+
 	const NAME = 'Name';
 	const VERSION = 'Version';
 	const DESCRIPTION = 'Description';

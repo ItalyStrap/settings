@@ -8,8 +8,8 @@ namespace ItalyStrap\FileHeader;
  * @link https://developer.wordpress.org/plugins/plugin-basics/header-requirements/
  * @package ItalyStrap\FileHeader
  */
-interface Plugin extends CommonKeys
-{
+interface Plugin extends CommonKeys {
+
 	const PLUGIN_URI = 'PluginURI';
 	const NETWORK = 'Network';
 	const REQUIRES_WP = 'RequiresWP';
