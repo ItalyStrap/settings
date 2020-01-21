@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Tests;
 
-
 use Codeception\Test\Unit;
 use ItalyStrap\FileHeader\HeaderFields;
 use ItalyStrap\FileHeader\Plugin;

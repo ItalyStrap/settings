@@ -5,7 +5,10 @@ namespace ItalyStrap\Tests;
 
 use ItalyStrap\FileHeader\Plugin;
 
+// phpcs:disable
 require_once 'HeaderFieldsBase.php';
+// phpcs:enable
+
 /**
  * @link https://codex.wordpress.org/File_Header
  * Class PluginDataTest

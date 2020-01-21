@@ -7,6 +7,7 @@ use SplFileObject;
 
 /**
  * Class PluginData
+ * @link https://codex.wordpress.org/File_Header
  * @package ItalyStrap\FileHeader
  */
 class HeaderFields implements HeaderFieldsInterface {

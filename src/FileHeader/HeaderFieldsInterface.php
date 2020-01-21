@@ -7,8 +7,8 @@ namespace ItalyStrap\FileHeader;
  * Interface HeaderFieldsInterface
  * @package ItalyStrap\FileHeader
  */
-interface HeaderFieldsInterface
-{
+interface HeaderFieldsInterface {
+
 	/**
 	 * @return array
 	 */

@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace ItalyStrap\Tests;
 
-
 use ItalyStrap\FileHeader\Theme;
 
+// phpcs:disable
 require_once 'HeaderFieldsBase.php';
+// phpcs:enable
 
 class HeaderFieldsThemeTest extends HeaderFieldsBase {
 
