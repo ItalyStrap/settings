@@ -8,6 +8,8 @@ use SplFileObject;
 /**
  * Class PluginData
  * @link https://codex.wordpress.org/File_Header
+ * @link https://developer.wordpress.org/themes/basics/main-stylesheet-style-css/
+ * @link https://developer.wordpress.org/plugins/plugin-basics/header-requirements/
  * @package ItalyStrap\FileHeader
  */
 class HeaderFields implements HeaderFieldsInterface {

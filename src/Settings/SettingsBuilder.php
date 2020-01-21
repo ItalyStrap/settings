@@ -13,6 +13,8 @@ use ItalyStrap\DataParser\Filters\ValidateFilter;
 use ItalyStrap\DataParser\LazyParser;
 use ItalyStrap\DataParser\ParserInterface;
 use ItalyStrap\Fields\Fields;
+use ItalyStrap\FileHeader\HeaderFields;
+use ItalyStrap\FileHeader\Plugin;
 use ItalyStrap\HTML\Attributes;
 use ItalyStrap\HTML\Tag;
 use ItalyStrap\I18N\Translator;
@@ -177,13 +179,17 @@ class SettingsBuilder {
 	 */
 	public function build(): void {
 
+		$file = new \SplFileObject( $this->plugin_file );
+		$headers_info = new HeaderFields( $file, Plugin::HEADERS );
+
+		d_footer( $headers_info->fields() );
+
 		\array_map( function ( array $to_boot ) {
 			foreach ( $to_boot as $bootable ) {
 				$bootable->boot();
 			}
 		}, $this->pages_obj );
 
-//		$plugin = new PluginData( new \SplFileObject( $this->plugin_file ) );
 		$this->links()->boot( $this->base_name );
 
 		/**

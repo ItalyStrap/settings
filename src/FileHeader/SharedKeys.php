@@ -4,10 +4,10 @@ declare(strict_types=1);
 namespace ItalyStrap\FileHeader;
 
 /**
- * Interface CommonKeys
+ * Interface SharedKeys
  * @package ItalyStrap\FileHeader
  */
-interface CommonKeys {
+interface SharedKeys {
 
 	const NAME = 'Name';
 	const VERSION = 'Version';
