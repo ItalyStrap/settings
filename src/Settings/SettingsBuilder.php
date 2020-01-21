@@ -76,7 +76,12 @@ class SettingsBuilder {
 	 * @param string $base_name
 	 * @param string $plugin_file
 	 */
-	public function __construct( $option_name, $domain = '', $base_name = '', string $plugin_file = '' ) {
+	public function __construct(
+		string $option_name,
+		string $domain = '',
+		string $base_name = '',
+		string $plugin_file = ''
+	) {
 		$this->option_name = $option_name;
 		$this->domain = $domain;
 		$this->base_name = $base_name;
@@ -89,7 +94,7 @@ class SettingsBuilder {
 	public function links(): PluginLinks {
 
 		if ( empty( $this->links ) ) {
-			$this->links = new PluginLinks( new Tag( new Attributes() ) );
+			$this->links = new PluginLinks( new Tag( new Attributes() ), $this->base_name );
 		}
 
 		return $this->links;
@@ -190,7 +195,7 @@ class SettingsBuilder {
 			}
 		}, $this->pages_obj );
 
-		$this->links()->boot( $this->base_name );
+		$this->links()->boot();
 
 		/**
 		 * Load script for Tabbed admin page

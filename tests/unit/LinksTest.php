@@ -55,7 +55,7 @@ class LinksTest extends \Codeception\Test\Unit {
 
 	private function getInstance(): \ItalyStrap\Settings\PluginLinks {
 		$tag = new \ItalyStrap\HTML\Tag( new \ItalyStrap\HTML\Attributes() );
-		$sut = new \ItalyStrap\Settings\PluginLinks( $tag );
+		$sut = new \ItalyStrap\Settings\PluginLinks( $tag, 'plugin_base_name' );
 		$this->assertInstanceOf( \ItalyStrap\Settings\PluginLinks::class, $sut, '' );
 		return $sut;
 	}

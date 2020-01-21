@@ -56,6 +56,10 @@ class PluginLinks implements PluginLinksInterface {
 		'users.php',
 		'tools.php'
 	];
+	/**
+	 * @var string
+	 */
+	private $base_name;
 
 	/**
 	 * @return array
@@ -84,9 +88,11 @@ class PluginLinks implements PluginLinksInterface {
 	/**
 	 * Links constructor.
 	 * @param Tag $tag
+	 * @param string $base_name
 	 */
-	public function __construct( Tag $tag ) {
+	public function __construct( Tag $tag, string $base_name ) {
 		$this->tag = $tag;
+		$this->base_name = $base_name;
 	}
 
 	/**
@@ -123,11 +129,11 @@ class PluginLinks implements PluginLinksInterface {
 	}
 
 	/**
-	 * @param string $base_name
+	 * @return void
 	 */
-	public function boot( $base_name = '' ): void {
+	public function boot(): void {
 		$prefix = is_network_admin() ? 'network_admin_' : '';
-		\add_filter( $prefix . 'plugin_action_links_' . $base_name, [ $this, 'update' ], 10, 4 );
+		\add_filter( $prefix . 'plugin_action_links_' . $this->base_name, [ $this, 'update' ], 10, 4 );
 	}
 
 	/**
