@@ -58,7 +58,7 @@ class HeaderFields implements HeaderFieldsInterface {
 	}
 
 	/**
-	 * @return false|string|string[]
+	 * @return string
 	 */
 	private function fileContent(): string {
 		return \strval( \str_replace( "\r", "\n", $this->file->fread( 8 * 1024 ) ) );
