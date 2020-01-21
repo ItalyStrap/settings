@@ -72,18 +72,15 @@ class SettingsBuilder {
 
 	/**
 	 * @param string $option_name
-	 * @param string $domain
 	 * @param string $base_name
 	 * @param string $plugin_file
 	 */
 	public function __construct(
 		string $option_name,
-		string $domain = '',
 		string $base_name = '',
 		string $plugin_file = ''
 	) {
 		$this->option_name = $option_name;
-		$this->domain = $domain;
 		$this->base_name = $base_name;
 		$this->plugin_file = $plugin_file;
 	}

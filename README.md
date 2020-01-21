@@ -57,8 +57,8 @@ $settings_config = \ItalyStrap\Config\ConfigFactory::make(
 // Initialize the builder
 $settings = new SettingsBuilder(
 	$option_name,
-	$text_domain,
-	ITALYSTRAP_BASENAME
+	ITALYSTRAP_BASENAME,
+	ITALYSTRAP_FILE
 );
 
 // You can add configuration via the \ItalyStrap\Config\ConfigFactory::class

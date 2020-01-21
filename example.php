@@ -12,7 +12,6 @@ $settings_config = \ItalyStrap\Config\ConfigFactory::make(
 // Initialize the builder
 $settings = new SettingsBuilder(
 	$option_name,
-	$text_domain,
 	ITALYSTRAP_BASENAME,
 	ITALYSTRAP_FILE
 );
