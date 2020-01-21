@@ -187,8 +187,6 @@ class SettingsBuilder {
 		$file = new \SplFileObject( $this->plugin_file );
 		$headers_info = new HeaderFields( $file, Plugin::HEADERS );
 
-		d_footer( $headers_info->fields() );
-
 		\array_map( function ( array $to_boot ) {
 			foreach ( $to_boot as $bootable ) {
 				$bootable->boot();
