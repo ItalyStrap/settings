@@ -3,14 +3,13 @@ declare(strict_types=1);
 
 namespace ItalyStrap\FileHeader;
 
-use ItalyStrap\Config\Config;
 use SplFileObject;
 
 /**
  * Class PluginData
  * @package ItalyStrap\FileHeader
  */
-class HeaderFields extends Config implements Plugin {
+class HeaderFields implements HeaderFieldsInterface {
 
 	/**
 	 * @var SplFileObject
@@ -18,28 +17,29 @@ class HeaderFields extends Config implements Plugin {
 	private $file;
 
 	/**
+	 * @var array
+	 */
+	private $headers;
+
+	/**
 	 * PluginData constructor.
 	 * @param SplFileObject $file
+	 * @param array $headers
 	 */
-	public function __construct( SplFileObject $file ) {
+	public function __construct( SplFileObject $file, array $headers ) {
 		$this->file = $file;
-		parent::__construct( $this->fields() );
-	}
-
-	public function textDomain(): string {
-		return (string) $this->get( self::TEXT_DOMAIN );
+		$this->headers = $headers;
 	}
 
 	/**
-	 * @return array
+	 * @inheritDoc
 	 */
 	public function fields(): array {
-		$content = $this->file->fread( 8 * 1024 );
-		$content = \str_replace( "\r", "\n", $content );
+		$content = $this->fileContent();
 
-		$all_headers = [];
-		foreach (self::HEADERS as $field => $regex) {
-			$all_headers[ $field ] = '';
+		$headers = [];
+		foreach ( $this->headers as $field => $regex ) {
+			$headers[ $field ] = '';
 			if (
 				\preg_match(
 					'/^[ \t\/*#@]*' . \preg_quote( $regex, '/' ) . ':(.*)$/mi',
@@ -47,12 +47,19 @@ class HeaderFields extends Config implements Plugin {
 					$match
 				) && $match[ 1 ]
 			) {
-				$all_headers[ $field ] = \trim(
+				$headers[ $field ] = \trim(
 					\preg_replace( '/\s*(?:\*\/|\?>).*/', '', $match[ 1 ] )
 				);
 			}
 		}
 
-		return $all_headers;
+		return $headers;
+	}
+
+	/**
+	 * @return false|string|string[]
+	 */
+	private function fileContent(): string {
+		return \str_replace( "\r", "\n", $this->file->fread( 8 * 1024 ) );
 	}
 }
