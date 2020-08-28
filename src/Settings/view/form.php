@@ -57,6 +57,8 @@ $spinner = void_tag( $this->getPageSlug() . '_spinner', 'img', [
 </div>
 <div class="clear"></div>
 <?php
+return;
+
 /**
  * https://www.wpoptimus.com/434/save-plugin-theme-setting-options-ajax-wordpress/
  */
@@ -84,7 +86,9 @@ $updated = \sprintf(
 				},
 				timeout: 5000
 			});
-			setTimeout("$('#saveMessage').hide('slow');", 5000);
+			setTimeout(() => {
+				$('#saveMessage').hide('slow');
+			}, 5000);
 			return false;
 		});
 	});
