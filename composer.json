@@ -17,11 +17,10 @@
         "php" : ">=7.2",
         "italystrap/cleaner": "^1.1",
         "italystrap/config": "^2.2",
-        "italystrap/fields": "^2.0",
-        "italystrap/view": "^1.1"
+        "italystrap/fields": "^2.0"
     },
     "require-dev": {
-        "lucatume/wp-browser": "~2.2",
+        "lucatume/wp-browser": "2.2",
         "lucatume/function-mocker-le": "^1.0",
         "italystrap/debug": "~2.0",
         "wp-coding-standards/wpcs": "^2.1",
