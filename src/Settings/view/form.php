@@ -56,6 +56,7 @@ $spinner = void_tag( $this->getPageSlug() . '_spinner', 'img', [
 	</div>
 </div>
 <div class="clear"></div>
+<?php do_action( 'italystrap_after_settings_page', $this ); ?>
 <?php
 return;
 
@@ -93,4 +94,3 @@ $updated = \sprintf(
 		});
 	});
 </script>
-<?php do_action( 'italystrap_after_settings_page', $this ); ?>
