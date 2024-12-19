@@ -151,7 +151,7 @@ class SettingsBuilder {
 		$this->pages[ $page[ Page::SLUG ] ][] = $sections;
 
 		$pages_obj = new Page(
-			ConfigFactory::make( $page ),
+			(new ConfigFactory)->make( $page ),
 			new ViewPage()
 		);
 
@@ -159,7 +159,7 @@ class SettingsBuilder {
 
 		if ( ! empty( $sections ) ) {
 			$sections_obj = new Sections(
-				ConfigFactory::make( $sections ),
+				(new ConfigFactory)->make( $sections ),
 				new Fields(),
 				$this->parser(),
 				$this->options()
