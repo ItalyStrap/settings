@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ItalyStrap\FileHeader;
@@ -12,57 +13,43 @@ use SplFileObject;
  * @link https://developer.wordpress.org/plugins/plugin-basics/header-requirements/
  * @package ItalyStrap\FileHeader
  */
-class HeaderFields implements HeaderFieldsInterface {
+class HeaderFields implements HeaderFieldsInterface
+{
+    /**
+     * PluginData constructor.
+     */
+    public function __construct(private readonly SplFileObject $file, private readonly array $headers)
+    {
+    }
 
-	/**
-	 * @var SplFileObject
-	 */
-	private $file;
+    /**
+     * @inheritDoc
+     */
+    public function fields(): array
+    {
+        $content = $this->fileContent();
 
-	/**
-	 * @var array
-	 */
-	private $headers;
+        $headers = [];
+        foreach ($this->headers as $field => $regex) {
+            $headers[ $field ] = '';
+            if (
+                \preg_match(
+                    '/^[ \t\/*#@]*' . \preg_quote($regex, '/') . ':(.*)$/mi',
+                    $content,
+                    $match
+                ) && $match[ 1 ]
+            ) {
+                $headers[ $field ] = \trim(
+                    \preg_replace('/\s*(?:\*\/|\?>).*/', '', $match[ 1 ])
+                );
+            }
+        }
 
-	/**
-	 * PluginData constructor.
-	 * @param SplFileObject $file
-	 * @param array $headers
-	 */
-	public function __construct( SplFileObject $file, array $headers ) {
-		$this->file = $file;
-		$this->headers = $headers;
-	}
+        return $headers;
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function fields(): array {
-		$content = $this->fileContent();
-
-		$headers = [];
-		foreach ( $this->headers as $field => $regex ) {
-			$headers[ $field ] = '';
-			if (
-				\preg_match(
-					'/^[ \t\/*#@]*' . \preg_quote( $regex, '/' ) . ':(.*)$/mi',
-					$content,
-					$match
-				) && $match[ 1 ]
-			) {
-				$headers[ $field ] = \trim(
-					\preg_replace( '/\s*(?:\*\/|\?>).*/', '', $match[ 1 ] )
-				);
-			}
-		}
-
-		return $headers;
-	}
-
-	/**
-	 * @return string
-	 */
-	private function fileContent(): string {
-		return \strval( \str_replace( "\r", "\n", $this->file->fread( 8 * 1024 ) ) );
-	}
+    private function fileContent(): string
+    {
+        return \strval(\str_replace("\r", "\n", $this->file->fread(8 * 1024)));
+    }
 }

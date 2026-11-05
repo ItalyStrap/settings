@@ -1,180 +1,185 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ItalyStrap\Tests;
 
-class LinksTest extends \Codeception\Test\Unit {
+use Codeception\Test\Unit;
+use Prophecy\PhpUnit\ProphecyTrait;
+use Prophecy\Prophecy\ObjectProphecy;
+use ItalyStrap\Settings\Page;
+use ItalyStrap\Settings\PluginLinks;
+use ItalyStrap\HTML\Tag;
+use ItalyStrap\HTML\Attributes;
 
-	/**
-	 * @var \UnitTester
-	 */
-	protected $tester;
+use function tad\FunctionMockerLe\define;
 
-	/**
-	 * @var \Prophecy\Prophecy\ObjectProphecy
-	 */
-	private $page;
+class LinksTest extends Unit
+{
+    use ProphecyTrait;
 
-	/**
-	 * @var string
-	 */
-	private $admin_url;
+
+    /**
+     * @var \UnitTester
+     */
+    protected $tester;
+
+    private ?ObjectProphecy $page = null;
+
+    private ?string $admin_url = null;
 
 	// phpcs:ignore -- Method from Codeception
 	protected function _before() {
 		// phpcs:ignore -- This is not a constant definition
-		\tad\FunctionMockerLe\define( 'apply_filters', function ( $filter_name, $value ) {
-			return $value;
-		} );
+		define( 'apply_filters', fn($filter_name, $value) => $value);
 		// phpcs:ignore -- This is not a constant definition
-		\tad\FunctionMockerLe\define( 'esc_attr', function ( $value ) {
-			return $value;
-		} );
+		define( 'esc_attr', fn($value) => $value);
 		// phpcs:ignore -- This is not a constant definition
-		\tad\FunctionMockerLe\define( 'esc_html', function ( $value ) {
-			return $value;
-		} );
+		define( 'esc_html', fn($value) => $value);
 		// phpcs:ignore -- This is not a constant definition
-		\tad\FunctionMockerLe\define( 'esc_url', function ( $value ) {
-			return $value;
-		} );
+		define( 'esc_url', fn($value) => $value);
 
-		$this->admin_url = $_ENV['TEST_SITE_WP_URL'] . '/wp-admin/';
+        $this->admin_url = 'http://wordpress/wp-admin/';
 
 		// phpcs:ignore -- This is not a constant definition
-		\tad\FunctionMockerLe\define( 'admin_url', function ( $value = '' ) {
-			return $this->admin_url . $value;
-		} );
+		define( 'admin_url', fn($value = ''): string => $this->admin_url . $value);
 
-		$this->page = $this->prophesize( \ItalyStrap\Settings\Page::class );
-	}
+        $this->page = $this->prophesize(Page::class);
+    }
 
 	// phpcs:ignore -- Method from Codeception
 	protected function _after() {
-	}
+    }
 
-	private function getInstance(): \ItalyStrap\Settings\PluginLinks {
-		$tag = new \ItalyStrap\HTML\Tag( new \ItalyStrap\HTML\Attributes() );
-		$sut = new \ItalyStrap\Settings\PluginLinks( $tag, 'plugin_base_name' );
-		$this->assertInstanceOf( \ItalyStrap\Settings\PluginLinks::class, $sut, '' );
-		return $sut;
-	}
+    private function getInstance(): PluginLinks
+    {
+        $tag = new Tag(new Attributes());
+        $sut = new PluginLinks($tag, 'plugin_base_name');
+        $this->assertInstanceOf(PluginLinks::class, $sut, '');
+        return $sut;
+    }
 
-	/**
-	 * @test
-	 */
-	public function itShouldBeInstantiable() {
-		$sut = $this->getInstance();
-	}
+    /**
+     * @test
+     */
+    public function itShouldBeInstantiable(): void
+    {
+        $this->getInstance();
+    }
 
-	private function getPage() {
-		return $this->page->reveal();
-	}
+    private function getPage()
+    {
+        return $this->page->reveal();
+    }
 
-	/**
-	 * @test
-	 */
-	public function itShouldAddsLinksForPage() {
-		$sut = $this->getInstance();
+    /**
+     * @test
+     */
+    public function itShouldAddsLinksForPage(): void
+    {
+        $sut = $this->getInstance();
 
-		$slug = 'some-test-slug';
-		$content = 'Title';
-		$this->page->getSlug()->willReturn( $slug );
-		$this->page->getPageTitle()->willReturn( $content );
-		$this->page->isSubmenu()->willReturn( false );
+        $slug = 'some-test-slug';
+        $content = 'Title';
+        $this->page->getSlug()->willReturn($slug);
+        $this->page->getPageTitle()->willReturn($content);
+        $this->page->isSubmenu()->willReturn(false);
 
-		$sut->forPages( $this->getPage() );
+        $sut->forPages($this->getPage());
 
-		$links = $sut->getLinks();
-		$this->assertIsArray( $links, '' );
+        $links = $sut->getLinks();
+        $this->assertIsArray($links, '');
 
-		foreach ($links as $link) {
-			$this->assertStringContainsString( \sprintf(
-				'<a href="%1$s" aria-label="%2$s">%2$s</a>',
-				$this->admin_url . 'admin.php?page=' . $slug,
-				$content
-			), $link, '' );
-		}
-	}
+        foreach ($links as $link) {
+            $this->assertStringContainsString(\sprintf(
+                '<a href="%1$s" aria-label="%2$s">%2$s</a>',
+                $this->admin_url . 'admin.php?page=' . $slug,
+                $content
+            ), $link, '');
+        }
+    }
 
-	/**
-	 * @test
-	 */
-	public function itShouldAddsLinksForSubPage() {
-		$sut = $this->getInstance();
+    /**
+     * @test
+     */
+    public function itShouldAddsLinksForSubPage(): void
+    {
+        $sut = $this->getInstance();
 
-		$slug = 'some-test-slug';
-		$content = 'Title';
-		$this->page->getSlug()->willReturn( $slug );
-		$this->page->getPageTitle()->willReturn( $content );
-		$this->page->isSubmenu()->willReturn( true );
-		$this->page->getParentPageSlug()->willReturn( 'parent' );
+        $slug = 'some-test-slug';
+        $content = 'Title';
+        $this->page->getSlug()->willReturn($slug);
+        $this->page->getPageTitle()->willReturn($content);
+        $this->page->isSubmenu()->willReturn(true);
+        $this->page->getParentPageSlug()->willReturn('parent');
 
-		$sut->forPages( $this->getPage() );
+        $sut->forPages($this->getPage());
 
-		$links = $sut->getLinks();
-		$this->assertIsArray( $links, '' );
+        $links = $sut->getLinks();
+        $this->assertIsArray($links, '');
 
-		foreach ($links as $link) {
-			$this->assertStringContainsString( \sprintf(
-				'<a href="%1$s" aria-label="%2$s">%2$s</a>',
-				$this->admin_url . 'admin.php?page=' . $slug,
-				$content
-			), $link, '' );
-		}
-	}
+        foreach ($links as $link) {
+            $this->assertStringContainsString(\sprintf(
+                '<a href="%1$s" aria-label="%2$s">%2$s</a>',
+                $this->admin_url . 'admin.php?page=' . $slug,
+                $content
+            ), $link, '');
+        }
+    }
 
-	/**
-	 * @test
-	 */
-	public function itShouldAddsLinksForSubPageOfWPPages() {
-		$sut = $this->getInstance();
+    /**
+     * @test
+     */
+    public function itShouldAddsLinksForSubPageOfWPPages(): void
+    {
+        $sut = $this->getInstance();
 
-		$parents = $sut->getDefaultPages();
+        $parents = $sut->getDefaultPages();
 
-		foreach ( $parents as $key => $parent ) {
-			$slug = 'some-test-slug';
-			$content = 'Title';
-			$this->page->getSlug()->willReturn( $slug );
-			$this->page->getPageTitle()->willReturn( $content );
-			$this->page->isSubmenu()->willReturn( true );
-			$this->page->getParentPageSlug()->willReturn( $parent );
+        foreach ($parents as $parent) {
+            $slug = 'some-test-slug';
+            $content = 'Title';
+            $this->page->getSlug()->willReturn($slug);
+            $this->page->getPageTitle()->willReturn($content);
+            $this->page->isSubmenu()->willReturn(true);
+            $this->page->getParentPageSlug()->willReturn($parent);
 
-			$sut->forPages( $this->getPage() );
+            $sut->forPages($this->getPage());
 
-			$links = $sut->getLinks();
-			$this->assertIsArray( $links, '' );
+            $links = $sut->getLinks();
+            $this->assertIsArray($links, '');
 
-			foreach ($links as $link) {
-				$this->assertStringContainsString( \sprintf(
-					'<a href="%1$s" aria-label="%2$s">%2$s</a>',
-					$this->admin_url . $parent . '?page=' . $slug,
-					$content
-				), $link, '' );
-			}
-		}
-	}
+            foreach ($links as $link) {
+                $this->assertStringContainsString(\sprintf(
+                    '<a href="%1$s" aria-label="%2$s">%2$s</a>',
+                    $this->admin_url . $parent . '?page=' . $slug,
+                    $content
+                ), $link, '');
+            }
+        }
+    }
 
-	/**
-	 * @test
-	 */
-	public function itShouldAddCustomLink() {
-		$sut = $this->getInstance();
+    /**
+     * @test
+     */
+    public function itShouldAddCustomLink(): void
+    {
+        $sut = $this->getInstance();
 
-		$key = 'some-key';
-		$url = 'http://localhost.com';
-		$content = 'Title';
+        $key = 'some-key';
+        $url = 'http://localhost.com';
+        $content = 'Title';
 
-		$sut->addLink($key, $url, $content);
+        $sut->addLink($key, $url, $content);
 
-		$links = $sut->getLinks();
+        $links = $sut->getLinks();
 
-		$this->assertArrayHasKey( $key, $links, '' );
+        $this->assertArrayHasKey($key, $links, '');
 
-		$this->assertStringContainsString( \sprintf(
-			'<a href="%1$s" aria-label="%2$s">%2$s</a>',
-			$url,
-			$content
-		), $links[ $key ], '' );
-	}
+        $this->assertStringContainsString(\sprintf(
+            '<a href="%1$s" aria-label="%2$s">%2$s</a>',
+            $url,
+            $content
+        ), $links[ $key ], '');
+    }
 }

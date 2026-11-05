@@ -1,0 +1,1009 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method ItalyStrap\\DataParser\\FilterableInterface\:\:getDefault\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/FilterableInterface.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\Filters\\CapabilityFilter\:\:getDefault\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Filters/CapabilityFilter.php
+
+		-
+			message: '#^Parameter \#1 \$capability of function current_user_can expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DataParser/Filters/CapabilityFilter.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\Filters\\NullFilter\:\:getDefault\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Filters/NullFilter.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\Filters\\RequiredFilter\:\:getDefault\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Filters/RequiredFilter.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\Filters\\SanitizeFilter\:\:getDefault\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Filters/SanitizeFilter.php
+
+		-
+			message: '#^Parameter \#1 \$data of method ItalyStrap\\Cleaner\\Sanitization\:\:sanitize\(\) expects int\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DataParser/Filters/SanitizeFilter.php
+
+		-
+			message: '#^Parameter \#1 \$rules of method ItalyStrap\\Cleaner\\Sanitization\:\:addRules\(\) expects array\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DataParser/Filters/SanitizeFilter.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\Filters\\ThemeModFilter\:\:getDefault\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Filters/ThemeModFilter.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\Filters\\TranslateFilter\:\:getDefault\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Filters/TranslateFilter.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DataParser/Filters/TranslateFilter.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\Filters\\ValidateFilter\:\:getDefault\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Filters/ValidateFilter.php
+
+		-
+			message: '#^Parameter \#1 \$rules of method ItalyStrap\\Cleaner\\Validation\:\:addRules\(\) expects array\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DataParser/Filters/ValidateFilter.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DataParser/Filters/ValidateFilter.php
+
+		-
+			message: '#^Only iterables can be unpacked, mixed given in argument \#1\.$#'
+			identifier: argument.unpackNonIterable
+			count: 1
+			path: src/DataParser/LazyParser.php
+
+		-
+			message: '#^Parameter \#1 \.\.\.\$filters of method ItalyStrap\\DataParser\\Parser\:\:withFilters\(\) expects ItalyStrap\\DataParser\\FilterableInterface, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DataParser/LazyParser.php
+
+		-
+			message: '#^Cannot call method filter\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/DataParser/Parser.php
+
+		-
+			message: '#^Cannot call method getDefault\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/DataParser/Parser.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\Parser\:\:assertDataValueIsSet\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Parser.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\Parser\:\:assertDataValueIsSet\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Parser.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\Parser\:\:getSchema\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Parser.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\Parser\:\:parseValue\(\) has parameter \$schema with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Parser.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\Parser\:\:parseValues\(\) should return array\<int\|string\> but returns array\.$#'
+			identifier: return.type
+			count: 1
+			path: src/DataParser/Parser.php
+
+		-
+			message: '#^Parameter \#1 \$array of function array_replace_recursive expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DataParser/Parser.php
+
+		-
+			message: '#^Parameter \#3 \$schema of method ItalyStrap\\DataParser\\Parser\:\:parseValue\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/DataParser/Parser.php
+
+		-
+			message: '#^Property ItalyStrap\\DataParser\\Parser\:\:\$filters type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Parser.php
+
+		-
+			message: '#^Property ItalyStrap\\DataParser\\Parser\:\:\$schema type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/Parser.php
+
+		-
+			message: '#^Method ItalyStrap\\DataParser\\ParserInterface\:\:getSchema\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/DataParser/ParserInterface.php
+
+		-
+			message: '#^Method ItalyStrap\\FileHeader\\HeaderFields\:\:__construct\(\) has parameter \$headers with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/FileHeader/HeaderFields.php
+
+		-
+			message: '#^Method ItalyStrap\\FileHeader\\HeaderFields\:\:fields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/FileHeader/HeaderFields.php
+
+		-
+			message: '#^Parameter \#1 \$str of function preg_quote expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/FileHeader/HeaderFields.php
+
+		-
+			message: '#^Parameter \#1 \$string of function trim expects string, string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/FileHeader/HeaderFields.php
+
+		-
+			message: '#^Parameter \#3 \$subject of function str_replace expects array\<string\>\|string, string\|false given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/FileHeader/HeaderFields.php
+
+		-
+			message: '#^Method ItalyStrap\\FileHeader\\HeaderFieldsInterface\:\:fields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/FileHeader/HeaderFieldsInterface.php
+
+		-
+			message: '#^Method ItalyStrap\\I18N\\Translatable\:\:deregisterString\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/I18N/Translatable.php
+
+		-
+			message: '#^Method ItalyStrap\\I18N\\Translatable\:\:getAvailableLanguages\(\) has parameter \$dir with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/I18N/Translatable.php
+
+		-
+			message: '#^Method ItalyStrap\\I18N\\Translatable\:\:getAvailableLanguages\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/I18N/Translatable.php
+
+		-
+			message: '#^Method ItalyStrap\\I18N\\Translatable\:\:registerString\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/I18N/Translatable.php
+
+		-
+			message: '#^Call to static method delete\(\) on an unknown class CMLTranslations\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/I18N/Translator.php
+
+		-
+			message: '#^Call to static method get\(\) on an unknown class CMLTranslations\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/I18N/Translator.php
+
+		-
+			message: '#^Call to static method get_current_id\(\) on an unknown class CMLLanguage\.$#'
+			identifier: class.notFound
+			count: 1
+			path: src/I18N/Translator.php
+
+		-
+			message: '#^Method ItalyStrap\\I18N\\Translator\:\:getAvailableLanguages\(\) has parameter \$dir with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/I18N/Translator.php
+
+		-
+			message: '#^Method ItalyStrap\\I18N\\Translator\:\:getAvailableLanguages\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/I18N/Translator.php
+
+		-
+			message: '#^Method ItalyStrap\\I18N\\Translator\:\:getLanguage\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/I18N/Translator.php
+
+		-
+			message: '#^Method ItalyStrap\\I18N\\Translator\:\:getString\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 3
+			path: src/I18N/Translator.php
+
+		-
+			message: '#^Parameter \#1 \$dir of function get_available_languages expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/I18N/Translator.php
+
+		-
+			message: '#^Parameter \#1 \$handle of function wp_enqueue_script expects non\-empty\-string, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/AssetLoader.php
+
+		-
+			message: '#^Parameter \#1 \$string of function stripslashes expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/AssetLoader.php
+
+		-
+			message: '#^Class ItalyStrap\\Settings\\Options extends generic class ItalyStrap\\Config\\Config but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Settings/Options.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Options\:\:addAll\(\) has parameter \$values with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/Options.php
+
+		-
+			message: '#^Interface ItalyStrap\\Settings\\OptionsInterface extends generic interface ItalyStrap\\Config\\ConfigInterface but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Settings/OptionsInterface.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\OptionsInterface\:\:addAll\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Settings/OptionsInterface.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\OptionsInterface\:\:addAll\(\) has parameter \$values with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/OptionsInterface.php
+
+		-
+			message: '#^Cannot access offset ''option_type'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Settings/OptionsParser.php
+
+		-
+			message: '#^Cannot access offset ''value'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Settings/OptionsParser.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\OptionsParser\:\:getPluginSettingsArrayDefault\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/OptionsParser.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\OptionsParser\:\:setThemeMods\(\) has parameter \$value with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/OptionsParser.php
+
+		-
+			message: '#^Property ItalyStrap\\Settings\\OptionsParser\:\:\$settingsFields type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/OptionsParser.php
+
+		-
+			message: '#^Access to an undefined property ItalyStrap\\Config\\ConfigInterface\:\:\$menu_slug\.$#'
+			identifier: property.notFound
+			count: 2
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Access to an undefined property ItalyStrap\\Config\\ConfigInterface\:\:\$menu_title\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Access to an undefined property ItalyStrap\\Config\\ConfigInterface\:\:\$parent\.$#'
+			identifier: property.notFound
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Action callback returns bool\|string but should not return anything\.$#'
+			identifier: return.void
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Page\:\:__construct\(\) has parameter \$config with generic interface ItalyStrap\\Config\\ConfigInterface but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Page\:\:assertHasMinimumValueSet\(\) has parameter \$config with generic interface ItalyStrap\\Config\\ConfigInterface but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Page\:\:getCallable\(\) has parameter \$config with generic interface ItalyStrap\\Config\\ConfigInterface but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Page\:\:getMenuTitle\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Page\:\:getPageTitle\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Page\:\:getParentPageSlug\(\) should return string but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Parameter \#1 \$condition of method ItalyStrap\\Settings\\Page\:\:showOn\(\) expects bool\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Parameter \#1 \$key of function sanitize_key expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Parameter \#1 \$view of method ItalyStrap\\Settings\\ViewPageInterface\:\:render\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Parameter \#3 \$capability of function add_menu_page expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Parameter \#4 \$capability of function add_submenu_page expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Parameter \#6 \$icon_url of function add_menu_page expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Parameter \#7 \$position of function add_menu_page expects float\|int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Page.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\PluginLinks\:\:createLink\(\) has parameter \$attr with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/PluginLinks.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\PluginLinks\:\:getDefaultPages\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/PluginLinks.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\PluginLinks\:\:update\(\) has parameter \$links with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/PluginLinks.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\PluginLinks\:\:update\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/PluginLinks.php
+
+		-
+			message: '#^Parameter \#3 \$attr of method ItalyStrap\\HTML\\Tag\:\:open\(\) expects array\<bool\|string\>, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/PluginLinks.php
+
+		-
+			message: '#^Parameter \#3 \$text of method ItalyStrap\\Settings\\PluginLinks\:\:addLink\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/PluginLinks.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\PluginLinksInterface\:\:getLinks\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/PluginLinksInterface.php
+
+		-
+			message: '#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\.$#'
+			identifier: foreach.nonIterable
+			count: 2
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Binary operation "\." between mixed and ''\.desc'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Cannot access offset ''fields'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Cannot access offset ''id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Cannot access offset mixed on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Cannot call method getSlug\(\) on ItalyStrap\\Settings\\PageInterface\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Sections\:\:__construct\(\) has parameter \$config with generic interface ItalyStrap\\Config\\ConfigInterface but does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Sections\:\:addSettingsFields\(\) has parameter \$section with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Sections\:\:getSections\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Sections\:\:getStringForLabel\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Sections\:\:parseArgsForFieldsBeforeRenderMethod\(\) has parameter \$args_for_fields with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Sections\:\:parseFieldArgsWithDefaultBeforePassingToRenderField\(\) has parameter \$field with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Sections\:\:parseSectionWithDefault\(\) has parameter \$section with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Sections\:\:renderField\(\) has parameter \$args_for_field with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\Sections\:\:renderSection\(\) has parameter \$section with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#1 \$condition of method ItalyStrap\\Settings\\Sections\:\:showOn\(\) expects bool\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#1 \$field of method ItalyStrap\\Settings\\Sections\:\:parseFieldArgsWithDefaultBeforePassingToRenderField\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#1 \$id of function add_settings_field expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#1 \$id of function add_settings_section expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#1 \$key of method ItalyStrap\\Storage\\StoreInterface\:\:get\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#1 \$section of method ItalyStrap\\Settings\\Sections\:\:parseSectionWithDefault\(\) expects array, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#1 \$value of function strval expects bool\|float\|GMP\|int\|resource\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#1 \(mixed\) of echo cannot be converted to string\.$#'
+			identifier: echo.nonString
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#2 \$string of function explode expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#2 \$title of function add_settings_field expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#2 \$title of function add_settings_section expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#5 \$section of function add_settings_field expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Parameter \#6 \$args of function add_settings_field expects array\{label_for\?\: string, class\?\: string, \.\.\.\}, non\-empty\-array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 3
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Property ItalyStrap\\Settings\\Sections\:\:\$config with generic interface ItalyStrap\\Config\\ConfigInterface does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Property ItalyStrap\\Settings\\Sections\:\:\$field_class type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Property ItalyStrap\\Settings\\Sections\:\:\$options_values type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Property ItalyStrap\\Settings\\Sections\:\:\$section_key has no type specified\.$#'
+			identifier: missingType.property
+			count: 1
+			path: src/Settings/Sections.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\SectionsInterface\:\:getSections\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/SectionsInterface.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\SectionsInterface\:\:register\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Settings/SectionsInterface.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\SectionsInterface\:\:renderField\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Settings/SectionsInterface.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\SectionsInterface\:\:renderField\(\) has parameter \$args with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/SectionsInterface.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\SectionsInterface\:\:renderSection\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Settings/SectionsInterface.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\SectionsInterface\:\:renderSection\(\) has parameter \$section with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/SectionsInterface.php
+
+		-
+			message: '#^Cannot access an offset on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 4
+			path: src/Settings/SettingsBuilder.php
+
+		-
+			message: '#^Cannot call method boot\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Settings/SettingsBuilder.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\SettingsBuilder\:\:addCustomPluginLink\(\) has parameter \$attr with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/SettingsBuilder.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\SettingsBuilder\:\:addPage\(\) has parameter \$page with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/SettingsBuilder.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\SettingsBuilder\:\:addPage\(\) has parameter \$sections with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/SettingsBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function array_map expects \(callable\(mixed\)\: mixed\)\|null, Closure\(array\)\: void given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/SettingsBuilder.php
+
+		-
+			message: '#^Parameter \#1 \$key of method ItalyStrap\\Settings\\PluginLinks\:\:addLink\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/SettingsBuilder.php
+
+		-
+			message: '#^Possibly invalid array key type mixed\.$#'
+			identifier: offsetAccess.invalidOffset
+			count: 2
+			path: src/Settings/SettingsBuilder.php
+
+		-
+			message: '#^Property ItalyStrap\\Settings\\SettingsBuilder\:\:\$domain \(string\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Settings/SettingsBuilder.php
+
+		-
+			message: '#^Property ItalyStrap\\Settings\\SettingsBuilder\:\:\$pages is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: src/Settings/SettingsBuilder.php
+
+		-
+			message: '#^Property ItalyStrap\\Settings\\SettingsBuilder\:\:\$pages type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/SettingsBuilder.php
+
+		-
+			message: '#^Property ItalyStrap\\Settings\\SettingsBuilder\:\:\$pages_obj type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: src/Settings/SettingsBuilder.php
+
+		-
+			message: '#^Binary operation "\." between non\-falsy\-string and mixed results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Cannot access offset ''callback'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Cannot access offset ''id'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Cannot access offset ''show_on'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Cannot access offset ''tab_title'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Cannot access offset ''title'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Cannot access offset mixed on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Cannot access offset string on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 2
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Instanceof between ItalyStrap\\Settings\\SectionsInterface and ItalyStrap\\Settings\\SectionsInterface will always evaluate to true\.$#'
+			identifier: instanceof.alwaysTrue
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\ViewPage\:\:assertHasSections\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\ViewPage\:\:assertHasSections\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\ViewPage\:\:createNavTab\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\ViewPage\:\:createNavTab\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\ViewPage\:\:doSettingsSections\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\ViewPage\:\:doSettingsSections\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\ViewPage\:\:findView\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\ViewPage\:\:findView\(\) has parameter \$file_name with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Method ItalyStrap\\Settings\\ViewPage\:\:getPageSlug\(\) is unused\.$#'
+			identifier: method.unused
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Parameter \#1 \$callback of function call_user_func expects callable\(\)\: mixed, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Parameter \#1 \$condition of method ItalyStrap\\Settings\\ViewPage\:\:showOn\(\) expects bool\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Parameter \#1 \$filename of function is_readable expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Parameter \#2 \$section of function do_settings_fields expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Part \$section\[''title''\] \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Property ItalyStrap\\Settings\\ViewPage\:\:\$capability \(string\) does not accept mixed\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Property ItalyStrap\\Settings\\ViewPage\:\:\$pagenow is unused\.$#'
+			identifier: property.unused
+			count: 1
+			path: src/Settings/ViewPage.php
+
+		-
+			message: '#^Binary operation "\." between mixed and ''_spinner'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 1
+			path: src/Settings/view/form.php
+
+		-
+			message: '#^Binary operation "\." between mixed and ''form'' results in an error\.$#'
+			identifier: binaryOp.invalid
+			count: 2
+			path: src/Settings/view/form.php
+
+		-
+			message: '#^Cannot call method assertHasSections\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Settings/view/form.php
+
+		-
+			message: '#^Cannot call method createNavTab\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Settings/view/form.php
+
+		-
+			message: '#^Cannot call method doSettingsSections\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: src/Settings/view/form.php
+
+		-
+			message: '#^Cannot call method getPageSlug\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 6
+			path: src/Settings/view/form.php
+
+		-
+			message: '#^Parameter \#1 \$option_group of function settings_fields expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/view/form.php
+
+		-
+			message: '#^Parameter \#3 \$attr of function ItalyStrap\\HTML\\open_tag_e expects array\<bool\|string\>, array\<string, mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: src/Settings/view/form.php
+
+		-
+			message: '#^Variable \$this might not be defined\.$#'
+			identifier: variable.undefined
+			count: 13
+			path: src/Settings/view/form.php

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Translator API Class
  *
@@ -12,6 +13,7 @@
  *
  * @package ItalyStrap\I18N
  */
+
 declare(strict_types=1);
 
 namespace ItalyStrap\I18N;
@@ -19,135 +21,126 @@ namespace ItalyStrap\I18N;
 /**
  * Translator Class
  */
-class Translator implements Translatable {
+class Translator implements Translatable
+{
+    public function getDomain(): string
+    {
+        return $this->domain;
+    }
 
-	/**
-	 * The name of the plugin to use as a string group
-	 *
-	 * @var string
-	 */
-	private $domain = '';
+    /**
+     * Constructor
+     *
+     * @param  string $domain The name of the plugin.
+     */
+    public function __construct(
+        /**
+         * The name of the plugin to use as a string group
+         */
+        private $domain
+    ) {
+    }
 
-	/**
-	 * @return string
-	 */
-	public function getDomain(): string {
-		return $this->domain;
-	}
+    /**
+     * @inheritDoc
+     */
+    public function getLanguage(): string
+    {
 
-	/**
-	 * Constructor
-	 *
-	 * @param  string $domain The name of the plugin.
-	 */
-	public function __construct( $domain ) {
-		$this->domain = $domain;
-	}
+        return match (true) {
+            \defined('ICL_LANGUAGE_CODE') => \ICL_LANGUAGE_CODE,
+            \function_exists('cml_get_browser_lang') => \cml_get_browser_lang(),
+            \function_exists('pll_current_language') => \pll_current_language(),
+            \function_exists('get_user_locale') => \get_user_locale(),
+            /**
+             * @link https://codex.wordpress.org/Function_Reference/get_locale
+             */
+            default => \get_locale(),
+        };
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getLanguage(): string {
+    /**
+     * @inheritDoc
+     */
+    public function getAvailableLanguages($dir = null): array
+    {
+        return \get_available_languages($dir);
+    }
 
-		switch ( true ) {
-			case \defined( 'ICL_LANGUAGE_CODE' ):
-				return \ICL_LANGUAGE_CODE;
+    /**
+     * @inheritDoc
+     */
+    public function registerString($string_name, $value): void
+    {
 
-			case \function_exists( 'cml_get_browser_lang' ):
-				return \cml_get_browser_lang();
+        switch (true) {
+            case \function_exists('icl_register_string'):
+                \icl_register_string($this->domain, $string_name, $value);
+                break;
 
-			case \function_exists( 'pll_current_language' ):
-				return \pll_current_language();
+            case \class_exists('CMLTranslations'):
+                \CMLTranslations::add(
+                    $string_name,
+                    $value,
+                    \str_replace(' ', '-', $this->domain)
+                );
+                break;
 
-			case \function_exists( 'get_user_locale' ):
-				return \get_user_locale();
+            case \function_exists('pll_register_string'):
+                \pll_register_string(
+                    \str_replace(' ', '-', $this->domain),
+                    $string_name
+                );
+                break;
 
-			default:
-				/**
-				 * @link https://codex.wordpress.org/Function_Reference/get_locale
-				 */
-				return \get_locale();
-		}
-	}
+            default:
+                break;
+        }
+    }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getAvailableLanguages( $dir = null ): array {
-		return \get_available_languages( $dir );
-	}
+    /**
+     * @inheritDoc
+     */
+    public function deregisterString($string_name): void
+    {
 
-	/**
-	 * @inheritDoc
-	 */
-	public function registerString( $string_name, $value ) {
+        switch (true) {
+            case \function_exists('icl_unregister_string'):
+                \icl_unregister_string($this->domain, $string_name);
+                break;
 
-		switch ( true ) {
-			case \function_exists( 'icl_register_string' ):
-				\icl_register_string( $this->domain, $string_name, $value );
-				break;
+            case \has_filter('cml_my_translations'):
+                \CMLTranslations::delete(\str_replace(' ', '-', $this->domain));
+                break;
 
-			case \class_exists( 'CMLTranslations' ):
-				\CMLTranslations::add(
-					$string_name,
-					$value,
-					\str_replace( ' ', '-', $this->domain )
-				);
-				break;
+            default:
+                break;
+        }
+    }
 
-			case \function_exists( 'pll_register_string' ):
-				\pll_register_string(
-					\str_replace( ' ', '-', $this->domain ),
-					$string_name
-				);
-				break;
+    /**
+     * @inheritDoc
+     *
+     */
+    public function getString($string_name, $value)
+    {
 
-			default:
-				break;
-		}
-	}
+        switch (true) {
+            case \function_exists('icl_t'):
+                return \icl_t($this->domain, $string_name, $value);
 
-	/**
-	 * @inheritDoc
-	 */
-	public function deregisterString( $string_name ) {
+            case \has_filter('cml_my_translations'):
+                return \CMLTranslations::get(
+                    \CMLLanguage::get_current_id(),
+                    \strtolower($string_name),
+                    \str_replace(' ', '-', $this->domain)
+                );
 
-		switch ( true ) {
-			case \function_exists( 'icl_unregister_string' ):
-				\icl_unregister_string( $this->domain, $string_name );
-				break;
+            case \function_exists('pll__'):
+                return \pll__($string_name);
 
-			case \has_filter( 'cml_my_translations' ):
-				\CMLTranslations::delete( \str_replace( ' ', '-', $this->domain ) );
-				break;
-
-			default:
-				break;
-		}
-	}
-
-	/**
-	 * @inheritDoc
-	 *
-	 */
-	public function getString( $string_name, $value ) {
-
-		switch ( true ) {
-			case \function_exists( 'icl_t' ):
-				return \icl_t( $this->domain, $string_name, $value );
-
-			case \has_filter( 'cml_my_translations' ):
-				return \CMLTranslations::get(
-					\CMLLanguage::get_current_id(),
-					\strtolower( $string_name ),
-					\str_replace( ' ', '-', $this->domain )
-				);
-
-			case \function_exists( 'pll__' ):
-				return \pll__( $string_name );
-
-			default:
-				return $value;
-		}
-	}
+            default:
+                return $value;
+        }
+    }
 }

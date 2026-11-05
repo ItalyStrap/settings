@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ItalyStrap\FileHeader;
@@ -8,28 +9,28 @@ namespace ItalyStrap\FileHeader;
  * @link https://developer.wordpress.org/themes/basics/main-stylesheet-style-css/
  * @package ItalyStrap\FileHeader
  */
-interface Theme extends SharedKeys {
+interface Theme extends SharedKeys
+{
+    public const THEME_URI = 'ThemeURI';
+    public const TAGS = 'Tags';
+    public const TEMPLATE = 'Template';
 
-	const THEME_URI = 'ThemeURI';
-	const TAGS = 'Tags';
-	const TEMPLATE = 'Template';
+    public const HEADERS = [
+        self::NAME          => 'Theme Name',
+        self::THEME_URI     => 'Theme URI',
+        self::VERSION       => 'Version',
+        self::DESCRIPTION   => 'Description',
+        self::AUTHOR        => 'Author',
+        self::AUTHOR_URI    => 'Author URI',
+        self::TEXT_DOMAIN   => 'Text Domain',
+        self::DOMAIN_PATH   => 'Domain Path',
+        self::LICENSE       => 'License',
+        self::LICENSE_URI   => 'License URI',
+        self::TAGS          => 'Tags',
 
-	const HEADERS = [
-		self::NAME			=> 'Theme Name',
-		self::THEME_URI		=> 'Theme URI',
-		self::VERSION		=> 'Version',
-		self::DESCRIPTION	=> 'Description',
-		self::AUTHOR		=> 'Author',
-		self::AUTHOR_URI	=> 'Author URI',
-		self::TEXT_DOMAIN	=> 'Text Domain',
-		self::DOMAIN_PATH	=> 'Domain Path',
-		self::LICENSE		=> 'License',
-		self::LICENSE_URI	=> 'License URI',
-		self::TAGS			=> 'Tags',
-
-		/**
-		 * Used by child theme
-		 */
-		self::TEMPLATE		=> 'Template',
-	];
+        /**
+         * Used by child theme
+         */
+        self::TEMPLATE      => 'Template',
+    ];
 }

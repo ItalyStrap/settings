@@ -1,0 +1,50 @@
+name: Static analysis
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  phpstan:
+    name: PHPStan
+
+    runs-on: ubuntu-latest
+    if: "!github.event.pull_request.draft"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - uses: ramsey/composer-install@v3
+
+      - name: PHPStan
+        run: composer run stan
+
+  rector:
+    name: Rector
+
+    runs-on: ubuntu-latest
+    if: "!github.event.pull_request.draft"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: none
+
+      - uses: ramsey/composer-install@v3
+
+      - name: Rector
+        run: composer run rector

@@ -1,0 +1,20 @@
+{
+    "$schema": "vendor/infection/infection/resources/schema.json",
+    "source": {
+        "directories": ["src"]
+    },
+    "logs": {
+        "text": "tests/_output/infection.log",
+        "github": true
+    },
+    "tmpDir": "tests/_output",
+    "timeout": 10,
+    // The floor of the 0.0.x classes, raised by #7 and #8
+    "minMsi": 22,
+    "minCoveredMsi": 79,
+    "mutators": {
+        "@default": true
+    },
+    "testFramework": "codeception",
+    "testFrameworkOptions": "--skip=integration"
+}

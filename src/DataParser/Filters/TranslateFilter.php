@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ItalyStrap\DataParser\Filters;
@@ -6,30 +7,26 @@ namespace ItalyStrap\DataParser\Filters;
 use ItalyStrap\I18N\Translatable;
 use ItalyStrap\DataParser\FilterableInterface;
 
-class TranslateFilter implements FilterableInterface {
+class TranslateFilter implements FilterableInterface
+{
+    use DefaultSchema;
 
-	const KEY = 'translate';
+    public const KEY = 'translate';
 
-	use DefaultSchema;
+    public function __construct(private Translatable $translator)
+    {
+    }
 
-	/**
-	 * @var Translatable
-	 */
-	private $translator;
+    /**
+     * @inheritDoc
+     */
+    public function filter(string $key, $value, array $schema)
+    {
 
-	public function __construct( Translatable $translator ) {
-		$this->translator = $translator;
-	}
+        if ($schema[ self::KEY ]) {
+            $this->translator->registerString($key, \strip_tags(\strval($value)));
+        }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function filter( string $key, $value, array $schema ) {
-
-		if ( $schema[ self::KEY ] ) {
-			$this->translator->registerString( $key, \strip_tags( \strval( $value ) ) );
-		}
-
-		return $value;
-	}
+        return $value;
+    }
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ItalyStrap\Tests;
@@ -6,53 +7,57 @@ namespace ItalyStrap\Tests;
 use Codeception\Test\Unit;
 use ItalyStrap\I18N\Translator;
 
-class I18NTest extends Unit {
+use function tad\FunctionMockerLe\define;
 
-	/**
-	 * @var \UnitTester
-	 */
-	protected $tester;
+class I18NTest extends Unit
+{
+    /**
+     * @var \UnitTester
+     */
+    protected $tester;
 
 	// phpcs:ignore -- Method from Codeception
 	protected function _before() {
-	}
+    }
 
 	// phpcs:ignore -- Method from Codeception
 	protected function _after() {
-	}
+    }
 
-	private function getInstance() {
-		$sut = new Translator( 'some-domain' );
-		$this->assertInstanceOf( Translator::class, $sut, '' );
-		return $sut;
-	}
+    private function getInstance(): Translator
+    {
+        $sut = new Translator('some-domain');
+        $this->assertInstanceOf(Translator::class, $sut, '');
+        return $sut;
+    }
 
-	/**
-	 * @test
-	 */
-	public function itShouldBeInstantiable() {
-		$sut = $this->getInstance();
-	}
+    /**
+     * @test
+     */
+    public function itShouldBeInstantiable(): void
+    {
+        $this->getInstance();
+    }
 
-	/**
-	 * @test
-	 */
-	public function itShouldBeHasDeomain() {
-		$sut = $this->getInstance();
-		$this->assertStringContainsString( 'some-domain', $sut->getDomain(), '' );
-	}
+    /**
+     * @test
+     */
+    public function itShouldBeHasDeomain(): void
+    {
+        $sut = $this->getInstance();
+        $this->assertStringContainsString('some-domain', $sut->getDomain(), '');
+    }
 
-	/**
-	 * @test
-	 */
-	public function itShouldBeHasDeomainsdgs() {
+    /**
+     * @test
+     */
+    public function itShouldBeHasDeomainsdgs(): void
+    {
 
 		// phpcs:ignore -- This is not a constant definition
-		\tad\FunctionMockerLe\define( 'get_locale', function () {
-			return 'it_IT';
-		} );
+		define( 'get_locale', fn(): string => 'it_IT');
 
-		$sut = $this->getInstance();
-		$this->assertStringContainsString( 'it_IT', $sut->getLanguage(), '' );
-	}
+        $sut = $this->getInstance();
+        $this->assertStringContainsString('it_IT', $sut->getLanguage(), '');
+    }
 }

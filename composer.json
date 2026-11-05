@@ -1,7 +1,11 @@
 {
     "name": "italystrap/settings",
     "description": "Settings API for WordPress",
-    "keywords": ["wordpress","settings","framework"],
+    "keywords": [
+        "wordpress",
+        "settings",
+        "framework"
+    ],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -14,22 +18,25 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php" : ">=7.2",
+        "php": ">=8.2",
         "italystrap/cleaner": "^1.1",
         "italystrap/config": "^2.2",
         "italystrap/fields": "^2.0"
     },
     "require-dev": {
-        "lucatume/wp-browser": "2.2",
+        "lucatume/wp-browser": "^4.5",
+        "codeception/codeception": "^5.3",
+        "codeception/module-asserts": "^3.0",
+        "squizlabs/php_codesniffer": "^3.13",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "dealerdirect/phpcodesniffer-composer-installer": "^1.2",
+        "phpstan/phpstan": "^2.3",
+        "szepeviktor/phpstan-wordpress": "^2.0",
+        "infection/infection": "^0.29",
+        "infection/codeception-adapter": "^0.4.3",
+        "rector/rector": "^2.2",
         "lucatume/function-mocker-le": "^1.0",
-        "italystrap/debug": "~2.0",
-        "wp-coding-standards/wpcs": "^2.1",
-        "phpcompatibility/php-compatibility": "*",
-        "dealerdirect/phpcodesniffer-composer-installer": "^0.5.0",
-        "phpstan/phpstan": "^0.12",
-        "szepeviktor/phpstan-wordpress": "^0.5",
-        "rdlowrey/auryn": "^1.4",
-        "ocramius/proxy-manager": "^2.2"
+        "phpspec/prophecy-phpunit": "^2.3"
     },
     "autoload": {
         "psr-4": {
@@ -39,17 +46,60 @@
             "ItalyStrap\\Settings\\": "src/Settings/"
         }
     },
-    "scripts": {
-        "check": [
-            "phpcs -p -s --standard=phpcs.xml src",
-            "phpstan analyse"
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
         ],
-        "test": [
-            "test"
+        "exclude-from-classmap": [
+            "tests/_output/",
+            "tests/_data/"
         ]
     },
-    "support"    : {
+    "scripts": {
+        "cs": [
+            "@php vendor/bin/phpcs -p"
+        ],
+        "cs:fix": [
+            "@php vendor/bin/phpcbf -p"
+        ],
+        "stan": [
+            "@php -d memory_limit=1G vendor/bin/phpstan analyse --no-progress"
+        ],
+        "unit": [
+            "@php vendor/bin/codecept run unit"
+        ],
+        "integration": [
+            "@php vendor/bin/codecept run integration"
+        ],
+        "tests": [
+            "@unit",
+            "@integration"
+        ],
+        "infection": [
+            "@php vendor/bin/infection --threads=max"
+        ],
+        "clean": [
+            "@php vendor/bin/codecept clean"
+        ],
+        "rector": [
+            "@php vendor/bin/rector process --dry-run"
+        ],
+        "rector:fix": [
+            "@php vendor/bin/rector process"
+        ]
+    },
+    "support": {
         "issues": "https://github.com/ItalyStrap/settings/issues",
         "source": "https://github.com/ItalyStrap/settings"
+    },
+    "config": {
+        "sort-packages": false,
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "infection/extension-installer": true
+        },
+        "platform": {
+            "php": "8.2.29"
+        }
     }
 }
