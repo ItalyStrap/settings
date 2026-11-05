@@ -1,9 +1,9 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ItalyStrap\Settings;
 
-use Auryn\Injector;
 use ItalyStrap\Cleaner\Sanitization;
 use ItalyStrap\Cleaner\Validation;
 use ItalyStrap\Config\ConfigFactory;
@@ -23,181 +23,136 @@ use ItalyStrap\I18N\Translator;
  * Class SettingsFactory
  * @package ItalyStrap\Settings
  */
-class SettingsBuilder {
+class SettingsBuilder
+{
+    private ?Options $options = null;
 
-	/**
-	 * @var OptionsInterface
-	 */
-	private $options;
+    private ?PluginLinks $links = null;
 
-	/**
-	 * @var PluginLinks
-	 */
-	private $links;
+    /**
+     * @var string
+     */
 
-	/**
-	 * @var string
-	 */
-	private $option_name;
+    private $domain;
 
-	/**
-	 * @var string
-	 */
+    /**
+     * @var array
+     */
+    private $pages_obj;
 
-	private $domain;
+    /**
+     * @var array
+     */
+    private $pages;
 
-	/**
-	 * @var string
-	 */
-	private $base_name;
+    public function __construct(
+        private readonly string $option_name,
+        private readonly string $base_name = '',
+        private readonly string $plugin_file = '',
+    ) {
+    }
 
-	/**
-	 * @var array
-	 */
-	private $pages_obj;
+    public function links(): PluginLinks
+    {
 
-	/**
-	 * @var ParserInterface
-	 */
-	private $parser;
-	/**
-	 * @var string
-	 */
-	private $plugin_file;
+        if (!$this->links instanceof PluginLinks) {
+            $this->links = new PluginLinks(new Tag(new Attributes()), $this->base_name);
+        }
 
-	/**
-	 * @var array
-	 */
-	private $pages;
+        return $this->links;
+    }
 
-	/**
-	 * @param string $option_name
-	 * @param string $base_name
-	 * @param string $plugin_file
-	 */
-	public function __construct(
-		string $option_name,
-		string $base_name = '',
-		string $plugin_file = ''
-	) {
-		$this->option_name = $option_name;
-		$this->base_name = $base_name;
-		$this->plugin_file = $plugin_file;
-	}
+    public function options(): OptionsInterface
+    {
 
-	/**
-	 * @return PluginLinks
-	 */
-	public function links(): PluginLinks {
+        if (!$this->options instanceof Options) {
+            $this->options = new Options($this->option_name);
+        }
 
-		if ( empty( $this->links ) ) {
-			$this->links = new PluginLinks( new Tag( new Attributes() ), $this->base_name );
-		}
+        return $this->options;
+    }
 
-		return $this->links;
-	}
+    protected function parser(): ParserInterface
+    {
 
-	/**
-	 * @return OptionsInterface
-	 */
-	public function options(): OptionsInterface {
+        $callable = function (): array {
 
-		if ( empty( $this->options ) ) {
-			$this->options = new Options( $this->option_name );
-		}
+            $filters = [
+                new SanitizeFilter(new Sanitization()),
+                new ValidateFilter(new Validation())
+            ];
 
-		return $this->options;
-	}
+            if (!empty($this->domain)) {
+                $filters[] = new TranslateFilter(new Translator($this->domain));
+            }
 
-	protected function parser(): ParserInterface {
+            return $filters;
+        };
 
-		$callable = function (): array {
+        return new LazyParser($callable);
+    }
 
-			$filters = [
-				new SanitizeFilter( new Sanitization() ),
-				new ValidateFilter( new Validation() )
-			];
+    /**
+     * @return $this
+     */
+    public function addCustomPluginLink(string $key, string $url, string $text, array $attr = []): static
+    {
+        $this->links()->addLink(...\func_get_args());
+        return $this;
+    }
 
-			if ( !empty( $this->domain ) ) {
-				$filters[] = new TranslateFilter( new Translator( $this->domain ) );
-			}
+    public function addPage(array $page, array $sections = []): SettingsBuilder
+    {
 
-			return $filters;
-		};
+        $this->pages[ $page[ Page::SLUG ] ][] = $page;
+        $this->pages[ $page[ Page::SLUG ] ][] = $sections;
 
-		return new LazyParser( $callable );
-	}
+        $pages_obj = new Page(
+            (new ConfigFactory())->make($page),
+            new ViewPage()
+        );
 
-	/**
-	 * @param string $key
-	 * @param string $url
-	 * @param string $text
-	 * @param array $attr
-	 * @return $this
-	 */
-	public function addCustomPluginLink( string $key, string $url, string $text, array $attr = [] ) {
-		$this->links()->addLink( ...\func_get_args() );
-		return $this;
-	}
+        $this->pages_obj[ $pages_obj->getSlug() ][] = $pages_obj;
 
-	/**
-	 * @param array $page
-	 * @param array $sections
-	 * @return SettingsBuilder
-	 */
-	public function addPage( array $page, array $sections = [] ): SettingsBuilder {
+        if ($sections !== []) {
+            $sections_obj = new Sections(
+                (new ConfigFactory())->make($sections),
+                new Fields(),
+                $this->parser(),
+                $this->options()
+            );
 
-		$this->pages[ $page[ Page::SLUG ] ][] = $page;
-		$this->pages[ $page[ Page::SLUG ] ][] = $sections;
+            $pages_obj->withSections($sections_obj);
+            $this->pages_obj[ $pages_obj->getSlug() ][] = $sections_obj;
+        }
 
-		$pages_obj = new Page(
-			(new ConfigFactory)->make( $page ),
-			new ViewPage()
-		);
+        if (! empty($this->base_name)) {
+            $this->links()->forPages($pages_obj);
+        }
 
-		$this->pages_obj[ $pages_obj->getSlug() ][] = $pages_obj;
+        return $this;
+    }
 
-		if ( ! empty( $sections ) ) {
-			$sections_obj = new Sections(
-				(new ConfigFactory)->make( $sections ),
-				new Fields(),
-				$this->parser(),
-				$this->options()
-			);
+    public function build(): void
+    {
 
-			$pages_obj->withSections( $sections_obj );
-			$this->pages_obj[ $pages_obj->getSlug() ][] = $sections_obj;
-		}
+        $file = new \SplFileObject($this->plugin_file);
+        $headers_info = new HeaderFields($file, Plugin::HEADERS);
 
-		if ( ! empty( $this->base_name ) ) {
-			$this->links()->forPages( $pages_obj );
-		}
+        $this->domain = $headers_info->fields()[ Plugin::TEXT_DOMAIN ];
 
-		return $this;
-	}
+        \array_map(function (array $to_boot): void {
+            foreach ($to_boot as $bootable) {
+                $bootable->boot();
+            }
+        }, $this->pages_obj);
 
-	/**
-	 * @return void
-	 */
-	public function build(): void {
+        $this->links()->boot();
 
-		$file = new \SplFileObject( $this->plugin_file );
-		$headers_info = new HeaderFields( $file, Plugin::HEADERS );
-
-		$this->domain = $headers_info->fields()[ Plugin::TEXT_DOMAIN ];
-
-		\array_map( function ( array $to_boot ) {
-			foreach ( $to_boot as $bootable ) {
-				$bootable->boot();
-			}
-		}, $this->pages_obj );
-
-		$this->links()->boot();
-
-		/**
-		 * Load script for Tabbed admin page
-		 */
-		$asset = new AssetLoader();
-		\add_action( 'admin_enqueue_scripts', [ $asset, 'load' ] );
-	}
+        /**
+         * Load script for Tabbed admin page
+         */
+        $asset = new AssetLoader();
+        \add_action('admin_enqueue_scripts', $asset->load(...));
+    }
 }

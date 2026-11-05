@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ItalyStrap\DataParser\Filters;
@@ -10,29 +11,24 @@ use ItalyStrap\DataParser\FilterableInterface;
  * Class SanitizeFilter
  * @package ItalyStrap\Settings\Filters
  */
-class SanitizeFilter implements FilterableInterface {
+class SanitizeFilter implements FilterableInterface
+{
+    use DefaultSchema;
 
-	const KEY = 'sanitize';
+    public const KEY = 'sanitize';
 
-	use DefaultSchema;
+    public function __construct(private Sanitization $sanitization)
+    {
+    }
 
-	/**
-	 * @var Sanitization
-	 */
-	private $sanitization;
+    /**
+     * @inheritDoc
+     */
+    public function filter(string $key, $value, array $schema)
+    {
 
-	public function __construct( Sanitization $sanitization ) {
-		$this->sanitization = $sanitization;
-	}
+        $this->sanitization->addRules($schema[ self::KEY ]);
 
-	/**
-	 * @inheritDoc
-	 */
-	public function filter( string $key, $value, array $schema ) {
-
-		$this->sanitization->addRules( $schema[ self::KEY ] );
-		$value = $this->sanitization->sanitize( $value );
-
-		return $value;
-	}
+        return $this->sanitization->sanitize($value);
+    }
 }

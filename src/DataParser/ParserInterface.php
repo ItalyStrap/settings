@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ItalyStrap\DataParser;
@@ -7,30 +8,26 @@ namespace ItalyStrap\DataParser;
  * Interface DataParserInterface
  * @package ItalyStrap\Settings
  */
-interface ParserInterface {
+interface ParserInterface
+{
+    /**
+     * @param array<mixed> $schema
+     * @return Parser
+     */
+    public function withSchema(array $schema);
 
-	/**
-	 * @param array<mixed> $schema
-	 * @return Parser
-	 */
-	public function withSchema( array $schema );
+    public function getSchema(): array;
 
-	/**
-	 * @return array
-	 */
-	public function getSchema(): array;
+    /**
+     * @return Parser
+     */
+    public function withFilters(FilterableInterface ...$filters);
 
-	/**
-	 * @param FilterableInterface ...$filters
-	 * @return Parser
-	 */
-	public function withFilters( FilterableInterface ...$filters );
-
-	/**
-	 * Sanitize the input data
-	 *
-	 * @param array<int|string> $data The input array.
-	 * @return array<int|string>      Return the array sanitized
-	 */
-	public function parseValues( array $data ): array;
+    /**
+     * Sanitize the input data
+     *
+     * @param array<int|string> $data The input array.
+     * @return array<int|string>      Return the array sanitized
+     */
+    public function parseValues(array $data): array;
 }

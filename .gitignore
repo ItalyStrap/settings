@@ -1,9 +1,6 @@
-/wp-content/
 /vendor/
-
-/_others/
-
-*.local
+composer.lock
 codeception.yml
-*.lock
-.php_cs.cache
+*.local
+*.phar
+.phpcs-cache

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ItalyStrap\DataParser\Filters;
@@ -11,39 +12,35 @@ use ItalyStrap\DataParser\FilterableInterface;
  * Class ValidateFilter
  * @package ItalyStrap\Settings\Filters
  */
-class ValidateFilter implements FilterableInterface {
+class ValidateFilter implements FilterableInterface
+{
+    use DefaultSchema;
 
-	const KEY = 'validate';
+    public const KEY = 'validate';
 
-	use DefaultSchema;
+    public function __construct(private Validation $validation)
+    {
+    }
 
-	/**
-	 * @var Validation
-	 */
-	private $validation;
+    /**
+     * @inheritDoc
+     */
+    public function filter(string $key, $value, array $schema)
+    {
 
-	public function __construct( Validation $validation ) {
-		$this->validation = $validation;
-	}
+        if (! $schema[ self::KEY ]) {
+            return $value;
+        }
 
-	/**
-	 * @inheritDoc
-	 */
-	public function filter( string $key, $value, array $schema ) {
+        $this->validation->addRules($schema[ self::KEY ]);
 
-		if ( ! $schema[ self::KEY ] ) {
-			return $value;
-		}
+        if (false === $this->validation->validate(\strval($value))) {
+            throw new InvalidValue(\sprintf(
+                'The "%s" is not valid.',
+                $key
+            ));
+        }
 
-		$this->validation->addRules( $schema[ self::KEY ] );
-
-		if ( false === $this->validation->validate( \strval( $value ) ) ) {
-			throw new InvalidValue( \sprintf(
-				'The "%s" is not valid.',
-				$key
-			) );
-		}
-
-		return $value;
-	}
+        return $value;
+    }
 }

@@ -1,6 +1,5 @@
 # ItalyStrap Settings API
 
-[![Build Status](https://travis-ci.org/ItalyStrap/settings.svg?branch=master)](https://travis-ci.org/ItalyStrap/settings)
 [![Latest Stable Version](https://img.shields.io/packagist/v/italystrap/settings.svg)](https://packagist.org/packages/italystrap/settings)
 [![Total Downloads](https://img.shields.io/packagist/dt/italystrap/settings.svg)](https://packagist.org/packages/italystrap/settings)
 [![Latest Unstable Version](https://img.shields.io/packagist/vpre/italystrap/settings.svg)](https://packagist.org/packages/italystrap/settings)
@@ -114,6 +113,25 @@ $settings->build();
 ## Contributing
 
 All feedback / bug reports / pull requests are welcome.
+
+## Development
+
+PHP 8.2 or later. PHP, Composer and the database run in the Docker containers in `.docker/`, the same environment runs in CI. `make help` lists all the targets.
+
+```bash
+make up          # Start the containers
+make install     # Install the dependencies and build the Codeception actors
+make cs          # PHP CodeSniffer, PSR-12 and PHPCompatibility
+make stan        # PHPStan at level max
+make rector      # Rector dry run, make rector-fix applies it
+make unit        # The unit suite, the core is not loaded
+make integration # The integration suite, the core is loaded
+make infection   # Mutation tests on the unit suite
+make qa          # All the checks above
+make down        # Stop and remove the containers
+```
+
+The PHP and core versions are in `.docker/test.env`.
 
 ## License
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace ItalyStrap\Settings;
 
 /**
@@ -21,43 +23,42 @@ namespace ItalyStrap\Settings;
  * Custom Post Type – edit.php?post_type=wporg_post_type
  * Network Admin – settings.php
  */
-interface PageInterface {
+interface PageInterface
+{
+    /**
+     * @return bool
+     */
+    public function isSubmenu();
 
-	/**
-	 * @return bool
-	 */
-	public function isSubmenu();
+    /**
+     * @return string
+     */
+    public function getParentPageSlug();
 
-	/**
-	 * @return string
-	 */
-	public function getParentPageSlug();
+    /**
+     * @return mixed
+     */
+    public function getPageTitle();
 
-	/**
-	 * @return mixed
-	 */
-	public function getPageTitle();
+    /**
+     * @return string
+     */
+    public function getMenuTitle();
 
-	/**
-	 * @return string
-	 */
-	public function getMenuTitle();
+    /**
+     * @return string
+     */
+    public function getSlug();
 
-	/**
-	 * @return string
-	 */
-	public function getSlug();
+    /**
+     * @return Page
+     */
+    public function withSections(SectionsInterface $sections);
 
-	/**
-	 * @param SectionsInterface $sections
-	 * @return Page
-	 */
-	public function withSections( SectionsInterface $sections );
-
-	/**
-	 * Must be loaded at 'admin_menu' hook
-	 * Add plugin primary page in admin panel
-	 * @return bool|false|string
-	 */
-	public function register();
+    /**
+     * Must be loaded at 'admin_menu' hook
+     * Add plugin primary page in admin panel
+     * @return bool|false|string
+     */
+    public function register();
 }

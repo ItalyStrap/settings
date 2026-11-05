@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace ItalyStrap\FileHeader;
@@ -7,10 +8,7 @@ namespace ItalyStrap\FileHeader;
  * Interface HeaderFieldsInterface
  * @package ItalyStrap\FileHeader
  */
-interface HeaderFieldsInterface {
-
-	/**
-	 * @return array
-	 */
-	public function fields(): array;
+interface HeaderFieldsInterface
+{
+    public function fields(): array;
 }
