@@ -9,11 +9,15 @@
     },
     "tmpDir": "tests/_output",
     "timeout": 10,
-    // The floor of the 0.0.x classes, raised by #7 and #8
-    "minMsi": 22,
-    "minCoveredMsi": 79,
+    // The floor with the 0.0.x classes, the new ones have 100%, raised to 100 by #8
+    "minMsi": 48,
+    "minCoveredMsi": 92,
     "mutators": {
-        "@default": true
+        "@default": true,
+        // Any version below 1 runs all the steps, the missing version is 0 only to name it
+        "DecrementInteger": {
+            "ignore": ["ItalyStrap\\Settings\\Migrator::storedVersion"]
+        }
     },
     "testFramework": "codeception",
     "testFrameworkOptions": "--skip=integration"
